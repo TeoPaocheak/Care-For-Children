@@ -1,8 +1,8 @@
 
 <section ng-app="app" id="widget-grid" class="">
     <div class="row">
-        <article class="col-sm-12 col-md-12 col-lg-12" ng-controller="entityInfoController">
-            <input type="text" ng-init="tableName='{{$table}}'" ng-model="tableName" hidden="">
+        <article class="col-sm-12 col-md-12 col-lg-12" ng-controller="entityAggController">
+            <input type="text" ng-init="tableName='<?php echo e($table); ?>'" ng-model="tableName" hidden="">
             <div class="jarviswidget jarviswidget-color-blueLight" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
                 <header>
                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
@@ -60,9 +60,9 @@
                                                 <label class="select">
                                                     <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
                                                         <option value="">--PROVINCE--</option>
-                                                        @foreach($provinces as $province)
-                                                            <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
-                                                        @endforeach
+                                                        <?php foreach($provinces as $province): ?>
+                                                        <option value="<?php echo e($province->ProvinceCode); ?>"><?php echo e($province->ProvinceName); ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -148,11 +148,11 @@
                                                 <label class="select">
                                                     <select ng-model="option.key.keyValue"  ng-change="loadValue($index)"  class="form-control">
                                                         <option value="">--SELECT--</option>
-                                                        @foreach($fields as $field)
-                                                            @if($field->DisplayField!==1)
-                                                                <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
-                                                            @endif
-                                                        @endforeach
+                                                        <?php foreach($fields as $field): ?>
+                                                        <?php if($field->DisplayField!==1): ?>
+                                                        <option ng-show="<?php echo e($field->EDFSearchType); ?> !== 0" value="<?php echo e($field->EntityDefinedFieldNameInTable); ?>"><?php echo e($field->EntityDefinedFieldListName); ?></option>
+                                                        <?php endif; ?>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </label>
                                             </section>
@@ -184,34 +184,6 @@
                                 </div>
                                 <button class="btn btn-sm btn-primary" ng-click="addOption('AND')">New Option</button>
                             </fieldset>
-                            <fieldset>
-                                <header>
-                                    <b>Selecting Fields</b>
-                                </header>
-                                <?php $i=0; ?>
-                                <div class="row">
-                                    <div class="tree">
-                                        <ul>
-                                            @foreach ($categories as $category)
-                                            <li class="parent_li" role="treeitem" ng-init="addCategory();">
-                                                <label><input type="checkbox" ng-init="categories[{{$i}}].selectedField=false" ng-model="categories[{{$i}}].selectedField"></label><span title="Collapse this branch">{{$category->EntityDefinedCategoryName}}</span>
-                                                <ul>
-                                                    @foreach($category->fields as $field)
-                                                        @if($field->DisplayField)
-                                                        <li>
-                                                            <span title="Collapse this branch"><input class="selections" type="checkbox" ng-checked="categories[{{$i}}].selectedField || {{$field->DefaultSelected}}===1" value="{{$field->EntityDefinedFieldNameInTable}}">&nbsp;{{$field->EntityDefinedFieldListName}}</span>           
-                                                        </li>
-                                                        @endif
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                            <?php $i++; ?>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                            </fieldset>
                             <footer>
                                 <button class="btn btn-primary" ng-click="view()"><i class="fa fa-fw fa-search"></i> Search</button>
                                 <button class="btn btn-danger" type="button" ng-click="reset()"><i class="fa fa-fw fa-refresh"></i>Reset</button>
@@ -225,81 +197,72 @@
     <div id="form-result">
     </div>
 </section> <!-- end section-->
-
 <div id="modal-loading" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
       <div class="modal-body" style="background-color: transparent; text-align: center;">
-          <img src="{{asset('img/loading.gif')}}">
+          <img src="<?php echo e(asset('img/loading.gif')); ?>">
       </div>
     </div>
+
   </div>
 </div>
-
 <script type="text/javascript">
+
     pageSetUp();
     $(document).ready(function () {
-        angular.bootstrap($('#widget-grid'), ["app"]);
+    angular.bootstrap($('#widget-grid'), ["app"]);
     });
     loadScript("js/plugin/bootstraptree/bootstrap-tree.min.js", function(){
         
     });
 </script>
-
 <script>
     var conditions = <?php echo $conditions; ?>;
-    
-    // var newField = function (obj) {
-    //     var append = $(obj).parent().siblings(".panel-body");
-    //     // $(append).html("Hello");
-    //     alert("hello");
-    // };
-
+    var newField = function (obj) {
+    var append = $(obj).parent().siblings(".panel-body");
+    $(append).html("Hello");
+    };
     var loadNew = function (obj, type) {
-        var code;
-        code = $(obj).val();
-        var location = getLocation(type, code);
 
-        if (type === 'district') {
-            $("#district-filter").html("<option value=''>--DISTRICT--</option>");
-            for (i = 0; i < location.length; i++) {
-                $("#district-filter").append("<option value='" + location[i].DistrictCode + "'>" + location[i].DistrictName + "</option>");
-            }
-            $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
-            $("#village-filter").html("<option value=''>--VILLAGE--</option>");
-        } else if (type === 'commune') {
-            $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
-            for (i = 0; i < location.length; i++) {
-                $("#commune-filter").append("<option value='" + location[i].CommuneCode + "'>" + location[i].CommuneName + "</option>");
-            }
-            $("#village-filter").html("<option value=''>--VILLAGE--</option>");
-        } else if (type === 'village') {
-            $("#village-filter").html("<option value=''>--VILLLAGE--</option>");
-            for (i = 0; i < location.length; i++) {
-                $("#village-filter").append("<option value='" + location[i].VillageCode + "'>" + location[i].VillageName + "</option>");
-            }
-        }
+    var code;
+    code = $(obj).val();
+    var location = getLocation(type, code);
+    if (type === 'district') {
+    $("#district-filter").html("<option value=''>--DISTRICT--</option>");
+    for (i = 0; i < location.length; i++) {
+    $("#district-filter").append("<option value='" + location[i].DistrictCode + "'>" + location[i].DistrictName + "</option>");
+    }
+    $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
+    $("#village-filter").html("<option value=''>--VILLAGE--</option>");
+    } else if (type === 'commune') {
+    $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
+    for (i = 0; i < location.length; i++) {
+    $("#commune-filter").append("<option value='" + location[i].CommuneCode + "'>" + location[i].CommuneName + "</option>");
+    }
+    $("#village-filter").html("<option value=''>--VILLAGE--</option>");
+    } else if (type === 'village') {
+    $("#village-filter").html("<option value=''>--VILLLAGE--</option>");
+    for (i = 0; i < location.length; i++) {
+    $("#village-filter").append("<option value='" + location[i].VillageCode + "'>" + location[i].VillageName + "</option>");
+    }
+    }
     };
-
     var getLocation = function (type, code) {
-        var results = "";
-        if (name === undefined) {
-            name = "";
-        }
-
-        // Go to PDCVController 
-        $.ajax({
-            url: "{{url('PDCV')}}/" + type + "/" + code,
-                type: "GET",
-                async: false,
-                success: function (result) {
-                    results = result;
-                }
-        });
-        return results;
+    var results = "";
+    if (name === undefined) {
+    name = "";
+    }
+    $.ajax({
+    url: "<?php echo e(url('PDCV')); ?>/" + type + "/" + code,
+            type: "GET",
+            async: false,
+            success: function (result) {
+            results = result;
+            }
+    });
+    return results;
     };
-
-    // Show search bar, copy/pdf/..    
     var pagefunction = function () {
        
         //console.log("cleared");
@@ -351,7 +314,7 @@
                         "sMessage": "Generated by Open Institute Monitoring System <i>(press Esc to close)</i>"
                     }
                 ],
-                "sSwfPath": "{{asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')}}"
+                "sSwfPath": "<?php echo e(asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')); ?>"
             },
             "iDisplayLength": 20,
             "autoWidth": true,
@@ -412,19 +375,15 @@
 
     };
 
-    var reloadScript = function(){
-        loadScript("{{asset('js/plugin/datatables/jquery.dataTables.min.js')}}", function () {
-            loadScript("{{asset('js/plugin/datatables/dataTables.colVis.min.js')}}", function () {
-                loadScript("{{asset('js/plugin/datatables/dataTables.tableTools.min.js')}}", function () {
-                    loadScript("{{asset('js/plugin/datatables/dataTables.bootstrap.min.js')}}", function () {
-                        loadScript("{{asset('js/plugin/datatable-responsive/datatables.responsive.min.js')}}", pagefunction);
-                    });
+var reloadScript = function(){
+    loadScript("<?php echo e(asset('js/plugin/datatables/jquery.dataTables.min.js')); ?>", function () {
+        loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.colVis.min.js')); ?>", function () {
+            loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.tableTools.min.js')); ?>", function () {
+                loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.bootstrap.min.js')); ?>", function () {
+                    loadScript("<?php echo e(asset('js/plugin/datatable-responsive/datatables.responsive.min.js')); ?>", pagefunction);
                 });
             });
         });
-    }
-
-    var compareObject = function(obj){
-        window.open($(obj).data("href"),'_blank');
-    };
+    });
+}
 </script>

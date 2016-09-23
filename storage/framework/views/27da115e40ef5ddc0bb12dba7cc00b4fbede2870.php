@@ -4,9 +4,9 @@
             <div class="col-xs-12 col-sm-2 col-md-12-3 col-lg-2">
                 <select id="table-value" class="form-control" onchange="loadField()">
                     <option value="">--Table--</option>
-                    @foreach($tables as $table)
-                    <option value="{{$table->id}}">{{$table->TableName}}</option>
-                    @endforeach
+                    <?php foreach($tables as $table): ?>
+                    <option value="<?php echo e($table->id); ?>"><?php echo e($table->TableName); ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <br>
                 <button class="btn btn-primary" onclick='newField()'><i class="fa fa-search-plus"></i> Add New Field</button>
@@ -77,7 +77,7 @@
         tableID = $("#table-value").val();
         if (tableID.length !== 0) {
             $.ajax({
-                url: "{{url('system/entity-field')}}/" + tableID,
+                url: "<?php echo e(url('system/entity-field')); ?>/" + tableID,
                 success: function (result) {
                     columnOption = "";
                     categoryOption = "";
@@ -138,7 +138,7 @@
         // loading();
         $(obj).parent().append("<span class=\"label label-info txt-color-blueDark\" href=\"javascript:void(0);\"><i class=\"fa fa-gear fa-2x fa-spin\"></i></span>");
         $.ajax({
-            url: "{{url('system/entity-field')}}",
+            url: "<?php echo e(url('system/entity-field')); ?>",
             type: 'POST',
             data: {
                 tableID: tableID,
@@ -176,7 +176,7 @@
         if (confirm("Are You sure to delete!")) {
             $("#spin").show();
             $.ajax({
-                url: "{{url('system/entity-field')}}/" + fieldID,
+                url: "<?php echo e(url('system/entity-field')); ?>/" + fieldID,
                 type: 'DELETE',
                 success: function (result) {
                     $(obj).parent().parent().remove();
@@ -196,7 +196,7 @@
     var getColumnAndCategory = function (tableID) {
         var results;
         $.ajax({
-            url: "{{url('system/entity-field/getColumnAndCategoryName')}}/" + tableID,
+            url: "<?php echo e(url('system/entity-field/getColumnAndCategoryName')); ?>/" + tableID,
             async: false,
             success: function (result) {
                 results = result;

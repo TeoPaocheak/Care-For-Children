@@ -9,6 +9,9 @@ class EntityDefinedFieldCondition extends Model {
 
     protected $table = 'entitydefinedfieldcondition';
 
+    /**
+     * Getting conditions for dropdown. The middle dropdown
+     */
     public static function getConditionByFieldID($fieldName, $languageID) {
         return DB::table('entitydefinedfield')
                         ->join('entitydefinedfieldcondition', 'entitydefinedfield.id', '=', 'entitydefinedfieldcondition.EntityDefinedFieldID')

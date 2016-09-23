@@ -1,4 +1,5 @@
 var entity = angular.module("entity", []);
+
 entity.controller("entityInfoController", function ($scope, $http) {
 //    $scope.categories = [
 //        {name: 'abc',processing:0,;
@@ -11,15 +12,20 @@ entity.controller("entityInfoController", function ($scope, $http) {
     $scope.categories = [];
     $scope.options = [];
     $scope.categories.push();
-    $scope.addCategory = function () {
+    
+    $scope.addCategory = function() {};
 
-    };
+    // Options for Selecting Characteristic
+    // Add a new row option
     $scope.addOption = function (conjunction) {
         $scope.options.push({conjunction: conjunction, key: {udfType: 1, keyValue: ''}, conditions: [], condition: '', listValues: [], value: ''});
     };
+
     $scope.removeOption = function (optionIndex) {
         $scope.options.splice(optionIndex, 1);
     };
+
+    // Add values and conditions according to First option dropdown
     $scope.loadValue = function (optionid) {
         $scope.options[optionid].listValues = [];
         $http({
@@ -33,10 +39,9 @@ entity.controller("entityInfoController", function ($scope, $http) {
             }
             $scope.options[optionid].listValues = response.data.values;
             $scope.options[optionid].conditions = response.data.conditions;
-        }, function (response) {
-
-        });
+        }, function (response) {});
     };
+    
     $scope.view = function () {
         //make the categori
         var conditions = [];
@@ -59,7 +64,8 @@ entity.controller("entityInfoController", function ($scope, $http) {
         $http({
             method: 'GET',
             url: "monitor/entity-info",
-            params: {gp_type: $scope.geography.type,
+            params: {
+                gp_type: $scope.geography.type,
                 gp_province: $scope.geography.province,
                 gp_district: $scope.geography.district,
                 gp_commune: $scope.geography.commune,
@@ -69,6 +75,7 @@ entity.controller("entityInfoController", function ($scope, $http) {
                 selections: JSON.stringify(selections)
             },
             headers: {
+                // Header for sending file
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (response) {
@@ -80,6 +87,7 @@ entity.controller("entityInfoController", function ($scope, $http) {
             alert("Error! Please check again!");
         });
     };
+    
     $scope.reset = function () {
         $scope.selections = [];
         $scope.geography = {};
@@ -88,31 +96,27 @@ entity.controller("entityInfoController", function ($scope, $http) {
             $scope.categories[i].options = [];
             $scope.categories[i].selectedField = true;
         }
-    };
-
+    }; 
 });
 
 entity.controller("entityAggController", function ($scope, $http) {
-//    $scope.categories = [
-//        {name: 'abc',processing:0,;
-//            options: [{conjunction :'and',key: {udfType: 1, keyValue: ''}, condition: '>', value: 456}]
-//        }
-//    ];
     $scope.selections = [];
     $scope.geography = {};
     $scope.geography.type = 'country';
     $scope.categories = [];
     $scope.options = [];
     $scope.categories.push();
-    $scope.addCategory = function () {
 
-    };
+    $scope.addCategory = function () {};
+
     $scope.addOption = function (conjunction) {
         $scope.options.push({conjunction: conjunction, key: {udfType: 1, keyValue: ''}, conditions: [], condition: '', listValues: [], value: ''});
     };
+
     $scope.removeOption = function (optionIndex) {
         $scope.options.splice(optionIndex, 1);
     };
+
     $scope.loadValue = function (optionid) {
         $scope.options[optionid].listValues = [];
         $http({
@@ -130,6 +134,7 @@ entity.controller("entityAggController", function ($scope, $http) {
 
         });
     };
+
     $scope.view = function () {
         //make the categori
         var conditions = [];
@@ -143,7 +148,8 @@ entity.controller("entityAggController", function ($scope, $http) {
         $http({
             method: 'GET',
             url: "monitor/entity-agg",
-            params: {gp_type: $scope.geography.type,
+            params: {
+                gp_type: $scope.geography.type,
                 gp_province: $scope.geography.province,
                 gp_district: $scope.geography.district,
                 gp_commune: $scope.geography.commune,
@@ -160,9 +166,10 @@ entity.controller("entityAggController", function ($scope, $http) {
             reloadScript();
         }, function () {
             $('#modal-loading').modal('hide');
-            alert("Error! Please check again!");
+            alert("Error! Please check again in Aggregate!");
         });
     };
+
     $scope.reset = function () {
         $scope.selections = [];
         $scope.geography = {};
@@ -174,3 +181,5 @@ entity.controller("entityAggController", function ($scope, $http) {
     };
 
 });
+
+

@@ -10,11 +10,12 @@
   | and give it the controller to call when that URI is requested.
   |
  */
+
 Route::group(['middleware' => ['web'], 'as' => 'auth::', 'prefix' => 'auth', 'namespace' => 'Auth'], function() {
     Route::get('login', ['as' => 'login', function () {
             return view('auth.login');
         }]);
-    Route::post('process', ['as' => 'process', 'uses' => 'LoginController@process']);
+    // Route::post('process', ['as' => 'process', 'uses' => 'LoginController@process']);
 });
 
 /*
@@ -44,7 +45,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('system/edf-import', function() {
         return view('content.system.import_field');
     });
-     Route::get('system/edf-export', 'EntityDefinedFieldController@exportVariable');
+
+    Route::get('system/edf-export', 'EntityDefinedFieldController@exportVariable');
     Route::post('system/edf-import/process','EntityDefinedFieldController@importVariable');
     Route::post('system/edf-export/process','EntityDefinedFieldController@exportProcess');
     Route::resource('system/entity-field-search', 'EntityDefinedSearchController');

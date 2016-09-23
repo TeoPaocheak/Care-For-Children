@@ -3,38 +3,39 @@
         $i = 0;
         $edf = [];
     ?>
-    @foreach($rows as $row)
+    <?php foreach($rows as $row): ?>
         <?php
             $edf[$i] = [];
         ?>
         <div class="col-sm-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    {{$table->TableNameEN}}
+                    <?php echo e($table->TableNameEN); ?>
+
                 </div>
                 <div class="panel-body">
                     <div class="form-horizontal" role="form">
                         <div class="col-sm-6">
-                            @foreach($colHeaders as $header)
+                            <?php foreach($colHeaders as $header): ?>
                                 <div class="form-group">
-                                    <label for="field" style="font-weight: bold;">{{$header->EntityDefinedFieldListName}}</label>
+                                    <label for="field" style="font-weight: bold;"><?php echo e($header->EntityDefinedFieldListName); ?></label>
                                 </div>
-                            @endforeach
+                            <?php endforeach; ?>
                         </div>
                         <div class="col-sm-6">
-                            @foreach($row as $col)
+                            <?php foreach($row as $col): ?>
                                 <?php $edf[$i][] = $col; ?>
                                 <div class="form-group">
-                                    <label for="field">:{{$col}}</label>
+                                    <label for="field">:<?php echo e($col); ?></label>
                                 </div>
-                            @endforeach
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <?php $i++; ?>
-    @endforeach
+    <?php endforeach; ?>
     <?php
         $noOfField = count($edf[0]);
     ?>

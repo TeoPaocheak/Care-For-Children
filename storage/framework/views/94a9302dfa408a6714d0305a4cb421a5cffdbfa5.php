@@ -8,23 +8,23 @@
         <meta name="phinath" content="OI Software Developer">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
         <!-- #CSS Links -->
         <!-- Basic Styles -->
-        <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/bootstrap.min.css')}}">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/font-awesome.min.css')}}">
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo e(asset('css/bootstrap.min.css')); ?>">
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo e(asset('css/font-awesome.min.css')); ?>">
 
         <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-        <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-production-plugins.min.css')}}">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-production.min.css')}}">
-        <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-skins.min.css')}}">
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo e(asset('css/smartadmin-production-plugins.min.css')); ?>">
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo e(asset('css/smartadmin-production.min.css')); ?>">
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo e(asset('css/smartadmin-skins.min.css')); ?>">
 
         <!-- DEV links : turn this on when you like to develop directly -->
         <!--<link rel="stylesheet" type="text/css" media="screen" href="../Source_UNMINIFIED_CSS/smartadmin-production.css">-->
         <!--<link rel="stylesheet" type="text/css" media="screen" href="../Source_UNMINIFIED_CSS/smartadmin-skins.css">-->
 
         <!-- SmartAdmin RTL Support -->
-        <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-rtl.min.css')}}"> 
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo e(asset('css/smartadmin-rtl.min.css')); ?>"> 
 
         <!-- We recommend you use "your_style.css" to override SmartAdmin
              specific styles this will also ensure you retrain your customization with each SmartAdmin update.
@@ -33,8 +33,8 @@
         <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
 
         <!-- #FAVICONS -->
-        <link rel="shortcut icon" href="{{asset('img/favicon/open.jpg')}}" type="image/x-icon">
-        <link rel="icon" href="{{asset('img/favicon/open.jpg')}}" type="image/x-icon">
+        <link rel="shortcut icon" href="<?php echo e(asset('img/favicon/open.jpg')); ?>" type="image/x-icon">
+        <link rel="icon" href="<?php echo e(asset('img/favicon/open.jpg')); ?>" type="image/x-icon">
 
         <!-- #GOOGLE FONT -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
@@ -42,19 +42,19 @@
         <!-- #APP SCREEN / ICONS -->
         <!-- Specifying a Webpage Icon for Web Clip 
                  Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
-        <link rel="apple-touch-icon" href="{{asset('img/splash/sptouch-icon-iphone.png')}}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/splash/touch-icon-ipad.png')}}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/splash/touch-icon-iphone-retina.png')}}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/splash/touch-icon-ipad-retina.png')}}">
+        <link rel="apple-touch-icon" href="<?php echo e(asset('img/splash/sptouch-icon-iphone.png')); ?>">
+        <link rel="apple-touch-icon" sizes="76x76" href="<?php echo e(asset('img/splash/touch-icon-ipad.png')); ?>">
+        <link rel="apple-touch-icon" sizes="120x120" href="<?php echo e(asset('img/splash/touch-icon-iphone-retina.png')); ?>">
+        <link rel="apple-touch-icon" sizes="152x152" href="<?php echo e(asset('img/splash/touch-icon-ipad-retina.png')); ?>">
 
         <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
         <!-- Startup image for web apps -->
-        <link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-landscape.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
-        <link rel="apple-touch-startup-image" href="{{asset('img/splash/ipad-portrait.png')}}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-        <link rel="apple-touch-startup-image" href="{{asset('img/splash/iphone.png')}}" media="screen and (max-device-width: 320px)">
+        <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/ipad-landscape.png')); ?>" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+        <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/ipad-portrait.png')); ?>" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+        <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/iphone.png')); ?>" media="screen and (max-device-width: 320px)">
 
     </head>
 
@@ -197,7 +197,7 @@
                 <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
                     <li class="">
                         <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
-                            <img src="{{url('img/avatars/male.png')}}" alt="Phinath" class="online" />  
+                            <img src="<?php echo e(url('img/avatars/male.png')); ?>" alt="Phinath" class="online" />  
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li>
@@ -225,7 +225,7 @@
 
                 <!-- logout button -->
                 <div id="logout" class="btn-header transparent pull-right">
-                    <span> <a href="{{url('lock')}}" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+                    <span> <a href="<?php echo e(url('lock')); ?>" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
                 </div>
                 <!-- end logout button -->
 
@@ -307,7 +307,7 @@
                 <span> <!-- User image size is adjusted inside CSS, it should stay as is --> 
 
                     <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                        <img src="{{asset('img/avatars/male.png')}}" alt="me" class="offline" /> 
+                        <img src="<?php echo e(asset('img/avatars/male.png')); ?>" alt="me" class="offline" /> 
                         <span>
                             Administrator
                         </span>
@@ -333,38 +333,38 @@
 
                 <ul>
                     <!-- <li class="">
-                        <a href="dashboard" title="Dashboard"><i class="fa fa-lg fa-fw fa-dashboard txt-color-blue"></i><span class="menu-item-parent">{{trans('home.dashboard')}}</span></a>
+                        <a href="dashboard" title="Dashboard"><i class="fa fa-lg fa-fw fa-dashboard txt-color-blue"></i><span class="menu-item-parent"><?php echo e(trans('home.dashboard')); ?></span></a>
                     </li> -->
                     
                     <!-- Navigation left  -->
                     <!-- Showing all tables -->
-                    @foreach($tables as $table)
+                    <?php foreach($tables as $table): ?>
                         <li class="">
-                            <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{$table->TableNameEN}} {{trans('home.monitor.information-list')}}</span></a>
+                            <a href="monitor/entity-info/<?php echo e($table->id); ?>" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent"><?php echo e($table->TableNameEN); ?> <?php echo e(trans('home.monitor.information-list')); ?></span></a>
                         </li>
                         <li class="">
-                            <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{$table->TableNameEN}} Aggregate List</span></a>
+                            <a href="monitor/entity-agg/<?php echo e($table->id); ?>" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent"><?php echo e($table->TableNameEN); ?> Aggregate List</span></a>
                         </li>
-                    @endforeach
+                    <?php endforeach; ?>
 
                     <!-- Showing system config -->
                     <li class="">
-                        <a href="#"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent">{{trans('home.system-config')}}</span></a>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-wrench"></i> <span class="menu-item-parent"><?php echo e(trans('home.system-config')); ?></span></a>
                         <ul>
                             <li class="">
-                                <a href="system/table" title="sys-table">{{trans('home.system.table')}}</a>
+                                <a href="system/table" title="sys-table"><?php echo e(trans('home.system.table')); ?></a>
                             </li>
                             <li class="">
-                                <a href="system/category" title="sys-category">{{trans('home.system.category')}}</a>
+                                <a href="system/category" title="sys-category"><?php echo e(trans('home.system.category')); ?></a>
                             </li>
                             <li class="">
-                                <a href="system/language" title="sys-language">{{trans('home.system.language')}}</a>
+                                <a href="system/language" title="sys-language"><?php echo e(trans('home.system.language')); ?></a>
                             </li>
                             <li class="">
-                                <a href="system/condition" title="sys-condition">{{trans('home.system.condition')}}</a>
+                                <a href="system/condition" title="sys-condition"><?php echo e(trans('home.system.condition')); ?></a>
                             </li>
                             <li class="">
-                                <a href="system/entity-field" title="sys-entity-defined-field">{{trans('home.system.entity-defined-field')}}</a>
+                                <a href="system/entity-field" title="sys-entity-defined-field"><?php echo e(trans('home.system.entity-defined-field')); ?></a>
                             </li>
                             <li class="">
                                 <a href="system/edf-import" title="sys-entity-defined-field">Import</a>
@@ -373,13 +373,13 @@
                                 <a href="system/edf-export" title="sys-entity-defined-field">Export</a>
                             </li>
                         <!--     <li class="">
-                                <a href="system/entity-field-condition" title="sys-entity-defined-field-condition">{{trans('home.system.entity-defined-field-condition')}}</a>
+                                <a href="system/entity-field-condition" title="sys-entity-defined-field-condition"><?php echo e(trans('home.system.entity-defined-field-condition')); ?></a>
                             </li>
                             <li class="">
-                                <a href="system/entity-field-value" title="sys-entity-defined-field-value">{{trans('home.system.entity-defined-field-value')}}</a>
+                                <a href="system/entity-field-value" title="sys-entity-defined-field-value"><?php echo e(trans('home.system.entity-defined-field-value')); ?></a>
                             </li>
                             <li class="">
-                                <a href="system/entity-field-search" title="sys-entity-defined-field-search">{{trans('home.system.entity-defined-field-search')}}</a>
+                                <a href="system/entity-field-search" title="sys-entity-defined-field-search"><?php echo e(trans('home.system.entity-defined-field-search')); ?></a>
                             </li> -->
                         </ul>
                     </li>
@@ -535,48 +535,48 @@
                 document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
             }
         </script>
-        <script src="{{asset('js/libs/angular-1.5.0.js')}}"></script>
-        <script src="{{asset('js/app.js')}}"></script>
-        <script src="{{asset('js/school-info.js')}}"></script>
+        <script src="<?php echo e(asset('js/libs/angular-1.5.0.js')); ?>"></script>
+        <script src="<?php echo e(asset('js/app.js')); ?>"></script>
+        <script src="<?php echo e(asset('js/school-info.js')); ?>"></script>
 
         <!-- IMPORTANT: APP CONFIG -->
-        <script src="{{asset('js/app.config.js')}}"></script>
+        <script src="<?php echo e(asset('js/app.config.js')); ?>"></script>
 
         <!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
-        <script src="{{asset('js/plugin/jquery-touch/jquery.ui.touch-punch.min.js')}}"></script> 
+        <script src="<?php echo e(asset('js/plugin/jquery-touch/jquery.ui.touch-punch.min.js')); ?>"></script> 
 
         <!-- BOOTSTRAP JS -->
-        <script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/bootstrap/bootstrap.min.js')); ?>"></script>
 
         <!-- CUSTOM NOTIFICATION -->
-        <script src="{{asset('js/notification/SmartNotification.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/notification/SmartNotification.min.js')); ?>"></script>
 
         <!-- JARVIS WIDGETS -->
-        <script src="{{asset('js/smartwidgets/jarvis.widget.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/smartwidgets/jarvis.widget.min.js')); ?>"></script>
 
         <!-- EASY PIE CHARTS -->
-        <script src="{{asset('js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js')); ?>"></script>
 
         <!-- SPARKLINES -->
-        <script src="{{asset('js/plugin/sparkline/jquery.sparkline.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/sparkline/jquery.sparkline.min.js')); ?>"></script>
 
         <!-- JQUERY VALIDATE -->
-        <script src="{{asset('js/plugin/jquery-validate/jquery.validate.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/jquery-validate/jquery.validate.min.js')); ?>"></script>
 
         <!-- JQUERY MASKED INPUT -->
-        <script src="{{asset('js/plugin/masked-input/jquery.maskedinput.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/masked-input/jquery.maskedinput.min.js')); ?>"></script>
 
         <!-- JQUERY SELECT2 INPUT -->
-        <script src="{{asset('js/plugin/select2/select2.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/select2/select2.min.js')); ?>"></script>
 
         <!-- JQUERY UI + Bootstrap Slider -->
-        <script src="{{asset('js/plugin/bootstrap-slider/bootstrap-slider.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/bootstrap-slider/bootstrap-slider.min.js')); ?>"></script>
 
         <!-- browser msie issue fix -->
-        <script src="{{asset('js/plugin/msie-fix/jquery.mb.browser.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/msie-fix/jquery.mb.browser.min.js')); ?>"></script>
 
         <!-- FastClick: For mobile devices: you can disable this in app.js -->
-        <script src="{{asset('js/plugin/fastclick/fastclick.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/plugin/fastclick/fastclick.min.js')); ?>"></script>
 
         <!--[if IE 8]>
                 <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -584,15 +584,15 @@
 
 
         <!-- MAIN APP JS FILE -->
-        <script src="{{asset('js/app.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/app.min.js')); ?>"></script>
 
         <!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
         <!-- Voice command : plugin -->
-        <script src="{{asset('js/speech/voicecommand.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/speech/voicecommand.min.js')); ?>"></script>
 
         <!-- SmartChat UI : plugin -->
-        <script src="{{asset('js/smart-chat-ui/smart.chat.ui.min.js')}}"></script>
-        <script src="{{asset('js/smart-chat-ui/smart.chat.manager.min.js')}}"></script>
+        <script src="<?php echo e(asset('js/smart-chat-ui/smart.chat.ui.min.js')); ?>"></script>
+        <script src="<?php echo e(asset('js/smart-chat-ui/smart.chat.manager.min.js')); ?>"></script>
 
         <!-- Your GOOGLE ANALYTICS CODE Below -->
         <script type="text/javascript">

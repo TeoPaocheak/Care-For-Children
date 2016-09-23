@@ -2,7 +2,7 @@
 <section ng-app="app" id="widget-grid" class="">
     <div class="row">
         <article class="col-sm-12 col-md-12 col-lg-12" ng-controller="entityInfoController">
-            <input type="text" ng-init="tableName='{{$table}}'" ng-model="tableName" hidden="">
+            <input type="text" ng-init="tableName='<?php echo e($table); ?>'" ng-model="tableName" hidden="">
             <div class="jarviswidget jarviswidget-color-blueLight" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
                 <header>
                     <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
@@ -60,9 +60,9 @@
                                                 <label class="select">
                                                     <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
                                                         <option value="">--PROVINCE--</option>
-                                                        @foreach($provinces as $province)
-                                                            <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
-                                                        @endforeach
+                                                        <?php foreach($provinces as $province): ?>
+                                                            <option value="<?php echo e($province->ProvinceCode); ?>"><?php echo e($province->ProvinceName); ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -148,11 +148,11 @@
                                                 <label class="select">
                                                     <select ng-model="option.key.keyValue"  ng-change="loadValue($index)"  class="form-control">
                                                         <option value="">--SELECT--</option>
-                                                        @foreach($fields as $field)
-                                                            @if($field->DisplayField!==1)
-                                                                <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
-                                                            @endif
-                                                        @endforeach
+                                                        <?php foreach($fields as $field): ?>
+                                                            <?php if($field->DisplayField!==1): ?>
+                                                                <option ng-show="<?php echo e($field->EDFSearchType); ?> !== 0" value="<?php echo e($field->EntityDefinedFieldNameInTable); ?>"><?php echo e($field->EntityDefinedFieldListName); ?></option>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </label>
                                             </section>
@@ -192,21 +192,21 @@
                                 <div class="row">
                                     <div class="tree">
                                         <ul>
-                                            @foreach ($categories as $category)
+                                            <?php foreach($categories as $category): ?>
                                             <li class="parent_li" role="treeitem" ng-init="addCategory();">
-                                                <label><input type="checkbox" ng-init="categories[{{$i}}].selectedField=false" ng-model="categories[{{$i}}].selectedField"></label><span title="Collapse this branch">{{$category->EntityDefinedCategoryName}}</span>
+                                                <label><input type="checkbox" ng-init="categories[<?php echo e($i); ?>].selectedField=false" ng-model="categories[<?php echo e($i); ?>].selectedField"></label><span title="Collapse this branch"><?php echo e($category->EntityDefinedCategoryName); ?></span>
                                                 <ul>
-                                                    @foreach($category->fields as $field)
-                                                        @if($field->DisplayField)
+                                                    <?php foreach($category->fields as $field): ?>
+                                                        <?php if($field->DisplayField): ?>
                                                         <li>
-                                                            <span title="Collapse this branch"><input class="selections" type="checkbox" ng-checked="categories[{{$i}}].selectedField || {{$field->DefaultSelected}}===1" value="{{$field->EntityDefinedFieldNameInTable}}">&nbsp;{{$field->EntityDefinedFieldListName}}</span>           
+                                                            <span title="Collapse this branch"><input class="selections" type="checkbox" ng-checked="categories[<?php echo e($i); ?>].selectedField || <?php echo e($field->DefaultSelected); ?>===1" value="<?php echo e($field->EntityDefinedFieldNameInTable); ?>">&nbsp;<?php echo e($field->EntityDefinedFieldListName); ?></span>           
                                                         </li>
-                                                        @endif
-                                                    @endforeach
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
                                                 </ul>
                                             </li>
                                             <?php $i++; ?>
-                                            @endforeach
+                                            <?php endforeach; ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -230,7 +230,7 @@
   <div class="modal-dialog">
     <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
       <div class="modal-body" style="background-color: transparent; text-align: center;">
-          <img src="{{asset('img/loading.gif')}}">
+          <img src="<?php echo e(asset('img/loading.gif')); ?>">
       </div>
     </div>
   </div>
@@ -289,7 +289,7 @@
 
         // Go to PDCVController 
         $.ajax({
-            url: "{{url('PDCV')}}/" + type + "/" + code,
+            url: "<?php echo e(url('PDCV')); ?>/" + type + "/" + code,
                 type: "GET",
                 async: false,
                 success: function (result) {
@@ -351,7 +351,7 @@
                         "sMessage": "Generated by Open Institute Monitoring System <i>(press Esc to close)</i>"
                     }
                 ],
-                "sSwfPath": "{{asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')}}"
+                "sSwfPath": "<?php echo e(asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')); ?>"
             },
             "iDisplayLength": 20,
             "autoWidth": true,
@@ -413,11 +413,11 @@
     };
 
     var reloadScript = function(){
-        loadScript("{{asset('js/plugin/datatables/jquery.dataTables.min.js')}}", function () {
-            loadScript("{{asset('js/plugin/datatables/dataTables.colVis.min.js')}}", function () {
-                loadScript("{{asset('js/plugin/datatables/dataTables.tableTools.min.js')}}", function () {
-                    loadScript("{{asset('js/plugin/datatables/dataTables.bootstrap.min.js')}}", function () {
-                        loadScript("{{asset('js/plugin/datatable-responsive/datatables.responsive.min.js')}}", pagefunction);
+        loadScript("<?php echo e(asset('js/plugin/datatables/jquery.dataTables.min.js')); ?>", function () {
+            loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.colVis.min.js')); ?>", function () {
+                loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.tableTools.min.js')); ?>", function () {
+                    loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.bootstrap.min.js')); ?>", function () {
+                        loadScript("<?php echo e(asset('js/plugin/datatable-responsive/datatables.responsive.min.js')); ?>", pagefunction);
                     });
                 });
             });
