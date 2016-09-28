@@ -9,6 +9,19 @@ use DB;
 use MONITORING\Table;
 
 class EntityDefinedSearchController extends Controller {
+    private $language_id;
+
+    public function __construct() {
+        if (session()->get('locale')) {
+            if (session()->get('locale') == 'km') {
+                $this->language_id = 2;
+            } elseif (session()->get('locale') == 'en') {
+                $this->language_id = 1;
+            }
+        } else {
+            $this->language_id = 1;
+        }
+    }
 
     public function index() {
         $tables = Table::all(['id', 'TableName', 'TableCorespondingName']);
@@ -18,7 +31,7 @@ class EntityDefinedSearchController extends Controller {
                     ->select('entitydefinedfieldlist.EntityDefinedFiledListName', 'entitydefinedfield.EntityDefinedFieldNameInTable', 'entitydefinedfieldlist.EntityDefinedFieldListCategory', 'entitydefinedfieldlist.LanguageID')
                     ->orderBy('entitydefinedfieldlist.EntityDefinedFieldListCategory')
                     ->where('entitydefinedfield.TableID', '=', $tables[$i]->id)
-                    ->where('entitydefinedfieldlist.LanguageID','=',2)
+                    ->where('entitydefinedfieldlist.LanguageID','=',$this->language_id)
                     ->get();
         }
         return response()

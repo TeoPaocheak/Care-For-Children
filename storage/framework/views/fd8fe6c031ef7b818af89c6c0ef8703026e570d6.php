@@ -21,7 +21,7 @@
             -->
             <header>
                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                <h2>Information Result</h2>
+                <h2><?php echo e(trans('information_content.result.information-result')); ?></h2>
             </header>
 
             <!-- widget div-->

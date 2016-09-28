@@ -31,10 +31,17 @@ Route::group(['middleware' => ['web'], 'as' => 'auth::', 'prefix' => 'auth', 'na
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+    
     Route::get('/dashboard', ['as' => 'dashboard', function() {
             return view('content.dashboard');
         }]
     );
+
+    Route::get('/lang/{locale}', function($locale) {
+      Session::set('locale', $locale);
+      return redirect()->back();
+    });
+
     Route::resource('system/table', 'TableController');
     Route::resource('system/condition', 'ConditionController');
     Route::resource('system/language', 'LanguageController');
@@ -54,14 +61,22 @@ Route::group(['middleware' => ['web']], function () {
     // change language
     Route::get('system/language/change-language/{lang}', function($lang) {
         App::setLocale($lang);
-        echo 'worki';
+        echo 'working';
     });
-    // monitoring
 
+    // monitoring
     Route::get('monitor/entity-info-field/{fieldID}', 'InformationController@showFieldListValue'); // show list value
     // Route::get('monitor/entity-info/{tableID}/{category}', 'InformationController@showFieldRelatedWithCategory');
     Route::resource('monitor/entity-info', 'InformationController');
     Route::get('monitor/entity/{tableID}/{edfCode}', 'InformationController@compareEDF');
     Route::get('PDCV/{type}/{code}', 'PDCVController@getLocation');
     Route::resource('monitor/entity-agg', 'AggregateController');
+
+    Route::get('/logout', function() {
+        Session::forget('locale');
+        if(!Session::has('locale'))
+        {
+            return "Session has been removed";
+        }
+    });
 });

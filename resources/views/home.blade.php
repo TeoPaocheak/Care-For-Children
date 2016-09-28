@@ -188,7 +188,7 @@
 
                 <!-- collapse menu button -->
                 <div id="hide-menu" class="btn-header pull-right">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="{{ trans('home.top-menu.collapse-menu') }}"><i class="fa fa-reorder"></i></a> </span>
                 </div>
                 <!-- end collapse menu -->
 
@@ -225,13 +225,13 @@
 
                 <!-- logout button -->
                 <div id="logout" class="btn-header transparent pull-right">
-                    <span> <a href="{{url('lock')}}" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+                    <span> <a href="/logout" title="{{ trans('home.top-menu.sign-out') }}" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
                 </div>
                 <!-- end logout button -->
 
                 <!-- search mobile button (this is hidden till mobile view port) -->
                 <div id="search-mobile" class="btn-header transparent pull-right">
-                    <span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
+                    <span> <a href="javascript:void(0)" title="{{ trans('home.top-menu.search') }}"><i class="fa fa-search"></i></a> </span>
                 </div>
                 <!-- end search mobile button -->
 
@@ -248,14 +248,14 @@
 
                 <!-- fullscreen button -->
                 <div id="fullscreen" class="btn-header transparent pull-right">
-                    <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
+                    <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="{{ trans('home.top-menu.full-screen') }}"><i class="fa fa-arrows-alt"></i></a> </span>
                 </div>
                 <!-- end fullscreen button -->
 
                 <!-- #Voice Command: Start Speech -->
                 <!-- NOTE: Voice command button will only show in browsers that support it. Currently it is hidden under mobile browsers. 
                                    You can take off the "hidden-sm" and "hidden-xs" class to display inside mobile browser-->
-                <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
+                <!-- <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
                     <div> 
                         <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a> 
                         <div class="popover bottom"><div class="arrow"></div>
@@ -271,26 +271,32 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- end voice command -->
 
                 <!-- multiple lang dropdown : find all flags in the flags page -->
                 <ul class="header-dropdown-list hidden-xs">
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-us" alt="United States"> <span> US</span> <i class="fa fa-angle-down"></i> </a>
+                        @if (session()->has('locale'))
+                            @if (session()->get('locale') == 'km')
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>KH</span> <i class="fa fa-angle-down"></i> </a>
+                            @elseif (session()->get('locale') == 'en')
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-us" alt="United States"> <span>US</span> <i class="fa fa-angle-down"></i> </a>
+                            @endif    
+                        @else
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>KH</span> <i class="fa fa-angle-down"></i> </a>
+                        @endif   
                         <ul class="dropdown-menu pull-right">
-                            <li class="active">
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-us" alt="United States"> English (EN)</a>
-                            </li>	
                             <li>
-                                <a href="javascript:void(0);"><img src="img/blank.gif" class="flag flag-kr" alt="Khmer"> Khmer (KH)</a>
-                            </li>	
-
+                                <a href="lang/km"><img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> Khmer (KH)</a>
+                            </li>
+                            <li>
+                                <a href="lang/en"><img src="img/blank.gif" class="flag flag-us" alt="United States"> English (EN)</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
                 <!-- end multiple lang -->
-
             </div>
             <!-- end pulled right: nav area -->
 
@@ -309,7 +315,7 @@
                     <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
                         <img src="{{asset('img/avatars/male.png')}}" alt="me" class="offline" /> 
                         <span>
-                            Administrator
+                            {{ trans('home.top-menu.administrator') }}
                         </span>
                         <i class="fa fa-angle-down"></i>
                     </a> 
@@ -339,12 +345,30 @@
                     <!-- Navigation left  -->
                     <!-- Showing all tables -->
                     @foreach($tables as $table)
-                        <li class="">
-                            <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{$table->TableNameEN}} {{trans('home.monitor.information-list')}}</span></a>
-                        </li>
-                        <li class="">
-                            <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{$table->TableNameEN}} Aggregate List</span></a>
-                        </li>
+                        @if (session()->has('locale'))
+                            @if (session()->get('locale') == 'en')
+                                <li class="">
+                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{$table->TableNameEN}} {{ trans('home.monitor.information-list') }}</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{$table->TableNameEN}} Aggregate List</span></a>
+                                </li>
+                            @elseif (session()->get('locale') == 'km')
+                                <li class="">
+                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
+                                </li>
+                            @endif    
+                        @else
+                                <li class="">
+                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
+                                </li>
+                                <li class="">
+                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
+                                </li>
+                        @endif
                     @endforeach
 
                     <!-- Showing system config -->
@@ -367,10 +391,10 @@
                                 <a href="system/entity-field" title="sys-entity-defined-field">{{trans('home.system.entity-defined-field')}}</a>
                             </li>
                             <li class="">
-                                <a href="system/edf-import" title="sys-entity-defined-field">Import</a>
+                                <a href="system/edf-import" title="sys-entity-defined-field">{{trans('home.system.import')}}</a>
                             </li>
                             <li class="">
-                                <a href="system/edf-export" title="sys-entity-defined-field">Export</a>
+                                <a href="system/edf-export" title="sys-entity-defined-field">{{trans('home.system.export')}}</a>
                             </li>
                         <!--     <li class="">
                                 <a href="system/entity-field-condition" title="sys-entity-defined-field-condition">{{trans('home.system.entity-defined-field-condition')}}</a>
@@ -434,7 +458,7 @@
         <div class="page-footer">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                    <span class="txt-color-white">CFS Version 1.0 <span class="hidden-xs"> Powered by Open Institute</span> � 2016</span>
+                    <span class="txt-color-white">CFS Version 1.0 | <span class="hidden-xs">{{ trans('home.footer.powered-by') }}</span> � 2016</span>
                 </div>
 
                 <div class="col-xs-6 col-sm-6 text-right hidden-xs">

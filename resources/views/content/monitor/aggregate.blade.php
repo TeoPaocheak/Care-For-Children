@@ -19,7 +19,7 @@
                     <div class="widget-body no-padding">
                         <div class="smart-form">
                             <fieldset>
-                                <header><b>Selecting Geographical Area</b></header>
+                                <header><b>{{ trans('information_content.geography.selecting-geographical-area') }}</b></header>
                                 <div class="col-sm-5">
                                     <fieldset>
                                         <div class="row">

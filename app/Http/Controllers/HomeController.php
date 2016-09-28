@@ -10,6 +10,7 @@ use MONITORING\Table;
 class HomeController extends Controller
 {
     public function index(){
+        // \App::setLocale('kh');
         $tables = Table::all();
         return response()
         ->view('home',['tables'=>$tables]);

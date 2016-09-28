@@ -1,229 +1,259 @@
 
 <section ng-app="app" id="widget-grid" class="">
-    <div class="row">
-        <article class="col-sm-12 col-md-12 col-lg-12" ng-controller="entityInfoController">
-            <input type="text" ng-init="tableName='{{$table}}'" ng-model="tableName" hidden="">
-            <div class="jarviswidget jarviswidget-color-blueLight" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
-                <header>
-                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                    <h2>Form Information List</h2>				
-                    <span id="loading" style="display: none;"><i class="fa fa-gear fa-2x fa-spin"></i></span>
-                </header>
-                <div>
-                    <!-- widget edit box -->
-                    <div class="jarviswidget-editbox">
-                        <!-- This area used as dropdown edit box -->
+  <div class="row">
+    <article class="col-sm-12 col-md-12 col-lg-12" ng-controller="entityInfoController">
+      <input type="text" ng-init="tableName='{{$table}}'" ng-model="tableName" hidden="">
+      <div class="jarviswidget jarviswidget-color-blueLight" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+        <header>
+          <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+          <h2>{{ trans('information_content.form-information-list') }}</h2>				
+          <span id="loading" style="display: none;"><i class="fa fa-gear fa-2x fa-spin"></i></span>
+        </header>
+        <div>
+          <!-- widget edit box -->
+          <div class="jarviswidget-editbox">
+              <!-- This area used as dropdown edit box -->
+          </div>
+          <!-- end widget edit box -->
 
+          <div class="widget-body no-padding">
+            <div class="smart-form">
+              <fieldset>
+                <header><b>{{ trans('information_content.geography.selecting-geographical-area') }}</b></header>
+                <div class="col-sm-5">
+                  <fieldset>
+                    <div class="row">
+                      <section class="col col-4">
+                          <label class="label">
+                              {{ trans('information_content.geography.geographical-area') }}
+                          </label>
+                      </section>
+                      <section class="col col-8">
+                          <label class="select">
+                              <select ng-model="geography.type" class="form-control">
+                                <option value="country">{{ trans('information_content.geography.country') }}</option>
+                                <option value="province">{{ trans('information_content.geography.province') }}</option>
+                                <option value="district">{{ trans('information_content.geography.district') }}</option>
+                                <option value="commune">{{ trans('information_content.geography.commune') }}</option>
+                                <option value="village">{{ trans('information_content.geography.village') }}</option>
+                              </select>
+                              <i></i>
+                          </label>
+                      </section>
                     </div>
-                    <!-- end widget edit box -->
-                    <div class="widget-body no-padding">
-                        <div class="smart-form">
-                            <fieldset>
-                                <header><b>Selecting Geographical Area</b></header>
-                                <div class="col-sm-5">
-                                    <fieldset>
-                                        <div class="row">
-                                            <section class="col col-3">
-                                                <label class="label">
-                                                    Geographical Area:
-                                                </label>
-                                            </section>
-                                            <section class="col col-8">
-                                                <label class="select">
-                                                    <select ng-model="geography.type" class="form-control">
-                                                        <option value="country">Country</option>
-                                                        <option value="province">Province</option>
-                                                        <option value="district">District</option>
-                                                        <option value="commune">Commune</option>
-                                                        <option value="village">Village</option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <div class="col-sm-6" style="border-left: 1px solid black">
-                                    <fieldset>
-                                        <div class="row" ng-hide="geography.type === 'country'">
-                                            <section class="col col-3">
-                                                <label class="label">
-                                                    Province
-                                                </label>
-                                            </section>
-                                            <section class="col col-1">
-                                                <label class="label">
-                                                    :
-                                                </label>
-                                            </section>
-                                            <section class="col col-8">
-                                                <label class="select">
-                                                    <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
-                                                        <option value="">--PROVINCE--</option>
-                                                        @foreach($provinces as $province)
-                                                            <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div class="row" ng-show="geography.type === 'village' || geography.type === 'commune' || geography.type === 'district'">
-                                            <section class="col col-3">
-                                                <label class="label">
-                                                    District
-                                                </label>
-                                            </section>
-                                            <section class="col col-1">
-                                                <label class="label">
-                                                    :
-                                                </label>
-                                            </section>
-                                            <section class="col col-8">
-                                                <label class="select">
-                                                    <select ng-model="geography.district" id="district-filter" class="form-control" onchange="loadNew(this, 'commune')">
-                                                        <option value="">--DISTRICT--</option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div class="row" ng-show="geography.type === 'village' || geography.type === 'commune'">
-                                            <section class="col col-3">
-                                                <label class="label">
-                                                    Commune
-                                                </label>
-                                            </section>
-                                            <section class="col col-1">
-                                                <label class="label">
-                                                    :
-                                                </label>
-                                            </section>
-                                            <section class="col col-8">
-                                                <label class="select">
-                                                    <select ng-model="geography.commune" id="commune-filter" class="form-control" onchange="loadNew(this, 'village')">
-                                                        <option value="">--COMMUNE--</option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div class="row" ng-show="geography.type === 'village'">
-                                            <section class="col col-3">
-                                                <label class="label">
-                                                    Village
-                                                </label>
-                                            </section>
-                                            <section class="col col-1">
-                                                <label class="label">
-                                                    :
-                                                </label>
-                                            </section>
-                                            <section class="col col-8">
-                                                <label class="select">
-                                                    <select ng-model="geography.village" id="village-filter" class="form-control">
-                                                        <option value="">--VILLAGE--</option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                            </section>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <header><b>Selecting Characteristic</b></header>
-                                <div class="col-sm-12">
-                                    <fieldset>
-                                        <div class="row" ng-repeat="option in options">
-                                            <section class="col col-2">
-                                                <label class="select">
-                                                    <select ng-model="option.conjunction" ng-hide="$index === 0" class="form-control">
-                                                        <option value="AND">AND</option>
-                                                        <option value="OR">OR</option>
-                                                    </select>
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label class="select">
-                                                    <select ng-model="option.key.keyValue"  ng-change="loadValue($index)"  class="form-control">
-                                                        <option value="">--SELECT--</option>
-                                                        @foreach($fields as $field)
-                                                            @if($field->DisplayField!==1)
-                                                                <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label class="select">
-                                                    <select ng-model="option.condition" class="form-control">
-                                                        <option value="">--SELECT--</option>
-                                                        <option ng-repeat="condition in option.conditions" value="<%condition.ConditionSymbol%>"><%condition.ConditionName%></option>
-                                                    </select>
-                                                </label>
-                                            </section>
-                                            <section class="col col-3">
-                                                <label class="select" ng-show="option.key.edfSearchType === 1">
-                                                    <select ng-model="option.value" class="form-control">
-                                                        <option value="">--SELECT--</option>
-                                                        <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description%></option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
-                                                <label class="input" ng-show="option.key.edfSearchType === 2">
-                                                    <input ng-model="option.value" class="form-control">
-                                                </label>
-                                            </section>
-                                            <section class="col col-1">
-                                                <button class="btn btn-sm btn-danger" ng-click="removeOption($index)"><i class="fa fa-trash-o"></i> Remove</button>
-                                            </section>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <button class="btn btn-sm btn-primary" ng-click="addOption('AND')">New Option</button>
-                            </fieldset>
-                            <fieldset>
-                                <header>
-                                    <b>Selecting Fields</b>
-                                </header>
-                                <?php $i=0; ?>
-                                <div class="row">
-                                    <div class="tree">
-                                        <ul>
-                                            @foreach ($categories as $category)
-                                            <li class="parent_li" role="treeitem" ng-init="addCategory();">
-                                                <label><input type="checkbox" ng-init="categories[{{$i}}].selectedField=false" ng-model="categories[{{$i}}].selectedField"></label><span title="Collapse this branch">{{$category->EntityDefinedCategoryName}}</span>
-                                                <ul>
-                                                    @foreach($category->fields as $field)
-                                                        @if($field->DisplayField)
-                                                        <li>
-                                                            <span title="Collapse this branch"><input class="selections" type="checkbox" ng-checked="categories[{{$i}}].selectedField || {{$field->DefaultSelected}}===1" value="{{$field->EntityDefinedFieldNameInTable}}">&nbsp;{{$field->EntityDefinedFieldListName}}</span>           
-                                                        </li>
-                                                        @endif
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                            <?php $i++; ?>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                            </fieldset>
-                            <footer>
-                                <button class="btn btn-primary" ng-click="view()"><i class="fa fa-fw fa-search"></i> Search</button>
-                                <button class="btn btn-danger" type="button" ng-click="reset()"><i class="fa fa-fw fa-refresh"></i>Reset</button>
-                            </footer>
-                        </div>
-                    </div>
+                  </fieldset>
                 </div>
-            </div><!-- end panel-->
-        </article><!-- end controller-->
-    </div><!-- end row-->
-    <div id="form-result">
-    </div>
+                <div class="col-sm-6" style="border-left: 1px solid black">
+                  <fieldset>
+                    <!-- When Geographical Area dropdown equals 'province', province dropdown will show -->
+                    <div class="row" ng-hide="geography.type === 'country'">
+                        <section class="col col-3">
+                            <label class="label">
+                              {{ trans('information_content.geography.province') }}
+                            </label>
+                        </section>
+                        <section class="col col-1">
+                            <label class="label">
+                                :
+                            </label>
+                        </section>
+                        <section class="col col-8">
+                            <label class="select">
+                              <!-- loadNew function here is used to change district according to the selected province -->
+                              <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
+                                  <!-- Only Province is passed from controller. Others will be loaded by Javascript below -->
+                                <option value="">{{ trans('information_content.geography.province_label') }}</option>
+                                @foreach($provinces as $province)
+                                  <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
+                                @endforeach
+                              </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+
+                    <!-- If u want to understand this, deleted one the conditions in ng-show below. -->
+                    <div class="row" ng-show="geography.type === 'village' || geography.type === 'commune' || geography.type === 'district'">
+                        <section class="col col-3">
+                            <label class="label">
+                                {{ trans('information_content.geography.district') }}
+                            </label>
+                        </section>
+                        <section class="col col-1">
+                            <label class="label">
+                                :
+                            </label>
+                        </section>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select ng-model="geography.district" id="district-filter" class="form-control" onchange="loadNew(this, 'commune')">
+                                    <option value="">{{ trans('information_content.geography.district_label') }}</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row" ng-show="geography.type === 'village' || geography.type === 'commune'">
+                        <section class="col col-3">
+                            <label class="label">
+                                {{ trans('information_content.geography.commune') }}
+                            </label>
+                        </section>
+                        <section class="col col-1">
+                            <label class="label">
+                                :
+                            </label>
+                        </section>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select ng-model="geography.commune" id="commune-filter" class="form-control" onchange="loadNew(this, 'village')">
+                                    <option value="">{{ trans('information_content.geography.commune_label') }}</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+                    <div class="row" ng-show="geography.type === 'village'">
+                        <section class="col col-3">
+                            <label class="label">
+                                {{ trans('information_content.geography.village') }}
+                            </label>
+                        </section>
+                        <section class="col col-1">
+                            <label class="label">
+                                :
+                            </label>
+                        </section>
+                        <section class="col col-8">
+                            <label class="select">
+                                <select ng-model="geography.village" id="village-filter" class="form-control">
+                                    <option value="">{{ trans('information_content.geography.village_label') }}</option>
+                                </select>
+                                <i></i>
+                            </label>
+                        </section>
+                    </div>
+                  </fieldset>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <header><b>{{ trans('information_content.characteristic.selecting-characteristic') }}</b></header>
+                <div class="col-sm-12">
+                  <fieldset>
+                      <div class="row" ng-repeat="option in options">
+                          <section class="col col-1">
+                              <label class="select">
+                                  <!-- When index is more than one, this select will appear -->
+                                  <select ng-model="option.conjunction" ng-hide="$index === 0" class="form-control">
+                                      <option value="AND">{{ trans('information_content.characteristic.and') }}</option>
+                                      <option value="OR">{{ trans('information_content.characteristic.or') }}</option>
+                                  </select>
+                              </label>
+                          </section>
+                          <section class="col col-3">
+                              <label class="select">
+                                  <select ng-model="option.key.keyValue"  ng-change="loadValue($index)"  class="form-control">
+                                      <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                      @foreach($fields as $field)
+                                          @if($field->DisplayField!==1)
+                                              <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
+                                          @endif
+                                      @endforeach
+                                  </select>
+                              </label>
+                          </section>
+
+                          <section class="col col-3">
+                              <label class="select">
+                                  <select ng-model="option.condition" class="form-control">
+                                      <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                      <option ng-repeat="condition in option.conditions" value="<%condition.ConditionSymbol%>"><%condition.ConditionName%></option>
+                                  </select>
+                              </label>
+                          </section>
+
+                          <!-- This will display a dropdown or textbox -->
+                          <section class="col col-3">
+                              <!-- option.key.edfSearchType === 1 displays dropdown -->
+                              <label class="select" ng-show="option.key.edfSearchType === 1">
+                                  @if (session()->get('locale'))
+                                      @if (session()->get('locale') == 'en')
+                                          <select ng-model="option.value" class="form-control">
+                                            <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                             <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description%></option>
+                                          </select>
+                                          <i></i>
+                                      @elseif (session()->get('locale') == 'km')
+                                          <select ng-model="option.value" class="form-control">
+                                              <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                              <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description_KH%></option>
+                                          </select>
+                                          <i></i>
+                                      @endif
+                                  @else
+                                      <select ng-model="option.value" class="form-control">
+                                          <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                          <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description_KH%></option>
+                                      </select>
+                                      <i></i>
+                                  @endif
+                              </label>
+                              <label class="input" ng-show="option.key.edfSearchType === 2">
+                                  <input ng-model="option.value" class="form-control">
+                              </label>
+                          </section>
+
+                          <section class="col col-1">
+                              <button class="btn btn-sm btn-danger" ng-click="removeOption($index)"><i class="fa fa-trash-o"></i>{{ trans('button.remove') }}</button>
+                          </section>
+                      </div>
+                  </fieldset>
+                </div>
+                <button class="btn btn-sm btn-primary" ng-click="addOption('AND')">{{ trans('button.new-option') }}</button>
+              </fieldset>
+
+              <fieldset>
+                <header>
+                    <b>{{ trans('information_content.selecting-field') }}</b>
+                </header>
+                <?php $i=0; ?>
+                <div class="row">
+                  <div class="tree">
+                    <ul>
+                        @foreach ($categories as $category)
+                          <li class="parent_li" role="treeitem" ng-init="addCategory();">
+                              <label><input type="checkbox" ng-init="categories[{{$i}}].selectedField=false" ng-model="categories[{{$i}}].selectedField"></label><span title="Collapse this branch">{{$category->EntityDefinedCategoryName}}</span>
+                              <ul>
+                                  @foreach($category->fields as $field)
+                                      @if($field->DisplayField)
+                                        <li>
+                                          <span title="Collapse this branch"><input class="selections" type="checkbox" ng-checked="categories[{{ $i }}].selectedField || {{ $field->DefaultSelected }} === 1" value="{{$field->EntityDefinedFieldNameInTable}}">&nbsp;{{$field->EntityDefinedFieldListName}}</span>
+                                        </li>
+                                      @endif
+                                  @endforeach
+                              </ul>
+                          </li>
+                          <?php $i++; ?>
+                        @endforeach
+                    </ul>
+                  </div>
+                </div>
+              </fieldset>
+
+              <footer>
+                <button class="btn btn-primary" ng-click="view()"><i class="fa fa-fw fa-search"></i>{{ trans('button.search') }}</button>
+                <button class="btn btn-danger" type="button" ng-click="reset()"><i class="fa fa-fw fa-refresh"></i>{{ trans('button.reset') }}</button>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div><!-- end panel-->
+    </article><!-- end controller-->
+  </div><!-- end row-->
+
+  <div id="form-result"></div>
+
 </section> <!-- end section-->
 
 <div id="modal-loading" class="modal fade" role="dialog">
@@ -241,9 +271,7 @@
     $(document).ready(function () {
         angular.bootstrap($('#widget-grid'), ["app"]);
     });
-    loadScript("js/plugin/bootstraptree/bootstrap-tree.min.js", function(){
-        
-    });
+    loadScript("js/plugin/bootstraptree/bootstrap-tree.min.js", function(){});
 </script>
 
 <script>
@@ -255,26 +283,27 @@
     //     alert("hello");
     // };
 
+
     var loadNew = function (obj, type) {
         var code;
         code = $(obj).val();
         var location = getLocation(type, code);
 
         if (type === 'district') {
-            $("#district-filter").html("<option value=''>--DISTRICT--</option>");
+            $("#district-filter").html("<option value=''>{{ trans('information_content.geography.district_label') }}</option>");
             for (i = 0; i < location.length; i++) {
                 $("#district-filter").append("<option value='" + location[i].DistrictCode + "'>" + location[i].DistrictName + "</option>");
             }
-            $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
-            $("#village-filter").html("<option value=''>--VILLAGE--</option>");
+            $("#commune-filter").html("<option value=''>{{ trans('information_content.geography.commune_label') }}</option>");
+            $("#village-filter").html("<option value=''>{{ trans('information_content.geography.village_label') }}</option>");
         } else if (type === 'commune') {
-            $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
+            $("#commune-filter").html("<option value=''>{{ trans('information_content.geography.commune_label') }}</option>");
             for (i = 0; i < location.length; i++) {
                 $("#commune-filter").append("<option value='" + location[i].CommuneCode + "'>" + location[i].CommuneName + "</option>");
             }
-            $("#village-filter").html("<option value=''>--VILLAGE--</option>");
+            $("#village-filter").html("<option value=''>{{ trans('information_content.geography.village_label') }}</option>");
         } else if (type === 'village') {
-            $("#village-filter").html("<option value=''>--VILLLAGE--</option>");
+            $("#village-filter").html("<option value=''>{{ trans('information_content.geography.village_label') }}</option>");
             for (i = 0; i < location.length; i++) {
                 $("#village-filter").append("<option value='" + location[i].VillageCode + "'>" + location[i].VillageName + "</option>");
             }
@@ -290,20 +319,18 @@
         // Go to PDCVController 
         $.ajax({
             url: "{{url('PDCV')}}/" + type + "/" + code,
-                type: "GET",
-                async: false,
-                success: function (result) {
-                    results = result;
-                }
+            type: "GET",
+            async: false,
+            success: function (result) {
+                results = result;
+            }
         });
         return results;
     };
 
     // Show search bar, copy/pdf/..    
     var pagefunction = function () {
-       
         //console.log("cleared");
-
         /* // DOM Position key index //
          
          l - Length changing (dropdown)
@@ -374,7 +401,6 @@
 
         // Apply the filter
         $("#datatable_fixed_column thead th input[type=text],#datatable_fixed_column thead th select").on('keyup change', function () {
-
             otable
                     .column($(this).parent().index() + ':visible')
                     .search(this.value)
@@ -397,7 +423,7 @@
             "preDrawCallback": function () {
                 // Initialize the responsive datatables helper once.
                 if (!responsiveHelper_datatable_col_reorder) {
-                    responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                  responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
                 }
             },
             "rowCallback": function (nRow) {

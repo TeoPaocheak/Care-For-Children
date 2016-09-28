@@ -26,6 +26,7 @@ entity.controller("entityInfoController", function ($scope, $http) {
     };
 
     // Add values and conditions according to First option dropdown
+    // This will call function in InformationController@showFieldListValue
     $scope.loadValue = function (optionid) {
         $scope.options[optionid].listValues = [];
         $http({
@@ -43,7 +44,7 @@ entity.controller("entityInfoController", function ($scope, $http) {
     };
     
     $scope.view = function () {
-        //make the categori
+        //make the categories
         var conditions = [];
         for (i = 0; i < $scope.options.length; i++) {
             conditions.push({conjunction: $scope.options[i].conjunction,
@@ -179,7 +180,6 @@ entity.controller("entityAggController", function ($scope, $http) {
             $scope.categories[i].selectedField = true;
         }
     };
-
 });
 
 

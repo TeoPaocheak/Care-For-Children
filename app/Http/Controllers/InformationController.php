@@ -12,6 +12,19 @@ use MONITORING\EntityDefinedFieldCondition;
 use DB;
 
 class InformationController extends Controller {
+    private $language_id;
+
+    public function __construct() {
+        if (session()->has('locale')) {
+            if (session()->get('locale') == 'km') {
+                $this->language_id = 2;
+            } elseif (session()->get('locale') == 'en') {
+                $this->language_id = 1;
+            }
+        } else {
+            $this->language_id = 2;
+        }
+    }
 
     // Triggerred when Searching fired
     public function index(Request $request) {
@@ -62,7 +75,7 @@ class InformationController extends Controller {
         $col_header = DB::table('entitydefinedfieldwithlistfull')
                 ->select('EntityDefinedFieldListName')
                 ->whereIn('EntityDefinedFieldNameInTable', $selections)
-                ->where('LanguageID', 1)
+                ->where('LanguageID', $this->language_id)
                 ->orderBy('EntityDefinedCategoryCode', 'asc')
                 ->orderBy('id', 'asc')
                 ->get();
@@ -70,30 +83,37 @@ class InformationController extends Controller {
         return response()->view('content.monitor.information-result', ['col_headers' => $col_header, 'rows' => $db->get(), 'table' => $table]);
     }
 
-    public function show($tableID) { // show category
+    // show category
+    public function show($tableID) {
         // get province code
-        $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
-        $conditions = Condition::where('LanguageID', 1)->get();
+        if ($this->language_id == 1) {
+            $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
+        } elseif ($this->language_id == 2) {
+            $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->get();
+        }
+
+        $conditions = Condition::where('LanguageID', $this->language_id)->get();
+        
         // get category
         $table = DB::table('table')->where('id', $tableID)->first();
 
         // Selecting data from Database View called EntityDefinedFieldWithListFull
         // Checkbox
         $categories = DB::table('entitydefinedfieldwithlistfull')
-                ->where([['LanguageID', 1], ['TableID', $tableID]])
+                ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
                 ->groupBy('EntityDefinedCategoryName')
                 ->orderBy('EntityDefinedCategoryCode', 'asc')
                 ->get();
 
         for ($i = 0; $i < count($categories); $i++) {
             $categories[$i]->fields = DB::table('entitydefinedfieldwithlistfull')
-                    ->where([['LanguageID', 1], ['TableID', $tableID], ['EntityDefinedCategoryName', $categories[$i]->EntityDefinedCategoryName]])
+                    ->where([['LanguageID', $this->language_id], ['TableID', $tableID], ['EntityDefinedCategoryName', $categories[$i]->EntityDefinedCategoryName]])
                     ->get();
         }
 
-        // get catgories to select option
+        // get categories to first select option
         $fields = DB::table('entitydefinedfieldwithlistfull')
-                ->where([['LanguageID', 1], ['TableID', $tableID]])
+                ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
                 ->orderBy('EntityDefinedFieldListCode', 'asc')
                 ->get();
 
@@ -112,20 +132,22 @@ class InformationController extends Controller {
     // Selecting values and conditions of related fields
     public function showFieldListValue($fieldName) {
         $obj = array('values' => DB::table('edf_entitydefinedfieldsearch')
-                    ->select('id', 'Value', 'Description', 'EDFSearchType')
+                    ->select('id', 'Value', 'Description', 'Description_KH', 'EDFSearchType')
                     ->where('EntityDefinedFieldNameInTable', $fieldName)
                     ->get(),
-            'conditions' => EntityDefinedFieldCondition::getConditionByFieldID($fieldName, 1));
+                    'conditions' => EntityDefinedFieldCondition::getConditionByFieldID($fieldName, $this->language_id));
 
         return response($obj, 200);
     }
 
+    // Comparing All fields when clicking on a row in result form
+    // It is in result form
     public function compareEDF($tableID, $edfCode) {
         $colHeaders = DB::table('entitydefinedfieldwithlistfull')
                 ->select('EntityDefinedFieldNameInTable', 'EntityDefinedFieldListName')
                 ->whereIn('DisplayField', [1, 2])
                 ->where('TableID', $tableID)
-                ->where('LanguageID', 1)
+                ->where('LanguageID', $this->language_id)
                 ->orderBy('id', 'asc')
                 ->get();
         $fields =[];
