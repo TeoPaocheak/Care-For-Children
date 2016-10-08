@@ -152,11 +152,11 @@ class InformationController extends Controller {
                 ->get();
         $fields =[];
         foreach($colHeaders as $col){
-            $fiels[]=$col->EntityDefinedFieldNameInTable;
+            $fields[]=$col->EntityDefinedFieldNameInTable;
         }
         $table = DB::table('table')->where('id', $tableID)->first();
         $rows = DB::table($table->TableName)
-                ->select(DB::raw(implode(",", $fiels)))
+                ->select(DB::raw(implode(",", $fields)))
                 ->where('EDF_CODE', $edfCode)
                 ->orderBy('_URI','desc')
                 ->take(2)->get();

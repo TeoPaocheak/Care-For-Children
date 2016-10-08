@@ -59,10 +59,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('system/entity-field-search', 'EntityDefinedSearchController');
 
     // change language
-    Route::get('system/language/change-language/{lang}', function($lang) {
-        App::setLocale($lang);
-        echo 'working';
-    });
+    // Route::get('system/language/change-language/{lang}', function($lang) {
+    //     App::setLocale($lang);
+    //     echo 'working';
+    // });
 
     // monitoring
     Route::get('monitor/entity-info-field/{fieldID}', 'InformationController@showFieldListValue'); // show list value
@@ -72,11 +72,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('PDCV/{type}/{code}', 'PDCVController@getLocation');
     Route::resource('monitor/entity-agg', 'AggregateController');
 
-    Route::get('/logout', function() {
-        Session::forget('locale');
-        if(!Session::has('locale'))
-        {
-            return "Session has been removed";
-        }
-    });
+    // Route::get('/logout', function() {
+    //     Session::forget('locale');
+    //     if(!Session::has('locale'))
+    //     {
+    //         return "Session has been removed";
+    //     }
+    // });
 });

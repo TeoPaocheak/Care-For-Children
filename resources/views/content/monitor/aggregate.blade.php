@@ -2,11 +2,11 @@
 <section ng-app="app" id="widget-grid" class="">
     <div class="row">
         <article class="col-sm-12 col-md-12 col-lg-12" ng-controller="entityAggController">
-            <input type="text" ng-init="tableName='{{$table}}'" ng-model="tableName" hidden="">
+            <input type="text" ng-init="tableName ='{{$table}}'" ng-model="tableName" hidden="">
             <div class="jarviswidget jarviswidget-color-blueLight" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
                 <header>
-                    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                    <h2>Form Information List</h2>				
+                    <span class="widget-icon"> <i class="fa fa-files-o"></i> </span>
+                    <h2 style="font-size: 17px">{{ trans('aggregate_content.form-aggregate-list') }}</h2>              
                     <span id="loading" style="display: none;"><i class="fa fa-gear fa-2x fa-spin"></i></span>
                 </header>
                 <div>
@@ -19,23 +19,23 @@
                     <div class="widget-body no-padding">
                         <div class="smart-form">
                             <fieldset>
-                                <header><b>{{ trans('information_content.geography.selecting-geographical-area') }}</b></header>
+                                <header><b>{{ trans('aggregate_content.geography.selecting-geographical-area') }}</b></header>
                                 <div class="col-sm-5">
                                     <fieldset>
                                         <div class="row">
                                             <section class="col col-3">
                                                 <label class="label">
-                                                    Geographical Area:
+                                                    {{ trans('aggregate_content.geography.geographical-area') }}
                                                 </label>
                                             </section>
                                             <section class="col col-8">
                                                 <label class="select">
                                                     <select ng-model="geography.type" class="form-control">
-                                                        <option value="country">Country</option>
-                                                        <option value="province">Province</option>
-                                                        <option value="district">District</option>
-                                                        <option value="commune">Commune</option>
-                                                        <option value="village">Village</option>
+                                                        <option value="country">{{ trans('aggregate_content.geography.country') }}</option>
+                                                        <option value="province">{{ trans('aggregate_content.geography.province') }}</option>
+                                                        <option value="district">{{ trans('aggregate_content.geography.district') }}</option>
+                                                        <option value="commune">{{ trans('aggregate_content.geography.commune') }}</option>
+                                                        <option value="village">{{ trans('aggregate_content.geography.village') }}</option>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -48,7 +48,7 @@
                                         <div class="row" ng-hide="geography.type === 'country'">
                                             <section class="col col-3">
                                                 <label class="label">
-                                                    Province
+                                                    {{ trans('aggregate_content.geography.province') }}
                                                 </label>
                                             </section>
                                             <section class="col col-1">
@@ -59,9 +59,9 @@
                                             <section class="col col-8">
                                                 <label class="select">
                                                     <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
-                                                        <option value="">--PROVINCE--</option>
+                                                        <option value="">{{ trans('aggregate_content.geography.province_label') }}</option>
                                                         @foreach($provinces as $province)
-                                                        <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
+                                                            <option value="{{$province->ProvinceCode}}">{{$province-> ProvinceName}}</option>
                                                         @endforeach
                                                     </select>
                                                     <i></i>
@@ -71,7 +71,7 @@
                                         <div class="row" ng-show="geography.type === 'village' || geography.type === 'commune' || geography.type === 'district'">
                                             <section class="col col-3">
                                                 <label class="label">
-                                                    District
+                                                    {{ trans('aggregate_content.geography.district') }}
                                                 </label>
                                             </section>
                                             <section class="col col-1">
@@ -82,7 +82,7 @@
                                             <section class="col col-8">
                                                 <label class="select">
                                                     <select ng-model="geography.district" id="district-filter" class="form-control" onchange="loadNew(this, 'commune')">
-                                                        <option value="">--DISTRICT--</option>
+                                                        <option value="">{{ trans('aggregate_content.geography.district_label') }}</option>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -91,7 +91,7 @@
                                         <div class="row" ng-show="geography.type === 'village' || geography.type === 'commune'">
                                             <section class="col col-3">
                                                 <label class="label">
-                                                    Commune
+                                                    {{ trans('aggregate_content.geography.commune') }}
                                                 </label>
                                             </section>
                                             <section class="col col-1">
@@ -102,7 +102,7 @@
                                             <section class="col col-8">
                                                 <label class="select">
                                                     <select ng-model="geography.commune" id="commune-filter" class="form-control" onchange="loadNew(this, 'village')">
-                                                        <option value="">--COMMUNE--</option>
+                                                        <option value="">{{ trans('aggregate_content.geography.commune_label') }}</option>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -111,7 +111,7 @@
                                         <div class="row" ng-show="geography.type === 'village'">
                                             <section class="col col-3">
                                                 <label class="label">
-                                                    Village
+                                                    {{ trans('aggregate_content.geography.village') }}
                                                 </label>
                                             </section>
                                             <section class="col col-1">
@@ -122,7 +122,7 @@
                                             <section class="col col-8">
                                                 <label class="select">
                                                     <select ng-model="geography.village" id="village-filter" class="form-control">
-                                                        <option value="">--VILLAGE--</option>
+                                                        <option value="">{{ trans('aggregate_content.geography.village_label') }}</option>
                                                     </select>
                                                     <i></i>
                                                 </label>
@@ -132,26 +132,52 @@
                                 </div>
                             </fieldset>
                             <fieldset>
-                                <header><b>Selecting Characteristic</b></header>
+                                <header><b>{{ trans('aggregate_content.aggregate') }}</b></header>
+                                <div class="col-sm-5">
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-3">
+                                                <label class="label">
+                                                     {{ trans('aggregate_content.geography.geographical-area') }}
+                                                </label>
+                                            </section>
+                                            <section class="col col-8">
+                                                <label class="select">
+                                                    <select ng-model="geography.aggType" class="form-control">
+                                                        <option value="country">{{ trans('aggregate_content.geography.country') }}</option>
+                                                        <option value="province">{{ trans('aggregate_content.geography.province') }}</option>
+                                                        <option value="district">{{ trans('aggregate_content.geography.district') }}</option>
+                                                        <option value="commune">{{ trans('aggregate_content.geography.commune') }}</option>
+                                                        <option value="village">{{ trans('aggregate_content.geography.village') }}</option>
+                                                    </select>
+                                                    <i></i>
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <header><b>{{ trans('aggregate_content.characteristic.selecting-characteristic') }}</b></header>
                                 <div class="col-sm-12">
                                     <fieldset>
                                         <div class="row" ng-repeat="option in options">
-                                            <section class="col col-2">
+                                            <section class="col col-1">
                                                 <label class="select">
                                                     <select ng-model="option.conjunction" ng-hide="$index === 0" class="form-control">
-                                                        <option value="AND">AND</option>
-                                                        <option value="OR">OR</option>
+                                                        <option value="AND">{{ trans('aggregate_content.characteristic.and') }}</option>
+                                                        <option value="OR">{{ trans('aggregate_content.characteristic.or') }}</option>
                                                     </select>
                                                 </label>
                                             </section>
                                             <section class="col col-3">
                                                 <label class="select">
                                                     <select ng-model="option.key.keyValue"  ng-change="loadValue($index)"  class="form-control">
-                                                        <option value="">--SELECT--</option>
+                                                        <option value="">{{ trans('aggregate_content.characteristic.select') }}</option>
                                                         @foreach($fields as $field)
-                                                        @if($field->DisplayField!==1)
-                                                        <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
-                                                        @endif
+                                                            @if($field->DisplayField!==1)
+                                                                <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                 </label>
@@ -159,34 +185,50 @@
                                             <section class="col col-3">
                                                 <label class="select">
                                                     <select ng-model="option.condition" class="form-control">
-                                                        <option value="">--SELECT--</option>
+                                                        <option value="">{{ trans('aggregate_content.characteristic.select') }}</option>
                                                         <option ng-repeat="condition in option.conditions" value="<%condition.ConditionSymbol%>"><%condition.ConditionName%></option>
                                                     </select>
                                                 </label>
                                             </section>
                                             <section class="col col-3">
                                                 <label class="select" ng-show="option.key.edfSearchType === 1">
-                                                    <select ng-model="option.value" class="form-control">
-                                                        <option value="">--SELECT--</option>
-                                                        <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description%></option>
-                                                    </select>
-                                                    <i></i>
-                                                </label>
+                                                  @if (session()->get('locale'))
+                                                      @if (session()->get('locale') == 'en')
+                                                          <select ng-model="option.value" class="form-control">
+                                                            <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                                             <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description%></option>
+                                                          </select>
+                                                          <i></i>
+                                                      @elseif (session()->get('locale') == 'km')
+                                                          <select ng-model="option.value" class="form-control">
+                                                              <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                                              <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description_KH%></option>
+                                                          </select>
+                                                          <i></i>
+                                                      @endif
+                                                  @else
+                                                      <select ng-model="option.value" class="form-control">
+                                                          <option value="">{{ trans('information_content.characteristic.select') }}</option>
+                                                          <option ng-repeat="listValue in option.listValues" value="<%listValue.Value%>"><%listValue.Description_KH%></option>
+                                                      </select>
+                                                      <i></i>
+                                                  @endif
+                                                </label>  
                                                 <label class="input" ng-show="option.key.edfSearchType === 2">
                                                     <input ng-model="option.value" class="form-control">
                                                 </label>
                                             </section>
                                             <section class="col col-1">
-                                                <button class="btn btn-sm btn-danger" ng-click="removeOption($index)"><i class="fa fa-trash-o"></i> Remove</button>
+                                                <button class="btn btn-sm btn-danger" ng-click="removeOption($index)"><i class="fa fa-trash-o"></i>{{ trans('button.remove') }}</button>
                                             </section>
                                         </div>
                                     </fieldset>
                                 </div>
-                                <button class="btn btn-sm btn-primary" ng-click="addOption('AND')">New Option</button>
+                                <button class="btn btn-sm btn-primary" ng-click="addOption('AND')">{{ trans('button.new-option') }}</button>
                             </fieldset>
                             <footer>
-                                <button class="btn btn-primary" ng-click="view()"><i class="fa fa-fw fa-search"></i> Search</button>
-                                <button class="btn btn-danger" type="button" ng-click="reset()"><i class="fa fa-fw fa-refresh"></i>Reset</button>
+                                <button class="btn btn-primary" ng-click="view()"><i class="fa fa-fw fa-search"></i>{{ trans('button.search') }}</button>
+                                <button class="btn btn-danger" type="button" ng-click="reset()"><i class="fa fa-fw fa-refresh"></i>{{ trans('button.reset') }}</button>
                             </footer>
                         </div>
                     </div>
@@ -198,192 +240,189 @@
     </div>
 </section> <!-- end section-->
 <div id="modal-loading" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
-      <div class="modal-body" style="background-color: transparent; text-align: center;">
-          <img src="{{asset('img/loading.gif')}}">
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
+            <div class="modal-body" style="background-color: transparent; text-align: center;">
+                <img src="{{asset('img/loading.gif')}}">
+            </div>
+        </div>
+
     </div>
-
-  </div>
 </div>
-<script type="text/javascript">
 
+<script type="text/javascript">
     pageSetUp();
     $(document).ready(function () {
     angular.bootstrap($('#widget-grid'), ["app"]);
     });
     loadScript("js/plugin/bootstraptree/bootstrap-tree.min.js", function(){
-        
+
     });
 </script>
+
 <script>
     var conditions = <?php echo $conditions; ?>;
     var newField = function (obj) {
-    var append = $(obj).parent().siblings(".panel-body");
-    $(append).html("Hello");
+        var append = $(obj).parent().siblings(".panel-body");
+        $(append).html("Hello");
     };
-    var loadNew = function (obj, type) {
 
-    var code;
-    code = $(obj).val();
-    var location = getLocation(type, code);
-    if (type === 'district') {
-    $("#district-filter").html("<option value=''>--DISTRICT--</option>");
-    for (i = 0; i < location.length; i++) {
-    $("#district-filter").append("<option value='" + location[i].DistrictCode + "'>" + location[i].DistrictName + "</option>");
-    }
-    $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
-    $("#village-filter").html("<option value=''>--VILLAGE--</option>");
-    } else if (type === 'commune') {
-    $("#commune-filter").html("<option value=''>--COMMUNE--</option>");
-    for (i = 0; i < location.length; i++) {
-    $("#commune-filter").append("<option value='" + location[i].CommuneCode + "'>" + location[i].CommuneName + "</option>");
-    }
-    $("#village-filter").html("<option value=''>--VILLAGE--</option>");
-    } else if (type === 'village') {
-    $("#village-filter").html("<option value=''>--VILLLAGE--</option>");
-    for (i = 0; i < location.length; i++) {
-    $("#village-filter").append("<option value='" + location[i].VillageCode + "'>" + location[i].VillageName + "</option>");
-    }
-    }
+    var loadNew = function (obj, type) {
+      var code;
+      code = $(obj).val();
+      var location = getLocation(type, code);
+      if (type === 'district') {
+        $("#district-filter").html("<option value=''>{{ trans('information_content.geography.district_label') }}</option>");
+        for (i = 0; i < location.length; i++) {
+          $("#district-filter").append("<option value='" + location[i].DistrictCode + "'>" + location[i].DistrictName + "</option>");
+        }
+        $("#commune-filter").html("<option value=''>{{ trans('information_content.geography.commune_label') }}</option>");
+        $("#village-filter").html("<option value=''>{{ trans('information_content.geography.village_label') }}</option>");
+      } else if (type === 'commune') {
+        $("#commune-filter").html("<option value=''>{{ trans('information_content.geography.commune_label') }}</option>");
+        for (i = 0; i < location.length; i++) {
+          $("#commune-filter").append("<option value='" + location[i].CommuneCode + "'>" + location[i].CommuneName + "</option>");
+        }
+        $("#village-filter").html("<option value=''>{{ trans('information_content.geography.village_label') }}</option>");
+      } else if (type === 'village') {
+        $("#village-filter").html("<option value=''>{{ trans('information_content.geography.village_label') }}</option>");
+        for (i = 0; i < location.length; i++) {
+          $("#village-filter").append("<option value='" + location[i].VillageCode + "'>" + location[i].VillageName + "</option>");
+        }
+      }
     };
     var getLocation = function (type, code) {
-    var results = "";
-    if (name === undefined) {
-    name = "";
-    }
-    $.ajax({
-    url: "{{url('PDCV')}}/" + type + "/" + code,
-            type: "GET",
-            async: false,
-            success: function (result) {
-            results = result;
-            }
-    });
-    return results;
+      var results = "";
+      if (name === undefined) {
+        name = "";
+      }
+      $.ajax({
+      url: "{{url('PDCV')}}/" + type + "/" + code,
+              type: "GET",
+              async: false,
+              success: function (result) {
+              results = result;
+              }
+      });
+      return results;
     };
     var pagefunction = function () {
+
+      //console.log("cleared");
+
+      /* // DOM Position key index //
        
-        //console.log("cleared");
+       l - Length changing (dropdown)
+       f - Filtering input (search)
+       t - The Table! (datatable)
+       i - Information (records)
+       p - Pagination (paging)
+       r - pRocessing 
+       < and > - div elements
+       <"#id" and > - div with an id
+       <"class" and > - div with a class
+       <"#id.class" and > - div with an id and class
+       
+       Also see: http://legacy.datatables.net/usage/features
+       */
 
-        /* // DOM Position key index //
-         
-         l - Length changing (dropdown)
-         f - Filtering input (search)
-         t - The Table! (datatable)
-         i - Information (records)
-         p - Pagination (paging)
-         r - pRocessing 
-         < and > - div elements
-         <"#id" and > - div with an id
-         <"class" and > - div with a class
-         <"#id.class" and > - div with an id and class
-         
-         Also see: http://legacy.datatables.net/usage/features
-         */
+      /* BASIC ;*/
+      var responsiveHelper_datatable_fixed_column = undefined;
+      var responsiveHelper_datatable_col_reorder = undefined;
+      var breakpointDefinition = {
+      tablet: 1024,
+              phone: 480
+      };
+    /* END BASIC */
 
-        /* BASIC ;*/
-        var responsiveHelper_datatable_fixed_column = undefined;
-        var responsiveHelper_datatable_col_reorder = undefined;
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-
-        /* END BASIC */
-
-        /* COLUMN FILTER  */
-        var otable = $('#datatable_fixed_column').DataTable({
-            //"bFilter": false,
-            //"bInfo": false,
-            //"bLengthChange": false
-            //"bAutoWidth": false,
-            //"bPaginate": false,
-            //"bStateSave": true // saves sort state using localStorage
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-4 hidden-xs'f><'col-sm-4 col-xs-6 hidden-xs'T><'col-sm-4 col-xs-6 hidden-xs'C>r>" +
-                    "t" +
-                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+    /* COLUMN FILTER  */
+    var otable = $('#datatable_fixed_column').DataTable({
+    //"bFilter": false,
+    //"bInfo": false,
+    //"bLengthChange": false
+    //"bAutoWidth": false,
+    //"bPaginate": false,
+    //"bStateSave": true // saves sort state using localStorage
+    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-4 hidden-xs'f><'col-sm-4 col-xs-6 hidden-xs'T><'col-sm-4 col-xs-6 hidden-xs'C>r>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
             "oTableTools": {
-                "aButtons": [
+            "aButtons": [
                     "copy",
                     "xls",
                     "pdf",
-                    {
-                        "sExtends": "print",
-                        "sMessage": "Generated by Open Institute Monitoring System <i>(press Esc to close)</i>"
-                    }
-                ],
-                "sSwfPath": "{{asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')}}"
+            {
+            "sExtends": "print",
+                    "sMessage": "Generated by Open Institute Monitoring System <i>(press Esc to close)</i>"
+            }
+            ],
+                    "sSwfPath": "{{asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')}}"
             },
             "iDisplayLength": 20,
             "autoWidth": true,
             "preDrawCallback": function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper_datatable_fixed_column) {
-                    responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
-                }
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_datatable_fixed_column) {
+              responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+            }
             },
             "rowCallback": function (nRow) {
-                responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+              responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
             },
             "drawCallback": function (oSettings) {
-                responsiveHelper_datatable_fixed_column.respond();
+              responsiveHelper_datatable_fixed_column.respond();
             }
 
-        });
+    });
+    // custom toolbar
 
-        // custom toolbar
+    // Apply the filter
+    $("#datatable_fixed_column thead th input[type=text],#datatable_fixed_column thead th select").on('keyup change', function () {
 
-        // Apply the filter
-        $("#datatable_fixed_column thead th input[type=text],#datatable_fixed_column thead th select").on('keyup change', function () {
+    otable
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+    $("#datatable_fixed_column thead th select").bind("DOMSubtreeModified", function () {
+    otable
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+    /* END COLUMN FILTER */
 
-            otable
-                    .column($(this).parent().index() + ':visible')
-                    .search(this.value)
-                    .draw();
-        });
-        $("#datatable_fixed_column thead th select").bind("DOMSubtreeModified", function () {
-            otable
-                    .column($(this).parent().index() + ':visible')
-                    .search(this.value)
-                    .draw();
-        });
-        /* END COLUMN FILTER */
-
-        /* COLUMN SHOW - HIDE */
-        $('#datatable_col_reorder').dataTable({
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
-                    "t" +
-                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+    /* COLUMN SHOW - HIDE */
+    $('#datatable_col_reorder').dataTable({
+    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
             "autoWidth": true,
             "preDrawCallback": function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper_datatable_col_reorder) {
-                    responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
-                }
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_datatable_col_reorder) {
+              responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+              }
             },
             "rowCallback": function (nRow) {
-                responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+              responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
             },
             "drawCallback": function (oSettings) {
-                responsiveHelper_datatable_col_reorder.respond();
+              responsiveHelper_datatable_col_reorder.respond();
             }
-        });
-
-        /* END COLUMN SHOW - HIDE */
+    });
+    /* END COLUMN SHOW - HIDE */
 
     };
-
-var reloadScript = function(){
-    loadScript("{{asset('js/plugin/datatables/jquery.dataTables.min.js')}}", function () {
-        loadScript("{{asset('js/plugin/datatables/dataTables.colVis.min.js')}}", function () {
-            loadScript("{{asset('js/plugin/datatables/dataTables.tableTools.min.js')}}", function () {
-                loadScript("{{asset('js/plugin/datatables/dataTables.bootstrap.min.js')}}", function () {
-                    loadScript("{{asset('js/plugin/datatable-responsive/datatables.responsive.min.js')}}", pagefunction);
+    var reloadScript = function(){
+        loadScript("{{asset('js/plugin/datatables/jquery.dataTables.min.js')}}", function () {
+            loadScript("{{asset('js/plugin/datatables/dataTables.colVis.min.js')}}", function () {
+                loadScript("{{asset('js/plugin/datatables/dataTables.tableTools.min.js')}}", function () {
+                    loadScript("{{asset('js/plugin/datatables/dataTables.bootstrap.min.js')}}", function () {
+                        loadScript("{{asset('js/plugin/datatable-responsive/datatables.responsive.min.js')}}", pagefunction);
+                    });
                 });
             });
         });
-    });
-}
+    }
 </script>

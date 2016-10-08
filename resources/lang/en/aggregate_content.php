@@ -1,6 +1,6 @@
 <?php 
 return [
-    'form-information-list' => 'Form Information List',
+    'form-aggregate-list' => 'Form Aggregate List',
 
     'geography' => [
         'selecting-geographical-area' => 'Selecting Geographical Area',
@@ -17,6 +17,8 @@ return [
         'village_label' => '--Village--'
     ],
 
+    'aggregate' => 'Aggregated By Geographical Area',
+
     'characteristic' => [
         'selecting-characteristic' => 'Selecting Characteristic',
         'select' => '--Select--',
@@ -27,9 +29,7 @@ return [
     'selecting-field' => 'Selecting Fields',
 
     'result' => [
-       'information-result' => ' Information Result'
-    ],
-
-    'variance' => 'Variance'
+       'aggregate-result' => 'Aggregate Information Result'
+    ]
 
 ];

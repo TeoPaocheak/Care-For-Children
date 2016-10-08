@@ -1,5 +1,6 @@
 <?php
 return [
+    'home' => 'ទំព័រដេីម',
     'dashboard' => 'Dashboard',
     'system-config' => 'ការកំនត់ប្រព័ន្ធ',
     'system' => [

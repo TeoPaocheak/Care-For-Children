@@ -100,10 +100,12 @@ entity.controller("entityInfoController", function ($scope, $http) {
     }; 
 });
 
+// For Aggregate
 entity.controller("entityAggController", function ($scope, $http) {
     $scope.selections = [];
     $scope.geography = {};
     $scope.geography.type = 'country';
+    $scope.geography.aggType='country';
     $scope.categories = [];
     $scope.options = [];
     $scope.categories.push();
@@ -151,6 +153,7 @@ entity.controller("entityAggController", function ($scope, $http) {
             url: "monitor/entity-agg",
             params: {
                 gp_type: $scope.geography.type,
+                gp_aggType:$scope.geography.aggType,
                 gp_province: $scope.geography.province,
                 gp_district: $scope.geography.district,
                 gp_commune: $scope.geography.commune,
@@ -175,6 +178,7 @@ entity.controller("entityAggController", function ($scope, $http) {
         $scope.selections = [];
         $scope.geography = {};
         $scope.geography.type = 'country';
+        gp_aggType: $scope.geography.aggType = 'country';
         for (i = 0; i < $scope.categories.length; i++) {
             $scope.categories[i].options = [];
             $scope.categories[i].selectedField = true;

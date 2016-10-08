@@ -1,5 +1,6 @@
 <?php
 return [
+    'home' => 'Home',
     'dashboard' => 'Dashboard',
     'system-config' => 'System Configure',
     'system' => [

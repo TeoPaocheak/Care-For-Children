@@ -1,7 +1,7 @@
 <?php 
 return [
   
-    'form-information-list' => 'ទម្រង់​បញ្ជីនៃព័ត៌មាន',
+    'form-aggregate-list' => 'ទម្រង់​បញ្ជី​បូក​សរុប​ទិន្នន័យ​',
 
     'geography' => [
         'selecting-geographical-area' => 'ជ្រេីសរេីសតំបន់ភូមិសាស្ត្រ',
@@ -18,6 +18,8 @@ return [
         'village_label' => '--ភូមិ--'
     ],
 
+    'aggregate' => 'បូកសរុបទិន្នន័យតាមតំបន់ភូមិសាស្ត្រ',
+
     'characteristic' => [
         'selecting-characteristic' => 'ជ្រេីសរេីសលក្ខណៈសម្បត្តិដែល​​ត្រូវការ​កំណត់​លក្ខខ័ណ្ឌ',
         'select' => '--ជ្រេីសរេីស--',
@@ -28,8 +30,6 @@ return [
     'selecting-field' => 'ជ្រេីសរេីសអថេរ',
 
     'result' => [
-        'information-result' => ' លទ្ធផលនៃព័ត៌មាន'
-    ],
-
-    'variance' => 'គំលាតខុសគ្នា'
+        'aggregate-result' => 'លទ្ធផលនៃចំនួនបូកសរុប'
+    ]
 ];

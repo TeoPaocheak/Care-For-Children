@@ -5,8 +5,8 @@
       <input type="text" ng-init="tableName='<?php echo e($table); ?>'" ng-model="tableName" hidden="">
       <div class="jarviswidget jarviswidget-color-blueLight" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
         <header>
-          <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-          <h2><?php echo e(trans('information_content.form-information-list')); ?></h2>				
+          <span class="widget-icon"> <i class="fa fa-list"></i> </span>
+          <label style="margin-left: 10px; margin-top:-1px; font-size: 17px"><?php echo e(trans('information_content.form-information-list')); ?></label>				
           <span id="loading" style="display: none;"><i class="fa fa-gear fa-2x fa-spin"></i></span>
         </header>
         <div>

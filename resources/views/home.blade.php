@@ -2,7 +2,6 @@
 <html lang="en-us">	
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta charset="utf-8">
         <title> CFS | Open Institute</title>
         <meta name="description" content="Child Friendly School">
         <meta name="phinath" content="OI Software Developer">
@@ -108,7 +107,7 @@
             <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo"> <img src="img/logo.png" alt="Monitoring" style="position: absolute; top: 0;"> </span>
+                <span id="logo"><a href="http://open.org.kh/" target="blank"><img src="img/oi-logo.gif" alt="Monitoring" style="position: absolute; top: 0;"></a></span>
                 <!-- END LOGO PLACEHOLDER -->
 
                 <!-- Note: The activity badge color changes when clicked and resets the number to 0
@@ -279,16 +278,16 @@
                     <li>
                         @if (session()->has('locale'))
                             @if (session()->get('locale') == 'km')
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>KH</span> <i class="fa fa-angle-down"></i> </a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>ខ្មែរ</span> <i class="fa fa-angle-down"></i> </a>
                             @elseif (session()->get('locale') == 'en')
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-us" alt="United States"> <span>US</span> <i class="fa fa-angle-down"></i> </a>
                             @endif    
                         @else
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>KH</span> <i class="fa fa-angle-down"></i> </a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>ខ្មែរ</span> <i class="fa fa-angle-down"></i> </a>
                         @endif   
                         <ul class="dropdown-menu pull-right">
                             <li>
-                                <a href="lang/km"><img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> Khmer (KH)</a>
+                                <a href="lang/km"><img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> ភាសាខ្មែរ (KH)</a>
                             </li>
                             <li>
                                 <a href="lang/en"><img src="img/blank.gif" class="flag flag-us" alt="United States"> English (EN)</a>
@@ -348,26 +347,26 @@
                         @if (session()->has('locale'))
                             @if (session()->get('locale') == 'en')
                                 <li class="">
-                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{$table->TableNameEN}} {{ trans('home.monitor.information-list') }}</span></a>
+                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">{{$table->TableNameEN}} {{ trans('home.monitor.information-list') }}</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{$table->TableNameEN}} Aggregate List</span></a>
+                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{$table->TableNameEN}} Aggregate List</span></a>
                                 </li>
                             @elseif (session()->get('locale') == 'km')
                                 <li class="">
-                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
+                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
                                 </li>
                                 <li class="">
-                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
+                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
                                 </li>
                             @endif    
                         @else
-                                <li class="">
-                                    <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
-                                </li>
-                                <li class="">
-                                    <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-search-plus"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
-                                </li>
+                            <li class="">
+                                <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
+                            </li>
+                            <li class="">
+                                <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
+                            </li>
                         @endif
                     @endforeach
 
@@ -419,9 +418,8 @@
 
             <!-- RIBBON -->
             <div id="ribbon">
-
                 <span class="ribbon-button-alignment"> 
-                    <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh" rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings." data-html="true" data-reset-msg="Would you like to RESET all your saved widgets and clear LocalStorage?"><i class="fa fa-refresh"></i></span> 
+                    <i class="fa fa-home" style="color: white"></i> 
                 </span>
 
                 <!-- breadcrumb -->
@@ -440,15 +438,11 @@
                         <span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa fa-plus"></i> Add</span>
                         <button id="search" class="btn btn-ribbon" data-title="search"><i class="fa fa-search"></i> <span class="hidden-mobile">Search</span></button>
                 </span> -->
-
             </div>
             <!-- END RIBBON -->
 
             <!-- #MAIN CONTENT -->
-            <div id="content">
-
-            </div>
-
+            <div id="content"></div>
             <!-- END #MAIN CONTENT -->
 
         </div>
@@ -458,54 +452,7 @@
         <div class="page-footer">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                    <span class="txt-color-white">CFS Version 1.0 | <span class="hidden-xs">{{ trans('home.footer.powered-by') }}</span> � 2016</span>
-                </div>
-
-                <div class="col-xs-6 col-sm-6 text-right hidden-xs">
-                    <div class="txt-color-white inline-block">
-                        <i class="txt-color-blueLight hidden-mobile">Last account activity <i class="fa fa-clock-o"></i> <strong>52 mins ago &nbsp;</strong> </i>
-                        <div class="btn-group dropup">
-                            <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" data-toggle="dropdown">
-                                <i class="fa fa-link"></i> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right text-left">
-                                <li>
-                                    <div class="padding-5">
-                                        <p class="txt-color-darken font-sm no-margin">Download Progress</p>
-                                        <div class="progress progress-micro no-margin">
-                                            <div class="progress-bar progress-bar-success" style="width: 50%;"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="padding-5">
-                                        <p class="txt-color-darken font-sm no-margin">Server Load</p>
-                                        <div class="progress progress-micro no-margin">
-                                            <div class="progress-bar progress-bar-success" style="width: 20%;"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li >
-                                    <div class="padding-5">
-                                        <p class="txt-color-darken font-sm no-margin">Memory Load <span class="text-danger">*critical*</span></p>
-                                        <div class="progress progress-micro no-margin">
-                                            <div class="progress-bar progress-bar-danger" style="width: 70%;"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="padding-5">
-                                        <button class="btn btn-block btn-default">refresh</button>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end btn-group-->
-                    </div>
-                    <!-- end div-->
+                    <span class="txt-color-white">CFS Version 1.0 | <span class="hidden-xs">{{ trans('home.footer.powered-by') }}</span> © 2016</span>
                 </div>
                 <!-- end col -->
             </div>

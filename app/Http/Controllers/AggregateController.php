@@ -1,26 +1,44 @@
 <?php
 
 namespace MONITORING\Http\Controllers;
+
 use Illuminate\Http\Request;
 use MONITORING\Http\Requests;
 use MONITORING\Http\Controllers\Controller;
 use MONITORING\Province;
+use MONITORING\District;
+use MONITORING\Commune;
+use MONITORING\Village;
 use MONITORING\Condition;
 use MONITORING\EntityDefinedFieldSearchValue;
 use MONITORING\EntityDefinedFieldCondition;
 use DB;
 
-class AggregateController extends Controller
-{
+class AggregateController extends Controller {
+
+    private $language_id;
+
+    public function __construct() {
+        if (session()->has('locale')) {
+            if (session()->get('locale') == 'km') {
+                $this->language_id = 2;
+            } elseif (session()->get('locale') == 'en') {
+                $this->language_id = 1;
+            }
+        } else {
+            $this->language_id = 2;
+        }
+    }
+
     public function index(Request $request) {
         // show the entity information related to condition
         //$data = $request->input('key');
         $table = DB::table('table')->where('TableName', $request->input('table_name'))->first();
         $gp_type = $request->input('gp_type');
+        $gp_aggType = $request->input('gp_aggType');
         $conditions = json_decode($request->input('data'));
-        $selections = json_decode($request->input('selections'));
         $db = DB::table($request->input('table_name'));
-        $db->select(DB::raw("EDF_CODE,".implode(",", $selections)));
+        $db->select(DB::raw("COUNT(*) as NumberOfEntity"));
         switch ($gp_type) {
             case 'province':
                 $db->where("PROVINCE_CODE", $request->input('gp_province'));
@@ -48,45 +66,79 @@ class AggregateController extends Controller
                 }
             }
         }
-        //$db->groupBy('EDF_CODE');
-        //echo $db->toSql();
-        //select column header 
 
-        $col_header = DB::table('entitydefinedfieldwithlistfull')
-                ->select('EntityDefinedFieldListName')
-                ->whereIn('EntityDefinedFieldNameInTable', $selections)
-                ->where('LanguageID', 1)
-                ->orderBy('EntityDefinedCategoryCode', 'asc')
-                ->orderBy('id', 'asc')
-                ->get();
-        return response()
-                        ->view('content.monitor.information-result', ['col_headers' => $col_header, 'rows' => $db->get(), 'table' => $table]);
+        // get geographical hierachy 
+        //echo $tempDB->where('PROVINCE_CODE', 21)->first()->NumberOfEntity;   
+        $tempDB = clone $db;
+        $country = $tempDB->first();
+
+        $country->provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName, PROVINCE_KH AS ProvinceKhmerName"))->get();
+
+        if (strcmp($gp_aggType, 'country') !== 0) {
+            foreach ($country->provinces as $province) {
+                $tempDB = clone $db;
+                $province->NumberOfEntity = $tempDB->where('PROVINCE_CODE', $province->ProvinceCode)->first()->NumberOfEntity;
+
+                if (strcmp($gp_aggType, 'province') === 0) {
+                    continue;
+                }
+
+                $province->districts = District::select(DB::raw("DCode AS DistrictCode, DName_en AS DistrictName, DName_kh AS DistrictKhmerName"))->where('PCode', $province->ProvinceCode)->get();
+
+                foreach ($province->districts as $district) {
+                    $tempDB = clone $db;
+                    $district->NumberOfEntity = $tempDB->where('DISTRICT_CODE', $district->DistrictCode)->first()->NumberOfEntity;
+
+                    if (strcmp($gp_aggType, 'district') === 0) {
+                        continue;
+                    }
+
+                    $district->communes = Commune::select(DB::raw("CCode AS CommuneCode, CName_en AS CommuneName, CName_kh AS CommuneKhmerName"))->where('DCode', $district->DistrictCode)
+                            ->get();
+                    foreach ($district->communes as $commune) {
+                        $tempDB = clone $db;
+                        $commune->villages = Village::select(DB::raw("VCode AS VillageCode, VName_en AS VillageName, VName_kh AS VillageKhmerName"))->where('CCode', $commune->CommuneCode)
+                                ->get();
+                        $commune->NumberOfEntity = $tempDB->where('COMMUNE_CODE', $commune->CommuneCode)->first()->NumberOfEntity;
+                    }
+                }
+            }
+        }
+
+        return response()->view('content.monitor.aggregate-result', ["country" => $country,"gp_aggType" => $gp_aggType]);
     }
 
     
     public function show($tableID) { // show category
         // get province code
-        $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
-        $conditions = Condition::where('LanguageID', 1)->get();
+
+        if ($this->language_id == 1) {
+            $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
+        } elseif ($this->language_id == 2) {
+            $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->get();
+        }
+
+        $conditions = Condition::where('LanguageID', $this->language_id)->get();
         // get category
-        $table = DB::table('table')
-                        ->where('id', $tableID)->first();
+        $table = DB::table('table')->where('id', $tableID)->first();
+
         $categories = DB::table('entitydefinedfieldwithlistfull')
-                ->where([['LanguageID', 1], ['TableID', $tableID]])
+                ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
                 ->groupBy('EntityDefinedCategoryName')
                 ->orderBy('EntityDefinedCategoryCode', 'asc')
                 ->get();
+
         for ($i = 0; $i < count($categories); $i++) {
             $categories[$i]->fields = DB::table('entitydefinedfieldwithlistfull')
-                    ->where([['LanguageID', 1], ['TableID', $tableID], ['EntityDefinedCategoryName', $categories[$i]->EntityDefinedCategoryName]])
+                    ->where([['LanguageID', $this->language_id], ['TableID', $tableID], ['EntityDefinedCategoryName', $categories[$i]->EntityDefinedCategoryName]])
                     ->get();
         }
 //        get list of field related to each 
         $fields = DB::table('entitydefinedfieldwithlistfull')
-                ->where([['LanguageID', 1], ['TableID', $tableID]])
+                ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
                 ->orderBy('EntityDefinedFieldListCode', 'asc')
                 ->get();
-        return response()
-                        ->view('content.monitor.aggregate', ['table' => $table->TableName, 'provinces' => $provinces, 'conditions' => $conditions, 'categories' => $categories, 'fields' => $fields]);
+
+        return response()->view('content.monitor.aggregate', ['table' => $table->TableName, 'provinces' => $provinces, 'conditions' => $conditions, 'categories' => $categories, 'fields' => $fields]);
     }
 }
