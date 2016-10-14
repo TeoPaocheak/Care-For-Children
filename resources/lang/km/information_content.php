@@ -14,7 +14,7 @@ return [
 
         'province_label' => '--ខេត្ត--',
         'district_label' => '--ក្រុង/ស្រុក/ខ័ណ្ឌ--',
-        'commune_label' => '--ឃំុ/សង្កាត--',
+        'commune_label' => '--ឃំុ/សង្កាត់--',
         'village_label' => '--ភូមិ--'
     ],
 

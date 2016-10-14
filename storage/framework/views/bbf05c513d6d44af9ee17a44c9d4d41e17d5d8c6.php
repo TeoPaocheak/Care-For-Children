@@ -20,7 +20,9 @@
         <!-- WIDGET END -->
 
     </div>
+
     <!-- end row -->
+
 </section>
 <!-- end widget grid -->
 
@@ -74,21 +76,25 @@
 
         function run_jqgrid_function() {
 
-            var jqgrid_data = <?php echo $languages; ?>;
+
+            var jqgrid_data =<?php echo $conditions; ?>;
 
             jQuery("#jqgrid").jqGrid({
                 data: jqgrid_data,
                 datatype: "local",
                 height: 'auto',
-                colNames: ['Action', 'ID', 'Name'],
+                colNames: ['Action', 'ID', 'Code', 'Name', 'Symbol', 'Language'],
                 colModel: [
                     {name: 'act', index: 'act', sortable: false},
-                    {name: 'id', index: 'id',editable : true},
-                    {name: 'LanguageName', index: 'LanguageName', editable: true}],
+                    {name: 'id', index: 'id',editable: true},
+                    {name: 'ConditionCode', index: 'ConditionCode', editable: true},
+                    {name: 'ConditionName', index: 'ConditionName', editable: true},
+                    {name: 'ConditionSymbol', index: 'ConditionSymbol', align: "right", editable: true},
+                    {name: 'LanguageID', index: 'LanguageID', align: "center", editable: true}],
                 rowNum: 10,
                 rowList: [10, 20, 30, 40],
                 pager: '#pjqgrid',
-                sortname: 'id',
+                sortname: 'LanguageID',
                 toolbarfilter: true,
                 viewrecords: true,
                 sortorder: "asc",
@@ -104,8 +110,8 @@
                         jQuery("#jqgrid").jqGrid('setRowData', ids[i], {act: be + se + ca});
                     }
                 },
-                editurl: "system/language",
-                caption: "Languages",
+                editurl: "system/condition",
+                caption: "Conditions",
                 multiselect: true,
                 autowidth: true,
             });
@@ -166,7 +172,7 @@
 
 
             // update buttons
-            // Where you add the language view the content
+
             $(window).on('resize.jqGrid', function () {
                 jQuery("#jqgrid").jqGrid('setGridWidth', $("#content").width());
             })
@@ -177,6 +183,6 @@
 
     }
 
-    loadScript("{{url('js/plugin/jqgrid/grid.locale-en.min.js')}}", pagefunction);
+    loadScript("<?php echo e(url('js/plugin/jqgrid/grid.locale-en.min.js')); ?>", pagefunction);
 
 </script>

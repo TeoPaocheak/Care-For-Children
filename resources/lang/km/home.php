@@ -2,14 +2,14 @@
 return [
     'home' => 'ទំព័រដេីម',
     'dashboard' => 'Dashboard',
-    'system-config' => 'ការកំនត់ប្រព័ន្ធ',
+    'system-config' => 'ការកំណត់ប្រព័ន្ធ',
     'system' => [
         'table' => 'តារាង',
         'category' => 'ប្រភេទ',
         'condition' => 'លក្ខខ័ណ្ខ',
         'language' => 'ភាសា',
         'entity-defined-field-condition' => 'Entity Defined Field Condition',
-        'entity-defined-field' => 'កំនត់អថេរ',
+        'entity-defined-field' => 'កំណត់អថេរ',
         'entity-defined-field-value' => 'Entity Defined Field Value',
         'entity-defined-field-search' => 'Entity Defined Field Search',
         'import' => 'នាំចូល',

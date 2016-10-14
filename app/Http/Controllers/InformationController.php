@@ -164,4 +164,12 @@ class InformationController extends Controller {
         return response()->view('content.monitor.edf-comparison', ['colHeaders' => $colHeaders,'rows'=>  array_reverse($rows), 'table' => $table]);
     }
 
+    /**
+     * @return int
+     */
+    public function test()
+    {
+        return response()->view('content.monitor.test');
+    }
+
 }

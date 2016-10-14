@@ -23,4 +23,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function role() {
+        return $this->belongsTo('MONITORING\Role');
+    }
+
+    public function level() {
+        return $this->belongsTo('MONITORING\Level');
+    }
 }

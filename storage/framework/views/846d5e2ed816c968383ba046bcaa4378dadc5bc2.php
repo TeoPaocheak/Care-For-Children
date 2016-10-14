@@ -12,7 +12,7 @@
                         <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?> no-margin-bottom">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email">
+                                <input id="email" type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>">
                                 <?php if($errors->has('email')): ?> 
                                     <span class="help-block"> 
                                         <strong><?php echo e($errors->first('email')); ?></strong> 

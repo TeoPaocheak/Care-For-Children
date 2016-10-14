@@ -20,7 +20,9 @@
         <!-- WIDGET END -->
 
     </div>
+
     <!-- end row -->
+
 </section>
 <!-- end widget grid -->
 
@@ -177,6 +179,6 @@
 
     }
 
-    loadScript("{{url('js/plugin/jqgrid/grid.locale-en.min.js')}}", pagefunction);
+    loadScript("<?php echo e(url('js/plugin/jqgrid/grid.locale-en.min.js')); ?>", pagefunction);
 
 </script>
