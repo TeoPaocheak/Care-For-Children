@@ -17,7 +17,7 @@ class RolesTableSeeder extends Seeder
             [
                 'name' => 'admin',
                 'display_name' => 'Administrator',
-                'display_name_kh' => 'គ្រប់គ្រង',
+                'display_name_kh' => 'ថ្នាក់គ្រប់គ្រង',
                 'level' => 1,
                 'description' => 'It is for the role of administration',
                 'description_kh' => 'សំរាប់តួនាទីជាអ្នកគ្រប់គ្រង'
@@ -25,7 +25,7 @@ class RolesTableSeeder extends Seeder
             [
                 'name' => 'national',
                 'display_name' => 'National',
-                'display_name_kh' => 'ថ្នាក់ជាតិ',
+                'display_name_kh' => 'ក្រសួង(ថ្នាក់ជាតិ)',
                 'level' => 2,
                 'description' => 'It is for the role of national employment',
                 'description_kh' => 'សំរាប់តួនាទីជាថ្នាក់ជាតិ'
@@ -33,7 +33,7 @@ class RolesTableSeeder extends Seeder
             [
                 'name' => 'province',
                 'display_name' => 'Province',
-                'display_name_kh' => 'ថ្នាក់ខេត្ត',
+                'display_name_kh' => 'មន្ទីរ(ថ្នាក់ខេត្ត)',
                 'level' => 3,
                 'description' => 'It is for the role of province employment',
                 'description_kh' => 'សំរាប់តួនាទីជាថ្នាក់ខេត្ត'
@@ -41,7 +41,7 @@ class RolesTableSeeder extends Seeder
             [
                 'name' => 'district',
                 'display_name' => 'District',
-                'display_name_kh' => 'ថ្នាក់ស្រុក',
+                'display_name_kh' => 'ស្រុក(ថ្នាក់ស្រុក)',
                 'level' => 4,
                 'description' => 'It is for the role of district employment',
                 'description_kh' => 'សំរាប់តួនាទីជាថ្នាក់ស្រុក'
