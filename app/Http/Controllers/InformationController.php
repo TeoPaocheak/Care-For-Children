@@ -3,16 +3,20 @@
 namespace MONITORING\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MONITORING\District;
 use MONITORING\Http\Requests;
 use MONITORING\Http\Controllers\Controller;
 use MONITORING\Province;
 use MONITORING\Condition;
 use MONITORING\EntityDefinedFieldSearchValue;
 use MONITORING\EntityDefinedFieldCondition;
+use Auth;
 use DB;
+use phpDocumentor\Reflection\Types\Array_;
 
 class InformationController extends Controller {
     private $language_id;
+    private $user_role_level;
 
     public function __construct() {
         if (session()->has('locale')) {
@@ -24,6 +28,12 @@ class InformationController extends Controller {
         } else {
             $this->language_id = 2;
         }
+
+        if (Auth::check()) {
+            $this->user_role_level = Auth::user()->role->level;
+        }
+
+//        dd($this->user_role_level);
     }
 
     // Triggerred when Searching fired
@@ -39,6 +49,9 @@ class InformationController extends Controller {
         $db = DB::table($request->input('table_name'));
         $db->select(DB::raw("EDF_CODE,".implode(",", $selections)));
 
+//        dd($gp_type);
+//        dd($request->input('gp_province'));
+
         switch ($gp_type) {
             case 'province':
                 $db->where("PROVINCE_CODE", $request->input('gp_province'));
@@ -49,9 +62,9 @@ class InformationController extends Controller {
             case 'commune':
                 $db->where("COMMUNE_CODE", $request->input('gp_commune'));
                 break;
-            case 'village':
-                $db->where("VILLAGE_CODE", $request->input('gp_village'));
-                break;
+//            case 'village':
+//                $db->where("VILLAGE_CODE", $request->input('gp_village'));
+//                break;
             default: break;
         }
 
@@ -83,13 +96,72 @@ class InformationController extends Controller {
         return response()->view('content.monitor.information-result', ['col_headers' => $col_header, 'rows' => $db->get(), 'table' => $table]);
     }
 
+
     // show category
     public function show($tableID) {
-        // get province code
-        if ($this->language_id == 1) {
-            $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
-        } elseif ($this->language_id == 2) {
-            $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->get();
+        // Load geographical areas
+
+        $country = trans('information_content.geography.country');
+        $province = trans('information_content.geography.province');
+        $district = trans('information_content.geography.district');
+        $commune = trans('information_content.geography.commune');
+
+
+        switch ($this->user_role_level){
+            case 1:
+            case 2:
+                $geographical_areas = [
+                    ['name' => 'country', 'label' =>  $country, 'selected' => true],
+                    ['name' => 'province', 'label' => $province, 'selected' => false],
+                    ['name' => 'district', 'label' => $district, 'selected' => false],
+                    ['name' => 'commune', 'label' => $commune, 'selected' => false],
+                ];
+
+                // get province code
+                if ($this->language_id == 1) {
+                    $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
+                    $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
+                } elseif ($this->language_id == 2) {
+                    $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->get();
+                    $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
+                }
+                break;
+            case 3:
+                $geographical_areas = [
+                    ['name' => 'province', 'label' => $province, 'selected' => true],
+                    ['name' => 'district', 'label' => $district, 'selected' => false],
+                    ['name' => 'commune', 'label' => $commune, 'selected' => false]
+                ];
+
+                // get province code
+                if (Auth::check()) {
+                    if ($this->language_id == 1) {
+                        $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->where('PROCODE','=', Auth::user()->province_code)->get();
+                        $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
+                    } elseif ($this->language_id == 2) {
+                        $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->where('PROCODE','=', Auth::user()->province_code)->get();
+                        $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
+                    }
+                }
+                break;
+            case 4:
+                $geographical_areas = [
+                    ['name' => 'district', 'label' => $district, 'selected' => true],
+                    ['name' => 'commune', 'label' => $commune, 'selected' => false]
+                ];
+
+                // get province code
+                if (Auth::check()) {
+                    if ($this->language_id == 1) {
+                        $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->where('PROCODE', '=', Auth::user()->province_code)->get();
+                        $districts = District::select(DB::raw("DCode AS DistrictCode, DName_en AS DistrictName"))->where('DCode', '=', Auth::user()->district_code)->get();
+                    } elseif ($this->language_id == 2) {
+                        $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->where('PROCODE', '=', Auth::user()->province_code)->get();
+                        $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->where('DCode', '=', Auth::user()->district_code)->get();
+                    }
+                }
+                break;
+            default: break;
         }
 
         $conditions = Condition::where('LanguageID', $this->language_id)->get();
@@ -117,7 +189,7 @@ class InformationController extends Controller {
                 ->orderBy('EntityDefinedFieldListCode', 'asc')
                 ->get();
 
-        return response()->view('content.monitor.information', ['table' => $table->TableName, 'provinces' => $provinces, 'conditions' => $conditions, 'categories' => $categories, 'fields' => $fields]);
+        return response()->view('content.monitor.information', ['table' => $table->TableName, 'provinces' => $provinces, 'districts' => $districts, 'geographical_areas' => $geographical_areas, 'conditions' => $conditions, 'categories' => $categories, 'fields' => $fields, 'user_role_level' => $this->user_role_level]);
     }
 
     // Not used

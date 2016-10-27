@@ -3,6 +3,7 @@
 Homestead.yaml
 Homestead.json
 .env
+.env.example
 
 
 # Created by https://www.gitignore.io/api/laravel,node,composer,bower,windows,macos
@@ -20,6 +21,7 @@ bootstrap/cache/
 .env.*.php
 .env.php
 .env
+.env.example
 .idea
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
@@ -31,6 +33,8 @@ bootstrap/cache/
 logs
 *.log
 npm-debug.log*
+.idea
+.env.example
 
 # Runtime data
 pids

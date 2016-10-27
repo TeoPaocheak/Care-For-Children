@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+    <base href="/">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title> CFS | Open Institute</title>
     <meta name="description" content="Child Friendly School">
@@ -55,6 +56,7 @@
     <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/ipad-landscape.png')); ?>" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/ipad-portrait.png')); ?>" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/iphone.png')); ?>" media="screen and (max-device-width: 320px)">
+    <link rel="stylesheet" href="<?php echo e(URL::asset('css/custom_style.css')); ?>">
 
 </head>
 
@@ -106,91 +108,14 @@ Use search to find needed section.
 <!-- #HEADER -->
 <header id="header">
     <div id="logo-group">
-
         <!-- PLACE YOUR LOGO HERE -->
         <span id="logo"><a href="http://open.org.kh/" target="blank"><img src="img/oi-logo.gif" alt="Monitoring" style="position: absolute; top: 0;"></a></span>
         <!-- END LOGO PLACEHOLDER -->
-
-        <!-- Note: The activity badge color changes when clicked and resets the number to 0
-                 Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-        <!--                <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> 21 </b> </span>-->
-
-        <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
-        <!--                <div class="ajax-dropdown">
-
-                             the ID links are fetched via AJAX to the ajax container "ajax-notifications"
-                            <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                <label class="btn btn-default">
-                                    <input type="radio" name="activity" id="ajax/notify/mail.html">
-                                    Msgs (14) </label>
-                                <label class="btn btn-default">
-                                    <input type="radio" name="activity" id="ajax/notify/notifications.html">
-                                    notify (3) </label>
-                                <label class="btn btn-default">
-                                    <input type="radio" name="activity" id="ajax/notify/tasks.html">
-                                    Tasks (4) </label>
-                            </div>
-
-                             notification content
-                            <div class="ajax-notifications custom-scroll">
-
-                                <div class="alert alert-transparent">
-                                    <h4>Click a button to show messages here</h4>
-                                    This blank page message helps protect your privacy, or you can show the first message here automatically.
-                                </div>
-
-                                <i class="fa fa-lock fa-4x fa-border"></i>
-
-                            </div>
-                             end notification content
-
-                             footer: refresh area
-                            <span> Last updated on: 12/12/2013 9:43AM
-                                <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> Loading..." class="btn btn-xs btn-default pull-right">
-                                    <i class="fa fa-refresh"></i>
-                                </button> </span>
-                             end footer
-
-                        </div>
-                         END AJAX-DROPDOWN -->
     </div>
-
-    <!-- #PROJECTS: projects dropdown -->
-    <!--            <div class="project-context hidden-xs">
-
-                    <span class="label">Projects:</span>
-                    <span class="project-selector dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span>
-
-                     Suggestion: populate this list with fetch and push technique
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="javascript:void(0);">Online e-merchant management system - attaching integration with the iOS</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Notes on pipeline upgradee</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Assesment Report for merchant account</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Clear</a>
-                        </li>
-                    </ul>
-                     end dropdown-menu
-
-                </div>-->
-    <!-- end projects dropdown -->
 
     <!-- #TOGGLE LAYOUT BUTTONS -->
     <!-- pulled right: nav area -->
     <div class="pull-right">
-
-        <!-- collapse menu button -->
-        <div id="hide-menu" class="btn-header pull-right">
-            <span> <a href="javascript:void(0);" data-action="toggleMenu" title="<?php echo e(trans('home.top-menu.collapse-menu')); ?>"><i class="fa fa-reorder"></i></a> </span>
-        </div>
-        <!-- end collapse menu -->
 
         <!-- #MOBILE -->
         <!-- Top menu profile link : this shows only when top menu is active -->
@@ -225,9 +150,15 @@ Use search to find needed section.
 
         <!-- logout button -->
         <div id="logout" class="btn-header transparent pull-right">
-            <span> <a href="/logout" title="<?php echo e(trans('home.top-menu.sign-out')); ?>" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
+            <span> <a href="/logout" title="<?php echo e(trans('home.top-menu.sign-out')); ?>" data-action="userLogout" data-logout-msg="<?php echo e(trans('home.logout-msg')); ?>"><i class="fa fa-sign-out"></i></a> </span>
         </div>
         <!-- end logout button -->
+
+        <!-- collapse menu button -->
+        <div id="hide-menu" class="btn-header pull-right">
+            <span> <a href="javascript:void(0);" data-action="toggleMenu" title="<?php echo e(trans('home.top-menu.collapse-menu')); ?>"><i class="fa fa-reorder"></i></a> </span>
+        </div>
+        <!-- end collapse menu -->
 
         <!-- search mobile button (this is hidden till mobile view port) -->
         <div id="search-mobile" class="btn-header transparent pull-right">
@@ -235,15 +166,27 @@ Use search to find needed section.
         </div>
         <!-- end search mobile button -->
 
+        <div class="btn-header transparent pull-right">
+            <span><a href="/" title="<?php echo e(trans('auth.dashboard')); ?>"><i class="fa fa-lg fa-fw fa-tachometer"></i></a></span>
+        </div>
+
+        <?php if(Auth::check()): ?>
+            <?php if(Auth::user()->role->level != 4): ?>
+                <div class="btn-header transparent pull-right">
+                    <span><a href="/users" title="<?php echo e(trans('user_content.user-management')); ?>"><i class="fa fa-lg fa-fw fa-users"></i></a></span>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
         <!-- #SEARCH -->
         <!-- input: search field -->
-        <form action="#ajax/search.html" class="header-search pull-right">
-            <input id="search-fld" type="text" name="param" placeholder="Find reports and more">
-            <button type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-            <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-        </form>
+        <?php /*<form action="#ajax/search.html" class="header-search pull-right">*/ ?>
+            <?php /*<input id="search-fld" type="text" name="param" placeholder="Find reports and more">*/ ?>
+            <?php /*<button type="submit">*/ ?>
+                <?php /*<i class="fa fa-search"></i>*/ ?>
+            <?php /*</button>*/ ?>
+            <?php /*<a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>*/ ?>
+        <?php /*</form>*/ ?>
         <!-- end input: search field -->
 
         <!-- fullscreen button -->
@@ -252,48 +195,33 @@ Use search to find needed section.
         </div>
         <!-- end fullscreen button -->
 
-        <!-- #Voice Command: Start Speech -->
-        <!-- NOTE: Voice command button will only show in browsers that support it. Currently it is hidden under mobile browsers.
-                           You can take off the "hidden-sm" and "hidden-xs" class to display inside mobile browser-->
-        <!-- <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
-            <div>
-                <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a>
-                <div class="popover bottom"><div class="arrow"></div>
-                    <div class="popover-content">
-                        <h4 class="vc-title">Voice command activated <br><small>Please speak clearly into the mic</small></h4>
-                        <h4 class="vc-title-error text-center">
-                            <i class="fa fa-microphone-slash"></i> Voice command failed
-                            <br><small class="txt-color-red">Must <strong>"Allow"</strong> Microphone</small>
-                            <br><small class="txt-color-red">Must have <strong>Internet Connection</strong></small>
-                        </h4>
-                        <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">See Commands</a>
-                        <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">Close Popup</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- end voice command -->
-
         <!-- multiple lang dropdown : find all flags in the flags page -->
         <ul class="header-dropdown-list hidden-xs">
             <li>
                 <?php if(session()->has('locale')): ?>
                     <?php if(session()->get('locale') == 'km'): ?>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>ខ្មែរ</span> <i class="fa fa-angle-down"></i> </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="ភាសាខ្មែរ"> <span>ខ្មែរ</span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="lang/en"><img src="img/blank.gif" class="flag flag-gb" alt="English"> English (EN)</a>
+                            </li>
+                        </ul>
                     <?php elseif(session()->get('locale') == 'en'): ?>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-us" alt="United States"> <span>US</span> <i class="fa fa-angle-down"></i> </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-gb" alt="English"> <span>EN</span> <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="lang/km"><img src="img/blank.gif" class="flag flag-kh" alt="ភាសាខ្មែរ"> ភាសាខ្មែរ (KH)</a>
+                            </li>
+                        </ul>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> <span>ខ្មែរ</span> <i class="fa fa-angle-down"></i> </a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="img/blank.gif" class="flag flag-kh" alt="ភាសាខ្មែរ"> <span>ខ្មែរ</span> <i class="fa fa-angle-down"></i> </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="lang/en"><img src="img/blank.gif" class="flag flag-gb" alt="English"> English (EN)</a>
+                        </li>
+                    </ul>
                 <?php endif; ?>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a href="lang/km"><img src="img/blank.gif" class="flag flag-kh" alt="Khmer"> ភាសាខ្មែរ (KH)</a>
-                    </li>
-                    <li>
-                        <a href="lang/en"><img src="img/blank.gif" class="flag flag-us" alt="United States"> English (EN)</a>
-                    </li>
-                </ul>
             </li>
         </ul>
         <!-- end multiple lang -->
@@ -306,24 +234,26 @@ Use search to find needed section.
 <!-- #NAVIGATION -->
 <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS/SASS variables -->
-<aside id="left-panel">
+<aside id="left-panel" style="min-width: 240px;">
 
     <!-- User info -->
     <div class="login-info">
-                <span> <!-- User image size is adjusted inside CSS, it should stay as is -->
+        <span> <!-- User image size is adjusted inside CSS, it should stay as is -->
 
-                    <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                        <?php /*<img src="<?php echo e(asset('img/avatars/male.png')); ?>" alt="me" class="offline" />*/ ?>
-                        <span>
-                            <?php echo e(isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email); ?>
+            <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                <?php /*<img src="<?php echo e(asset('img/avatars/male.png')); ?>" alt="me" class="offline" />*/ ?>
+                <span>
+                    <?php if(Auth::check()): ?>
+                        <?php echo e(isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email); ?>
 
-                        </span>
-                        <i class="fa fa-angle-down">
-
-                        </i>
-                    </a>
-
+                    <?php endif; ?>
                 </span>
+                <i class="fa fa-angle-down">
+
+                </i>
+            </a>
+
+        </span>
     </div>
     <!-- end user info -->
 
@@ -341,10 +271,6 @@ Use search to find needed section.
         -->
 
         <ul>
-        <!-- <li class="">
-                        <a href="dashboard" title="Dashboard"><i class="fa fa-lg fa-fw fa-dashboard txt-color-blue"></i><span class="menu-item-parent"><?php echo e(trans('home.dashboard')); ?></span></a>
-                    </li> -->
-
             <!-- Navigation left  -->
             <!-- Showing all tables -->
             <?php foreach($tables as $table): ?>
@@ -402,12 +328,6 @@ Use search to find needed section.
                     </li>
                 </ul>
             </li>
-            <?php /*<?php endif; ?>*/ ?>
-
-            <li class="">
-                <a href="users" title="user-management"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">User Management</span></a>
-            </li>
-
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
@@ -419,7 +339,7 @@ Use search to find needed section.
 <div id="main" role="main">
 
     <!-- RIBBON -->
-    <div id="ribbon">
+    <div id="ribbon" style="margin-left: 20px">
         <span class="ribbon-button-alignment">
             <i class="fa fa-home" style="color: white"></i>
         </span>
@@ -449,7 +369,7 @@ Use search to find needed section.
         <?php /*<?php echo $__env->yieldContent('content'); ?>*/ ?>
     <?php /*<?php endif; ?>*/ ?>
 
-    <div id="content"></div>
+    <div id="content" style="margin-left: 20px"></div>
 
 </div>
 <!-- END #MAIN PANEL -->
@@ -457,7 +377,7 @@ Use search to find needed section.
 <!-- #PAGE FOOTER -->
 <div class="page-footer">
     <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-sm-6" style="padding-left: 30px !important;">
             <span class="txt-color-white">CFS Version 1.0 | <span class="hidden-xs"><?php echo e(trans('home.footer.powered-by')); ?></span> © 2016</span>
         </div>
         <!-- end col -->
