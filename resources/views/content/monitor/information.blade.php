@@ -72,9 +72,9 @@
                                                 <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
                                                     <!-- Only Province is passed from controller. Others will be loaded by Javascript below -->
                                                     <option value="">{{ trans('information_content.geography.province_label') }}</option>
-                                                        @foreach($provinces as $province)
-                                                            <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
-                                                        @endforeach
+                                                    @foreach($provinces as $province)
+                                                        <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -104,7 +104,7 @@
                                             <label class="select">
                                                 <select ng-model="geography.district" id="district-filter" class="form-control" onchange="loadNew(this, 'commune')">
                                                     <option value="">{{ trans('information_content.geography.district_label') }}</option>
-                                                    </select>
+                                                </select>
                                                 <i></i>
                                             </label>
                                         @endif
@@ -157,7 +157,9 @@
                                           <option value="">{{ trans('information_content.characteristic.select') }}</option>
                                           @foreach($fields as $field)
                                               @if($field->DisplayField!==1)
-                                                  <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">{{$field->EntityDefinedFieldListName}}</option>
+                                                  <option ng-show="{{$field->EDFSearchType}} !== 0" value="{{$field->EntityDefinedFieldNameInTable}}">
+                                                      {{$field->EntityDefinedFieldListName}}
+                                                  </option>
                                               @endif
                                           @endforeach
                                       </select>
@@ -272,7 +274,10 @@
     $(document).ready(function () {
         angular.bootstrap($('#widget-grid'), ["app"]);
 
-//            $('select[ng-model = "geography.province"]').find('option')[0].remove();
+//        if($('select[ng-model = "geography.type"]').find('option')[0] != 'country') {
+//            $('select[ng-model = "geography.type"]').find('option')[0].remove();
+//        }
+
         $('#geography').change(function () {
             if(({{ $user_role_level }}) == 3) {
                 var p_code = $('#province_code').val();

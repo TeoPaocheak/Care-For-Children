@@ -12,7 +12,6 @@ use MONITORING\EntityDefinedFieldSearchValue;
 use MONITORING\EntityDefinedFieldCondition;
 use Auth;
 use DB;
-use phpDocumentor\Reflection\Types\Array_;
 
 class InformationController extends Controller {
     private $language_id;

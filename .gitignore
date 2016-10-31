@@ -22,12 +22,11 @@ bootstrap/cache/
 .env.php
 .env
 .env.example
-.idea.
+.idea
 *.swp
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
-
 
 ### Node ###
 # Logs

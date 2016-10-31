@@ -74,9 +74,9 @@
                                                 <select ng-model="geography.province" id="province-filter" class="form-control" onchange="loadNew(this, 'district')">
                                                     <!-- Only Province is passed from controller. Others will be loaded by Javascript below -->
                                                     <option value=""><?php echo e(trans('information_content.geography.province_label')); ?></option>
-                                                        <?php foreach($provinces as $province): ?>
-                                                            <option value="<?php echo e($province->ProvinceCode); ?>"><?php echo e($province->ProvinceName); ?></option>
-                                                        <?php endforeach; ?>
+                                                    <?php foreach($provinces as $province): ?>
+                                                        <option value="<?php echo e($province->ProvinceCode); ?>"><?php echo e($province->ProvinceName); ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                                 <i></i>
                                             </label>
@@ -107,7 +107,7 @@
                                             <label class="select">
                                                 <select ng-model="geography.district" id="district-filter" class="form-control" onchange="loadNew(this, 'commune')">
                                                     <option value=""><?php echo e(trans('information_content.geography.district_label')); ?></option>
-                                                    </select>
+                                                </select>
                                                 <i></i>
                                             </label>
                                         <?php endif; ?>
@@ -161,7 +161,10 @@
                                           <option value=""><?php echo e(trans('information_content.characteristic.select')); ?></option>
                                           <?php foreach($fields as $field): ?>
                                               <?php if($field->DisplayField!==1): ?>
-                                                  <option ng-show="<?php echo e($field->EDFSearchType); ?> !== 0" value="<?php echo e($field->EntityDefinedFieldNameInTable); ?>"><?php echo e($field->EntityDefinedFieldListName); ?></option>
+                                                  <option ng-show="<?php echo e($field->EDFSearchType); ?> !== 0" value="<?php echo e($field->EntityDefinedFieldNameInTable); ?>">
+                                                      <?php echo e($field->EntityDefinedFieldListName); ?>
+
+                                                  </option>
                                               <?php endif; ?>
                                           <?php endforeach; ?>
                                       </select>
@@ -276,7 +279,10 @@
     $(document).ready(function () {
         angular.bootstrap($('#widget-grid'), ["app"]);
 
-//            $('select[ng-model = "geography.province"]').find('option')[0].remove();
+//        if($('select[ng-model = "geography.type"]').find('option')[0] != 'country') {
+//            $('select[ng-model = "geography.type"]').find('option')[0].remove();
+//        }
+
         $('#geography').change(function () {
             if((<?php echo e($user_role_level); ?>) == 3) {
                 var p_code = $('#province_code').val();
