@@ -45,6 +45,7 @@
                                                     <i></i>
                                                 </label>
                                             </section>
+                                            {{--<p ng-bind="geography.province"></p>--}}
                                         </div>
                                     </fieldset>
                                 </div>
