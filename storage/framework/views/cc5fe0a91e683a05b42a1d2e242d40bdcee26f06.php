@@ -242,12 +242,11 @@
 </section> <!-- end section-->
 <div id="modal-loading" class="modal fade" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content" style="background-color: transparent; box-shadow: none; border: none;">
+        <div class="modal-content" style="background-color: inherit; box-shadow: none; border: none;">
             <div class="modal-body" style="background-color: transparent; text-align: center;">
                 <img src="<?php echo e(asset('img/loading.gif')); ?>">
             </div>
         </div>
-
     </div>
 </div>
 

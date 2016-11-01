@@ -242,7 +242,6 @@
                 <img src="{{asset('img/loading.gif')}}">
             </div>
         </div>
-
     </div>
 </div>
 
