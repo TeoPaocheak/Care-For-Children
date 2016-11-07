@@ -324,7 +324,6 @@
                 });
             }
         });
-
     });
     loadScript("js/plugin/bootstraptree/bootstrap-tree.min.js", function(){});
 </script>

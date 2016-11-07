@@ -89,6 +89,8 @@ class InformationController extends Controller {
             }
         }
 
+//        dd($selections);
+
         // Selecting column header according to selections from checkboxes and displaying them in result form
         $col_header = DB::table('entitydefinedfieldwithlistfull')
                 ->select('EntityDefinedFieldListName')
