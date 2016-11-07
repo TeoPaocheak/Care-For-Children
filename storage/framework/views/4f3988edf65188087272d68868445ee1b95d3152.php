@@ -112,9 +112,9 @@ Use search to find needed section.
         <span id="logo"><a href="http://www.moeys.gov.kh" target="blank"><img src="img/ministry_logo.png" alt="Ministry of Education" style="position: absolute; top: 0; width: 40px; height: 55px;"></a></span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
-    <div id="logo-group" style="width: 260px;">
+    <div id="logo-group" style="width: 340px;">
         <!-- PLACE YOUR LOGO HERE -->
-        <span id="logo" style="position: absolute; top: 0; width: 210px; padding-top: 3px"><?php echo e(trans('auth.cfs')); ?></span>
+        <span id="logo" style="position: absolute; top: 0; width: 290px; font-size: 18px;"><?php echo e(trans('auth.cfs')); ?></span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
     <div id="logo-group" style="width: 150px;">
@@ -263,9 +263,7 @@ Use search to find needed section.
 
                     <?php endif; ?>
                 </span>
-                <i class="fa fa-angle-down">
-
-                </i>
+                <i class="fa fa-angle-down"></i>
             </a>
 
         </span>
