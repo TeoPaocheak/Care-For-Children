@@ -48,24 +48,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tabledetails as $table)
+                                <?php foreach($tabledetails as $table): ?>
                                 <tr>
-                                    <td>{{$table->id}}</td>
-                                    <td>{{$table->TableName}}</td>
+                                    <td><?php echo e($table->id); ?></td>
+                                    <td><?php echo e($table->TableName); ?></td>
                                     <td>
-                                        @foreach ($table->asset as $field)
-                                        {{--{{$field->EntityDefinedFieldListCategory}}<br><br>--}}
-                                            {{$field->EntityDefinedFieldListCode}}<br><br>
-                                        @endforeach
+                                        <?php foreach($table->asset as $field): ?>
+                                        <?php /*<?php echo e($field->EntityDefinedFieldListCategory); ?><br><br>*/ ?>
+                                            <?php echo e($field->EntityDefinedFieldListCode); ?><br><br>
+                                        <?php endforeach; ?>
                                     </td>
                                     <td>
                                         <!-- widget content -->
                                         <div class="widget-body">
                                             <div class="tree">
                                                 <ul>
-                                                    @foreach ($table->asset as $field)
+                                                    <?php foreach($table->asset as $field): ?>
                                                     <li>
-                                                        <span class="label label-primary"><i class="fa fa-lg fa-minus-circle"></i> {{$field->EntityDefinedFieldListName}}</span><span class="label label-info">{{$field->EntityDefinedFieldNameInTable}}</span>
+                                                        <span class="label label-primary"><i class="fa fa-lg fa-minus-circle"></i> <?php echo e($field->EntityDefinedFieldListName); ?></span><span class="label label-info"><?php echo e($field->EntityDefinedFieldNameInTable); ?></span>
                                                         <ul>
                                                             <li>
                                                                 <span class="label label-success"><i class="fa fa-lg fa-minus-circle"></i> Monday, January 7: 8.00 hours</span>
@@ -75,14 +75,14 @@
                                                             </li>
                                                         </ul>
                                                     </li>
-                                                    @endforeach
+                                                    <?php endforeach; ?>
                                                 </ul>
                                             </div>
                                         </div>
                                         <!-- end widget content -->
                                     </td>
                                 </tr>
-                                @endforeach
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>

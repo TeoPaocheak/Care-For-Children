@@ -24,18 +24,19 @@ class EntityDefinedSearchController extends Controller {
     }
 
     public function index() {
-        $tables = Table::all(['id', 'TableName', 'TableCorespondingName']);
+//        $tables = Table::all(['id', 'TableName', 'TableCorespondingName']);
+        $tables = Table::all(['id', 'TableName', 'TableNameEN', 'TableNameKH']);
+//        dd(count($tables));
         for ($i = 0; $i < count($tables); $i++) {
             $tables[$i]->asset = DB::table('entitydefinedfield')
                     ->leftJoin('entitydefinedfieldlist', 'entitydefinedfield.EntityDefinedFieldListCode', '=', 'entitydefinedfieldlist.EntityDefinedFieldListCode')
-                    ->select('entitydefinedfieldlist.EntityDefinedFiledListName', 'entitydefinedfield.EntityDefinedFieldNameInTable', 'entitydefinedfieldlist.EntityDefinedFieldListCategory', 'entitydefinedfieldlist.LanguageID')
-                    ->orderBy('entitydefinedfieldlist.EntityDefinedFieldListCategory')
+                    ->select('entitydefinedfieldlist.EntityDefinedFieldListName', 'entitydefinedfield.EntityDefinedFieldNameInTable', 'entitydefinedfieldlist.EntityDefinedFieldListCode', 'entitydefinedfieldlist.LanguageID')
+                    ->orderBy('entitydefinedfieldlist.EntityDefinedFieldListCode')
                     ->where('entitydefinedfield.TableID', '=', $tables[$i]->id)
                     ->where('entitydefinedfieldlist.LanguageID','=',$this->language_id)
                     ->get();
         }
-        return response()
-                        ->view('content.system.entity_defined_field_search', ['tabledetails' => $tables]);
+        return response()->view('content.system.entity_defined_field_search', ['tabledetails' => $tables]);
     }
 
 }

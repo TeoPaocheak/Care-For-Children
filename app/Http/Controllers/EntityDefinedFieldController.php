@@ -58,8 +58,7 @@ class EntityDefinedFieldController extends Controller {
 
     public function store(Request $request) {
         // problem is list code :(
-// find last code id
-
+        // find last code id
         $lastFieldCode = DB::table('entitydefinedfieldlist')
                 ->select('EntityDefinedFieldListCode')
                 ->orderBy('EntityDefinedFieldListCode', 'desc')
@@ -114,7 +113,6 @@ class EntityDefinedFieldController extends Controller {
     }
 
     public function importVariable(Request $request) {
-
         $file = $request->file('file');
         $inputFileName = $file->getClientOriginalName();
         $file_tmp_name = $file->getFileInfo();
@@ -232,6 +230,7 @@ class EntityDefinedFieldController extends Controller {
 //            $condition->LanguageID = 2;
 //            $condition->save();
 //        }
+
         foreach ($variable_conditions->get() as $var_con) {
             if ($var_con->variable_name_in_table === NULL) {
                 break;
@@ -298,7 +297,7 @@ class EntityDefinedFieldController extends Controller {
                         ->get();
                 $i = 2;
                 foreach ($conditions as $condition) {
-                    $sheet->row(2, [$condition->ConditionCode, $condition->ConditionNameEN, $condition->ConditionNameKH, $condition->ConditionSymbol]);
+                    $sheet->row($i++, [$condition->ConditionCode, $condition->ConditionNameEN, $condition->ConditionNameKH, $condition->ConditionSymbol]);
                 }
             });
             $reader->sheet('VariableConditions', function($sheet) {

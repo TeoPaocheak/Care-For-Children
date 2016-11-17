@@ -1,15 +1,17 @@
+{{--This uses Entity Defined Field Controller with method importVariables--}}
+
 <section id="widget-grid" class="">
     <div class="row">
         <article class="col-sm-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    Form
+                    Import Form
                 </div>
                 <div class="panel-body">
                     <form class="excel-upload smart-form" method="post" enctype="multipart/form-data" action='system/edf-import/process'>
                         <fieldset>	
                             <section>
-                                <label class="label">File input</label>
+                                <label class="label">Choose a file</label>
                                 <label for="file" class="col-sm-11 input input-file state-success">
                                     <div class="button"><input type="file" name="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</div><input type="text" readonly>
                                 </label>
@@ -29,9 +31,7 @@
 <script type="text/javascript">
     pageSetUp();
 
-    var pageFunction = function () {
-
-    };
+    var pageFunction = function () {};
 
     var process = function () {
         $("#loading").show();
@@ -46,10 +46,9 @@
             }
         });
     };
+
     loadScript('js/libs/jquery-form-3.51.js', pageFunction);
 
-    $(document).ready(function () {
-
-    });
+    $(document).ready(function() {});
 
 </script>

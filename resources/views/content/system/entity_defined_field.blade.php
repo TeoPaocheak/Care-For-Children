@@ -33,12 +33,6 @@
                     </thead>
                     <tbody id="field"></tbody>
                 </table>
-                <!-- <div class="widget-body">
-                    <div class="tree">
-                        <ul id="field">
-                        </ul>
-                    </div> 
-                </div>-->
             </div>
         </article>
     </div>
@@ -109,15 +103,13 @@
             });
         }
     };
-    var removeNewField = function (obj) {
-        $(obj).parent().remove();
-    };
-    var addNewField = function (data) {
 
+    //    Display the just added field in table
+    var addNewField = function (data) {
         $("#field").prepend(
             "<tr>" +
             "<td><span class='label label-danger' onclick='removeField(" + data.EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" + data.EntityDefinedFieldNameInTable + "</td>" +
-            //"<span class='label label-danger' onclick='removeField(" + result[i].EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" +                               
+            //"<span class='label label-danger' onclick='removeField(" + result[i].EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" +
             "<td>" + data.EntityDefinedCategoryNameEN + "-" + data.EntityDefinedCategoryNameKH + "</td>" +
             "<td>" + data.EntityDefinedFiledListNameEN + "</td>" +
             "<td>" + data.EntityDefinedFiledListNameKH + "</td>" +
@@ -127,6 +119,25 @@
             "</tr>");
 
     };
+
+    var newField = function () {
+        $("#new-field").prepend("<div>"+
+            "<div class='form-group col-sm-12 select-field-table'><select class='form-control input-sm'>" + columnOption + "</select></div>" +
+            "<div class='form-group col-sm-12 cat'><select class='form-control input-sm'>" + categoryOption + "</select></div>" +
+            "<div class='form-group col-sm-12 field-en'><input class='form-control input-sm' type='text' placeholder='Enter Variable Name In English'></div>" +
+            "<div class='form-group col-sm-12 field-kh'><input class='form-control input-sm' type='text' placeholder='Enter Variable Name In Khmer'></div>" +
+            "<div class='form-group col-sm-12 edf-type'><select class='form-control input-sm'>" + edfType + "</select></div>" +
+            "<div class='form-group col-sm-12 edf-search-type'><select class='form-control input-sm'>" + edfSearchType + "</select></div>" +
+            "<div class='form-group col-sm-12 display-field'><select class='form-control input-sm'>" + displayField + "</select></div>" +
+            "<button class='btn btn-info' onclick='saveNewField(this)'><i class='fa fa-lg fa-save'></i></button>"+
+            "<button class='btn btn-danger' onclick='removeNewField(this)'><i class='fa fa-lg fa-trash-o'></i></button>"+
+            "</div>");
+    };
+
+    var removeNewField = function (obj) {
+        $(obj).parent().remove();
+    };
+
     var saveNewField = function (obj) {
         var fieldInTable = $(obj).siblings(".select-field-table").children("select").val();
         var catCode = $(obj).siblings(".cat").children("select").val();
@@ -159,19 +170,6 @@
         });
     };
 
-    var newField = function () {
-        $("#new-field").prepend("<div>"+
-            "<div class='form-group col-sm-12 select-field-table'><select class='form-control input-sm'>" + columnOption + "</select></div>" +
-            "<div class='form-group col-sm-12 cat'><select class='form-control input-sm'>" + categoryOption + "</select></div>" +
-            "<div class='form-group col-sm-12 field-en'><input class='form-control input-sm' type='text' placeholder='Enter Variable Name In English'></div>" +
-            "<div class='form-group col-sm-12 field-kh'><input class='form-control input-sm' type='text' placeholder='Enter Variable Name In Khmer'></div>" +
-            "<div class='form-group col-sm-12 edf-type'><select class='form-control input-sm'>" + edfType + "</select></div>" +
-            "<div class='form-group col-sm-12 edf-search-type'><select class='form-control input-sm'>" + edfSearchType + "</select></div>" +
-            "<div class='form-group col-sm-12 display-field'><select class='form-control input-sm'>" + displayField + "</select></div>" +
-            "<button class='btn btn-info' onclick='saveNewField(this)'><i class='fa fa-lg fa-save'></i></button>"+
-            "<button class='btn btn-danger' onclick='removeNewField(this)'><i class='fa fa-lg fa-trash-o'></i></button>"+
-            "</div>");
-    };
     var removeField = function (fieldID, obj) {
         if (confirm("Are You sure to delete!")) {
             $("#spin").show();
@@ -189,9 +187,8 @@
             });
         }
     };
-    var editField = function (fieldID, obj) {
 
-    };
+    var editField = function (fieldID, obj) {};
 
     var getColumnAndCategory = function (tableID) {
         var results;
@@ -204,26 +201,6 @@
         });
         return results;
     };
-//    for (i = 0; i < result.length; i++) {
-//        $("#field").append(
-//                "<li>" +
-//                "<span class='label label-primary'><i class='fa fa-lg fa-plus-circle'></i>" + result[i].EntityDefinedFiledListName + "</span><span class='label label-danger'><i class='fa fa-lg fa-trash-o'></i></span><span class='label label-primary'><i class='fa fa-lg fa-save'></i></span>" +
-//                "<ul>" +
-//                "<li>" +
-//                "<lable class='label label-primary'>Categroy:</lable>" +
-//                "<div class='col-sm-3'><input class='form-control input-sm' type='text' value='" + result[i].EntityDefinedFieldListCategory + "'></div>" +
-//                "</li><br>" +
-//                "<li>" +
-//                "<lable class='label label-primary'>Field Name In Table:</lable>" +
-//                "<div class='col-sm-3'><select id='select-" + i + "' class='form-control input-sm'></select></div>" +
-//                "</li>" +
-//                "</ul>" +
-//                "</li>");
-//        $("#select-" + i).html("");
-//        for (j = 0; j < columns.length; j++) {
-//            $("#select-" + i).append("<option value='" + columns[j].COLUMN_NAME + "'>" + columns[j].COLUMN_NAME + "</option>");
-//        }
-//    }
 </script>
 
 <script type="text/javascript">
