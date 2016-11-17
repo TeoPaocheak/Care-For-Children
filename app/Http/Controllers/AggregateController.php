@@ -81,7 +81,7 @@ class AggregateController extends Controller {
             }
         }
 
-        // get geographical hierachy
+        // get geographical hierarchy
         //echo $tempDB->where('PROVINCE_CODE', 21)->first()->NumberOfEntity;
         $tempDB = clone $db;
         $country = $tempDB->first();
