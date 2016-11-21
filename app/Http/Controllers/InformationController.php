@@ -172,7 +172,7 @@ class InformationController extends Controller {
         }
 
         $conditions = Condition::where('LanguageID', $this->language_id)->get();
-        
+
         // get category
         $table = DB::table('table')->where('id', $tableID)->first();
 
@@ -210,12 +210,14 @@ class InformationController extends Controller {
 
     // Selecting values and conditions of related fields
     public function showFieldListValue($fieldName) {
+        // $fieldName refers to as a example "GENERAL_INFORMATION_FULL_OPTION"
         $obj = array('values' => DB::table('edf_entitydefinedfieldsearch')
                     ->select('id', 'Value', 'Description', 'Description_KH', 'EDFSearchType')
                     ->where('EntityDefinedFieldNameInTable', $fieldName)
                     ->get(),
                     'conditions' => EntityDefinedFieldCondition::getConditionByFieldID($fieldName, $this->language_id));
 
+        // $obj contains array of values and conditions
         return response($obj, 200);
     }
 

@@ -40,17 +40,19 @@
     var tableID;
     var columnOption;
     var categoryOption;
-    var edfType = 
+    var edfType =
             "<option value='0'>0-No Type</option>" +
             "<option value='1'>1-Drop Down</option>" +
             "<option value='2'>2-Input Text</option>";
     var addNew = "<li><a onclick='newField();'><span class='label label-primary'><i class='fa fa-lg fa-plus'></i> Add New </span><a></li>";
+
     var loadField = function () {
         $("#spin").show();
         $("#field").html("");
         tableID = $("#table-value").val();
         if (tableID.length !== 0) {
             $.ajax({
+                // This url calls Show Method in Entity Defined Field Controller
                 url: "<?php echo e(url('system/entity-field')); ?>/" + tableID,
                 success: function (result) {
                     columnOption = "";
@@ -62,6 +64,7 @@
                         columnOption += "<option value='" + columns[j].COLUMN_NAME + "'>" + columns[j].COLUMN_NAME + "</option>";
                     }
                     for (j = 0; j < categories.length; j++) {
+                        // console.log(categories[j].EntityDefinedCategoryName);
                         categoryOption += "<option value='" + categories[j].EntityDefinedCategoryCode + "'>" + categories[j].EntityDefinedCategoryName + "</option>";
                     }
                     $("#field").html(addNew);
@@ -98,11 +101,24 @@
             });
         }
     };
+
+    var getColumnAndCategory = function (tableID) {
+        var results;
+        $.ajax({
+            url: "<?php echo e(url('system/entity-field/getColumnAndCategoryName')); ?>/" + tableID,
+            async: false,
+            success: function (result) {
+                results = result;
+            }
+        });
+        return results;
+    };
+
     var removeNewField = function (obj) {
         $(obj).parent().parent().parent().remove();
     };
-    var addNewField = function (obj, data) {
 
+    var addNewField = function (obj, data) {
         $(obj).parent().parent().parent().html(
                 "<span class='label label-primary'><i class='fa fa-lg fa-plus-circle'></i> " + data.EntityDefinedFieldNameInTable + "</span><span class='label label-danger' onclick='removeField(" + data.EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" +
                 "<ul>" +
@@ -120,8 +136,8 @@
                 "</li>" +
                 "</ul>"
                 );
-
     };
+
     var saveNewField = function (obj) {
         var fieldInTable = $(obj).parent().parent().siblings(".select-field-table").children("select").val();
         var catCode = $(obj).parent().siblings(".cat").children("div").children("select").val();
@@ -171,8 +187,8 @@
                 "</li>" +
                 "</ul>" +
                 "</li>");
-
     };
+
     var removeField = function (fieldID, obj) {
         if (confirm("Are You sure to delete!")) {
             $(obj).parent().append("<span class=\"label label-info txt-color-blueDark\" href=\"javascript:void(0);\"><i class=\"fa fa-gear fa-2x fa-spin\"></i></span>");
@@ -185,21 +201,9 @@
             });
         }
     };
-    var editField = function (fieldID, obj) {
 
-    };
+    var editField = function (fieldID, obj) {};
 
-    var getColumnAndCategory = function (tableID) {
-        var results;
-        $.ajax({
-            url: "<?php echo e(url('system/entity-field/getColumnAndCategoryName')); ?>/" + tableID,
-            async: false,
-            success: function (result) {
-                results = result;
-            }
-        });
-        return results;
-    };
 //    for (i = 0; i < result.length; i++) {
 //        $("#field").append(
 //                "<li>" +
@@ -263,7 +267,7 @@
     };
     // end pagefunction
 
-    // destroy generated instances 
+    // destroy generated instances
     // pagedestroy is called automatically before loading a new page
     // only usable in AJAX version!
 
@@ -271,14 +275,14 @@
 
         /*
          Example below:
-         
+
          $("#calednar").fullCalendar( 'destroy' );
          if (debugState){
          root.console.log("? Calendar destroyed");
-         } 
-         
+         }
+
          For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
-         
+
          */
 
 

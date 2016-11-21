@@ -29,6 +29,7 @@ class EntityDefinedFieldController extends Controller {
         $entity_defined_fields = DB::table('entitydefinedfieldwithlist')
                 ->where('TableID', '=', $id)
                 ->get();
+        // print_r($entity_defined_fields);
         return response($entity_defined_fields, 200);
     }
 
@@ -56,6 +57,7 @@ class EntityDefinedFieldController extends Controller {
         return response('Your field has been deleted', 200);
     }
 
+    // Creating a new condition category and its components
     public function store(Request $request) {
         // problem is list code :(
         // find last code id

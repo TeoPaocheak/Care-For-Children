@@ -68,9 +68,11 @@ class AggregateController extends Controller {
                 break;
             default :break;
         }
+
         if (count($conditions) > 0) {
             $conditions[0]->conjunction = "AND";
         }
+
         for ($i = 0; $i < count($conditions); $i++) {
             if (strlen($conditions[$i]->keyValue) !== 0 && strlen($conditions[$i]->condition) !== 0 && strlen($conditions[$i]->value) !== 0) {
                 if (strcmp($conditions[$i]->conjunction, "AND") === 0) {
@@ -166,7 +168,6 @@ class AggregateController extends Controller {
         return response()->view('content.monitor.aggregate-result', ["country" => $country, "gp_aggType" => $gp_aggType, 'gp_type' => $gp_type, '']);
     }
 
-
     public function show($tableID) { // show category
         // get province code
 
@@ -174,7 +175,6 @@ class AggregateController extends Controller {
         $province = trans('information_content.geography.province');
         $district = trans('information_content.geography.district');
         $commune = trans('information_content.geography.commune');
-
 
         switch ($this->user_role_level){
             case 1:
@@ -237,23 +237,24 @@ class AggregateController extends Controller {
         // get category
         $table = DB::table('table')->where('id', $tableID)->first();
 
-        $categories = DB::table('entitydefinedfieldwithlistfull')
-            ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
-            ->groupBy('EntityDefinedCategoryName')
-            ->orderBy('EntityDefinedCategoryCode', 'asc')
-            ->get();
+        // $categories = DB::table('entitydefinedfieldwithlistfull')
+        //     ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
+        //     ->groupBy('EntityDefinedCategoryName')
+        //     ->orderBy('EntityDefinedCategoryCode', 'asc')
+        //     ->get();
+        //
+        // for ($i = 0; $i < count($categories); $i++) {
+        //     $categories[$i]->fields = DB::table('entitydefinedfieldwithlistfull')
+        //         ->where([['LanguageID', $this->language_id], ['TableID', $tableID], ['EntityDefinedCategoryName', $categories[$i]->EntityDefinedCategoryName]])
+        //         ->get();
+        // }
 
-        for ($i = 0; $i < count($categories); $i++) {
-            $categories[$i]->fields = DB::table('entitydefinedfieldwithlistfull')
-                ->where([['LanguageID', $this->language_id], ['TableID', $tableID], ['EntityDefinedCategoryName', $categories[$i]->EntityDefinedCategoryName]])
-                ->get();
-        }
-//        get list of field related to each
+//        get list of select option fields for conditions
         $fields = DB::table('entitydefinedfieldwithlistfull')
             ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
             ->orderBy('EntityDefinedFieldListCode', 'asc')
             ->get();
 
-        return response()->view('content.monitor.aggregate', ['table' => $table->TableName, 'geographical_areas' => $geographical_areas, 'provinces' => $provinces, 'districts' => $districts, 'conditions' => $conditions, 'categories' => $categories, 'fields' => $fields, 'user_role_level' => $this->user_role_level]);
+        return response()->view('content.monitor.aggregate', ['table' => $table->TableName, 'geographical_areas' => $geographical_areas, 'provinces' => $provinces, 'districts' => $districts, 'conditions' => $conditions, 'fields' => $fields, 'user_role_level' => $this->user_role_level]);
     }
 }
