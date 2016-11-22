@@ -9,7 +9,8 @@
                 </div>
                 <div class="panel-body">
                     <form class="excel-upload smart-form" method="post" enctype="multipart/form-data" action='system/edf-import/process'>
-                        <fieldset>	
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <fieldset>
                             <section>
                                 <label class="label">Choose a file</label>
                                 <label for="file" class="col-sm-11 input input-file state-success">

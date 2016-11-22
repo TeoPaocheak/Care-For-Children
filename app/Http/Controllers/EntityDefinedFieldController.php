@@ -29,7 +29,6 @@ class EntityDefinedFieldController extends Controller {
         $entity_defined_fields = DB::table('entitydefinedfieldwithlist')
                 ->where('TableID', '=', $id)
                 ->get();
-        // print_r($entity_defined_fields);
         return response($entity_defined_fields, 200);
     }
 

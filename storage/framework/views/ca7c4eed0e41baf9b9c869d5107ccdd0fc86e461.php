@@ -65,6 +65,8 @@
         "<option value='0'>Filter Only</option>" +
         "<option value='1'>Display Only</option>" +
         "<option value='2'>Filter and Display</option>";
+
+    // This calls method Show in EntityDefinedFieldController
     var loadField = function () {
         $("#spin").show();
         $("#field").html("");
@@ -89,7 +91,7 @@
                         $("#field").append(
                             "<tr>" +
                             "<td><span class='label label-danger' onclick='removeField(" + result[i].EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" + result[i].EntityDefinedFieldNameInTable + "</td>" +
-                            //"<span class='label label-danger' onclick='removeField(" + result[i].EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" +                               
+                            //"<span class='label label-danger' onclick='removeField(" + result[i].EntityDefinedFieldListCode + ",this)'><i class='fa fa-lg fa-trash-o'></i></span>" +
                             "<td>" + result[i].EntityDefinedCategoryNameEN + "-" + result[i].EntityDefinedCategoryNameKH + "</td>" +
                             "<td>" + result[i].EntityDefinedFieldListNameEN + "</td>" +
                             "<td>" + result[i].EntityDefinedFieldListNameKH + "</td>" +
@@ -243,20 +245,20 @@
     };
     // end pagefunction
 
-    // destroy generated instances 
+    // destroy generated instances
     // pagedestroy is called automatically before loading a new page
     // only usable in AJAX version!
     var pagedestroy = function () {
         /*
          Example below:
-         
+
          $("#calednar").fullCalendar( 'destroy' );
          if (debugState){
          root.console.log("✔ Calendar destroyed");
-         } 
-         
+         }
+
          For common instances, such as Jarviswidgets, Google maps, and Datatables, are automatically destroyed through the app.js loadURL mechanic
-         
+
          */
     }
     // end destroy
