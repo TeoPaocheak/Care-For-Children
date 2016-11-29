@@ -39,6 +39,8 @@ class InformationController extends Controller {
     public function index(Request $request) {
         // show the entity information related to condition
         //$data = $request->input('key');
+
+        // $table returns data from table Tabel
         $table = DB::table('table')->where('TableName', $request->input('table_name'))->first();
         $gp_type = $request->input('gp_type');
         // Data here is from dropdown1 ,2 and 3
@@ -47,6 +49,7 @@ class InformationController extends Controller {
         $selections = json_decode($request->input('selections'));
         $db = DB::table($request->input('table_name'));
         $db->select(DB::raw("EDF_CODE,".implode(",", $selections)));
+        // dd($selections);
 
 //        dd($gp_type);
 //        dd($request->input('gp_province'));

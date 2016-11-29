@@ -60,7 +60,12 @@
     <link rel="apple-touch-startup-image" href="<?php echo e(asset('img/splash/iphone.png')); ?>"
           media="screen and (max-device-width: 320px)">
     <link rel="stylesheet" href="<?php echo e(URL::asset('css/custom_style.css')); ?>">
-
+    
+    <style media="screen">
+        #ToolTables_datatable_fixed_column_2 {
+            display: none;
+        }
+    </style>
 </head>
 
 <!--
