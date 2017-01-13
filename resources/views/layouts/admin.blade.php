@@ -3,8 +3,8 @@
 <head>
     <base href="/">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>{{ trans('auth.cfs') }}</title>
-    <meta name="description" content="Child Friendly School">
+    <title>{{ trans('auth.cfc') }}</title>
+    <meta name="description" content="Care For Children">
     <meta name="phinath" content="OI Software Developer">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -60,7 +60,7 @@
     <link rel="apple-touch-startup-image" href="{{asset('img/splash/iphone.png')}}"
           media="screen and (max-device-width: 320px)">
     <link rel="stylesheet" href="{{ URL::asset('css/custom_style.css') }}">
-    
+
     <style media="screen">
         #ToolTables_datatable_fixed_column_2 {
             display: none;
@@ -120,10 +120,10 @@ Use search to find needed section.
         <span id="logo"><a href="http://www.moeys.gov.kh" target="blank"><img src="img/ministry_logo.png" alt="Ministry of Education" style="position: absolute; top: -2px; width: 40px; height: 55px;"></a></span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
-    <div id="logo-group" style="width: 340px;">
+    <div id="logo-group" style="width: 360px;">
         <!-- PLACE YOUR LOGO HERE -->
         <span id="logo"
-              style="position: absolute; top: 0; width: 290px; font-size: 18px;">{{ trans('auth.cfs') }}</span>
+              style="position: absolute; top: 0; width: 340px; font-size: 18px;">{{ trans('auth.cfc') }}</span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
     <div id="logo-group" style="width: 150px;">
@@ -266,7 +266,6 @@ Use search to find needed section.
     <!-- User info -->
     <div class="login-info">
         <span> <!-- User image size is adjusted inside CSS, it should stay as is -->
-
             <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
                 {{--<img src="{{asset('img/avatars/male.png')}}" alt="me" class="offline" />--}}
                 <span>
@@ -276,7 +275,6 @@ Use search to find needed section.
                 </span>
                 <i class="fa fa-angle-down"></i>
             </a>
-
         </span>
     </div>
     <!-- end user info -->
@@ -311,7 +309,7 @@ Use search to find needed section.
                             <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
                         </li>
                         <li class="">
-                            <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
+                            <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['orphanage' => 'មណ្ឌល']) }}</span></a>
                         </li>
                     @endif
                 @else
@@ -319,7 +317,7 @@ Use search to find needed section.
                         <a href="monitor/entity-info/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">{{trans('home.left-menu.information-list')}}{{$table->TableNameKH}}</span></a>
                     </li>
                     <li class="">
-                        <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['school' => $table->TableNameKH]) }}</span></a>
+                        <a href="monitor/entity-agg/{{$table->id}}" title="monitor-info"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">{{ trans('home.left-menu.aggregate-list', ['orphanage' => 'មណ្ឌល']) }}</span></a>
                     </li>
                 @endif
             @endforeach
@@ -351,6 +349,16 @@ Use search to find needed section.
                         <a href="system/edf-export" title="sys-entity-defined-field">{{trans('home.system.export')}}</a>
                     </li>
                 </ul>
+            </li>
+
+            <li class="">
+                <a href="inspect/inspect-chart" title="inspect-info"><i class="fa fa-lg fa-fw fa-university"></i><span class="menu-item-parent">{{ trans('inspection.institution-inspection-chart') }}</span></a>
+            </li>
+            <li class="">
+                <a href="inspect/inspect-children" title="inspect-info"><i class="fa fa-lg fa-fw fa-child"></i><span class="menu-item-parent">{{ trans('inspection.children-inspection-chart') }}</span></a>
+            </li>
+            <li class="">
+                <a href="inspect/inspect-table" title="inspect-info"><i class="fa fa-lg fa-fw fa-bar-chart"></i><span class="menu-item-parent">{{ trans('inspection.institution-inspection-table') }}</span></a>
             </li>
         </ul>
     </nav>
@@ -401,8 +409,8 @@ Use search to find needed section.
 <!-- #PAGE FOOTER -->
 <div class="page-footer">
     <div class="row">
-        <div class="col-xs-12 col-sm-6" style="padding-left: 30px !important;">
-            <span class="txt-color-white">CFS Version 1.0 | <span class="hidden-xs">{{ trans('home.footer.powered-by') }}</span> © 2016</span>
+        <div class="col-xs-12 col-sm-6" style="padding-left: 45px !important;">
+            <span class="txt-color-white">CFC Version 1.0 | <span class="hidden-xs">{{ trans('home.footer.powered-by') }}</span> © 2016</span>
         </div>
         <!-- end col -->
     </div>
@@ -441,16 +449,20 @@ Use search to find needed section.
 <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
 <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
 
-
 <!-- #PLUGINS -->
 <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
     if (!window.jQuery) {
         document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
     }
 </script>
+
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
 <script>
     if (!window.jQuery.ui) {
         document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
@@ -459,6 +471,7 @@ Use search to find needed section.
 <script src="{{asset('js/libs/angular-1.5.0.js')}}"></script>
 <script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('js/school-info.js')}}"></script>
+<script src="{{asset('js/chart-info.js')}}"></script>
 
 
 <!-- IMPORTANT: APP CONFIG -->

@@ -76,7 +76,12 @@ class UserController extends Controller {
     }
 
     public function index() {
-        $users = User::where([['user_id', '=', Auth::user()->id], ['is_deleted', '=', '0']])->get();
+        if (Auth::user()->role->level == 1) {
+            $users = User::where([['id', '!=', Auth::user()->id], ['is_deleted', '=', '0']])->get();
+        } else {
+            $users = User::where([['user_id', '=', Auth::user()->id], ['is_deleted', '=', '0']])->get();
+        }
+
         return response()->view('users.index', ['users' => $users]);
     }
 

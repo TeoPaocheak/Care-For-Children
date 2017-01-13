@@ -7,15 +7,18 @@ return [
         'selecting-geographical-area' => 'ជ្រេីសរេីសតំបន់ភូមិសាស្ត្រ',
         'geographical-area' => 'តំបន់ភូមិសាស្ត្រ',
         'country' => 'ប្រទេស',
+        'national' => 'ប្រទេស',
         'province' => 'ខេត្ត',
         'district' => 'ក្រុង/ស្រុក/ខ័ណ្ឌ',
         'commune' => 'ឃំុ/សង្កាត់',
         'village' => 'ភូមិ',
+        'center' => 'មណ្ឌល',
 
         'province_label' => '--ខេត្ត--',
         'district_label' => '--ក្រុង/ស្រុក/ខ័ណ្ឌ--',
         'commune_label' => '--ឃំុ/សង្កាត់--',
-        'village_label' => '--ភូមិ--'
+        'village_label' => '--ភូមិ--',
+        'year_label' => '--ឆ្នាំ--'
     ],
 
     'characteristic' => [
@@ -33,7 +36,7 @@ return [
 
     'variance' => 'គំលាត',
 
-    'report-title' => 'របាយការណ៍វាយតម្លៃសាលាកុមារមេត្រី',
+    'report-title' => 'របាយការណ៍វាយតម្លៃមជ្ឍមណ្ឌលកុមារកំព្រា',
 
-    'report-compare-title' => 'របាយការណ៍លទ្ធផលវាយតម្លៃសាលាកុមារមេត្រី'
+    'report-compare-title' => 'របាយការណ៍លទ្ធផលវាយតម្លៃមជ្ឍមណ្ឌលកុមារកំព្រា'
 ];

@@ -20,7 +20,7 @@
                             </section>
                         </fieldset>
                         <footer>
-                            <button type="submit" class="btn btn-primary" onclick="process()">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </footer>
                     </form>
                 </div>

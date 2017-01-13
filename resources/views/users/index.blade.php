@@ -82,14 +82,6 @@
                 $("#p-label-user-id").html(userId);
                 $("#label-username").html(userName);
             });
-
         });
     </script>
 @stop
-
-
-
-
-
-
-

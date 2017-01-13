@@ -429,13 +429,20 @@
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
             "oTableTools": {
                 "aButtons": [
-//                    "copy",
-                   "xls",
-                   "pdf",
+                //    "xls",
+                   {
+                       "sExtends": "xls",
+                       "sCharSet": "utf8"
+                   },
+                   {
+                       "sExtends": "pdf",
+                       "sCharSet": "utf16le"
+                   },
                    {
                        "sExtends": "print",
                        "sButtonText": "Print Preview report",
-                       "sMessage": "{{ trans('information_content.report-title') }}",
+                       "sCharSet": "utf8",
+                       "sMessage": "{{ trans('information_content.report-title') }}"
                    },
                    {
                        "sExtends": "print",
@@ -491,9 +498,7 @@
             "drawCallback": function (oSettings) {
                 responsiveHelper_datatable_fixed_column.respond();
             }
-
         });
-
         // custom toolbar
 
         // Apply the filter
@@ -530,7 +535,6 @@
                 responsiveHelper_datatable_col_reorder.respond();
             }
         });
-
         /* END COLUMN SHOW - HIDE */
 
     };

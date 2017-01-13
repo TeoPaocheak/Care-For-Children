@@ -13,7 +13,9 @@ use MONITORING\EntityDefinedCategory;
 use MONITORING\EntityDefinedFieldSearchValue;
 use MONITORING\Condition;
 use MONITORING\EntityDefinedFieldCondition;
+use MONITORING\BaseLine;
 use Excel;
+use Redirect;
 
 class EntityDefinedFieldController extends Controller {
 
@@ -196,9 +198,15 @@ class EntityDefinedFieldController extends Controller {
             $entity->DisplayField = $var->use_of_variable;
             $entity->DefaultSelected = $var->default_selected;
             $entity->save();
+
+            // print_r("Entity Defined Field ID");
+            // echo '<pre>'; print_r($entity->id); print_r($entity->EntityDefinedFieldNameInTable); echo '</pre>';
         }
+
+        // dd($variable_options);
+
         foreach ($variable_options->get() as $var_op) {
-            if ($var_op->variable_name_in_table === NULL) {
+            if (empty($var_op->variable_name_in_table)) {
                 break;
             }
             // first get field id;
@@ -206,6 +214,10 @@ class EntityDefinedFieldController extends Controller {
                             ->select('id')
                             ->where('EntityDefinedFieldNameInTable', $var_op->variable_name_in_table)
                             ->first()->id;
+
+            // print_r("Entity Defined Field Name");
+            // echo '<pre>'; print_r($var_id); print_r($var_op->variable_name_in_table); echo '</pre>';
+
             $entity_option = new EntityDefinedFieldSearchValue();
             $entity_option->EntityDefinedFieldID = $var_id;
             $entity_option->Value = $var_op->value;
@@ -214,38 +226,52 @@ class EntityDefinedFieldController extends Controller {
             $entity_option->save();
         }
 
-//        foreach ($conditions->get() as $con) {
-//            if ($con->condition_code === NULL) {
-//                break;
-//            }
-//            $condition = new Condition;
-//            $condition->ConditionCode = $con->condition_code;
-//            $condition->ConditionName = $con->name_en;
-//            $condition->ConditionSymbol = $con->symbol;
-//            $condition->LanguageID = 1;
-//            $condition->save();
-//            $condition = new Condition;
-//            $condition->ConditionCode = $con->condition_code;
-//            $condition->ConditionName = $con->name_kh;
-//            $condition->ConditionSymbol = $con->symbol;
-//            $condition->LanguageID = 2;
-//            $condition->save();
-//        }
+        // dd("Hello");
 
+    //    foreach ($conditions->get() as $con) {
+    //        if ($con->condition_code === NULL) {
+    //            break;
+    //        }
+    //        $condition = new Condition;
+    //        $condition->ConditionCode = $con->condition_code;
+    //        $condition->ConditionName = $con->name_en;
+    //        $condition->ConditionSymbol = $con->symbol;
+    //        $condition->LanguageID = 1;
+    //        $condition->save();
+    //        $condition = new Condition;
+    //        $condition->ConditionCode = $con->condition_code;
+    //        $condition->ConditionName = $con->name_kh;
+    //        $condition->ConditionSymbol = $con->symbol;
+    //        $condition->LanguageID = 2;
+    //        $condition->save();
+    //    }
+
+        //dd($variable_conditions->get());
         foreach ($variable_conditions->get() as $var_con) {
-            if ($var_con->variable_name_in_table === NULL) {
+            // print_r($var_con['variable_name_in_table']);
+
+            if (empty($var_con['variable_name_in_table'])) {
                 break;
             }
             $var_id = DB::table('entitydefinedfield')
                             ->select('id')
-                            ->where('EntityDefinedFieldNameInTable', $var_con->variable_name_in_table)
+                            ->where('EntityDefinedFieldNameInTable', $var_con['variable_name_in_table'])
                             ->first()->id;
+            // if (empty($var_id)) echo "Hello";
+            // else print_r($var_id);
+
+
+            // print_r("Entity Defined Field Name");
+            // echo '<pre>'; print_r($var_id); print_r($var_op['variable_name_in_table']); echo '</pre>';
+
             $entity_condition = new EntityDefinedFieldCondition();
             $entity_condition->EntityDefinedFieldID = $var_id;
-            $entity_condition->ConditionCode = $var_con->condition_code;
+            $entity_condition->ConditionCode = $var_con['condition_code'];
             $entity_condition->save();
         }
         DB::commit();
+
+        return \Redirect::to('/home#system/edf-import');
     }
 
     public function exportVariable() {

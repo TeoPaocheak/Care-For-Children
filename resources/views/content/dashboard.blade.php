@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default" style="border: none">
-					<div class="panel-heading heading" style="padding-top: 20px">{{ trans('auth.cfs') }}</div>
+					<div class="panel-heading heading" style="padding-top: 20px">{{ trans('auth.cfc') }}</div>
 				</div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 						<h5 class="pull-left">
 							<a href="/logout" title="cfs-report"><i class="fa fa-lg fa-fw fa-sign-out"></i> <span class="menu-item-parent">{{ trans('home.top-menu.sign-out')}}</span></a>
 						</h5>
-						<h5 class="pull-right">{{ trans('auth.cfs') }}</h5>
+						<h5 class="pull-right">{{ trans('auth.cfc') }}</h5>
 					</div>
 				</div>
 			</div>

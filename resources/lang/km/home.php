@@ -32,7 +32,7 @@ return [
 
     'left-menu' => [
         'information-list' => 'បញ្ជីព័ត៌មាន',
-        'aggregate-list' => 'បញ្ជី​បូក​សរុប​ទិន្នន័យ​:school'
+        'aggregate-list' => 'បញ្ជី​បូក​សរុប​ទិន្នន័យ​:orphanage'
     ],
 
     'footer' => [

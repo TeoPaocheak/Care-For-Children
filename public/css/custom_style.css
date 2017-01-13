@@ -15,7 +15,7 @@
     }
 
     aside#left-panel {
-        width: 235px;
+        width: 260px;
     }
 
     .ribbon-button-alignment {
@@ -23,7 +23,7 @@
     }
 
     #content {
-        margin-left: 10px;
+        margin-left: 40px;
     }
 
     .no-padding {
@@ -47,4 +47,8 @@
     /*logo side*/
     #header>:first-child, aside {
         width: 50px;
+    }
+
+    #ribbon {
+        padding-left: 35px !important;
     }

@@ -1,11 +1,6 @@
-var entity = angular.module("entity", []);
+var entity = angular.module("app", []);
 
 entity.controller("entityInfoController", function ($scope, $http) {
-//    $scope.categories = [
-//        {name: 'abc',processing:0,;
-//            options: [{conjunction :'and',key: {udfType: 1, keyValue: ''}, condition: '>', value: 456}]
-//        }
-//    ];
     // $scope.user.level.type = {Auth::user()->role->level};
     $scope.selections = [];
     $scope.geography = {};
@@ -32,7 +27,7 @@ entity.controller("entityInfoController", function ($scope, $http) {
     $scope.categories = [];
     $scope.options = [];
     $scope.categories.push();
-    
+
     $scope.addCategory = function() {};
 
     // Options for Selecting Characteristic
@@ -110,7 +105,7 @@ entity.controller("entityInfoController", function ($scope, $http) {
             alert("Error! Please check again!");
         });
     };
-    
+
     $scope.reset = function () {
         $scope.selections = [];
         $scope.geography = {};
@@ -138,10 +133,8 @@ entity.controller("entityInfoController", function ($scope, $http) {
             $scope.categories[i].options = [];
             $scope.categories[i].selectedField = false;
         }
-    }; 
+    };
 });
-
-
 
 // ============= For Aggregate =================
 entity.controller("entityAggController", function ($scope, $http) {
@@ -275,3 +268,6 @@ entity.controller("entityAggController", function ($scope, $http) {
 });
 
 
+entity.controller("chartController", function ($scope, $http) {
+    $scope.myValue = false;
+});

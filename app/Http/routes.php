@@ -63,5 +63,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('monitor/entity-agg', 'AggregateController');
     Route::get('get-district-by-pro-code/{p_code}', 'UserController@getDistrict');
 
-});
+    Route::get('inspect/inspect-chart', 'InspectController@index');
+    Route::get('inspect/get-chart-result', 'InspectController@getChartResult');
 
+    Route::get('inspect/inspect-table', 'InspectController@inspectTable');
+    Route::get('inspect/get-table-result', 'InspectController@getTableResult');
+
+    Route::get('inspect/inspect-children', 'InspectController@inspectChildren');
+    Route::get('inspect/get-children-result', 'InspectController@getChildrenResult');
+
+    // Route::get('/graph', function () {
+    //     return view('content.inspection.inspection-charts');
+    // });
+
+});

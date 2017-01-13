@@ -22,11 +22,11 @@ return [
         'remember' => 'Remember me'
     ],
 
-    'cfs' => 'CFS | Child Friendly School System',
+    'cfc' => 'CFC | Care For Children',
     'dashboard' => 'Back to Dashboard',
     'dashboards' => 'Dashboard',
     'back-user' => 'Back to User list',
-    'report' => 'School Assessment Report',
+    'report' => 'Orphanage Assessment Report',
     'permission' => 'Permission Denied',
     'permission-warning' => 'Sorry! You don\'t have right to access this page.',
     'role' => 'Role - '

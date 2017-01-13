@@ -6,15 +6,18 @@ return [
         'selecting-geographical-area' => 'Selecting Geographical Area',
         'geographical-area' => 'Geographical Area',
         'country' => 'Country',
+        'national' => 'Natiional',
         'province' => 'Province',
         'district' => 'District',
         'commune' => 'Commune',
         'village' => 'Village',
+        'center' => 'Center',
 
         'province_label' => '--Province--',
         'district_label' => '--District--',
         'commune_label' => '--Commune--',
-        'village_label' => '--Village--'
+        'village_label' => '--Village--',
+        'year_label' => '--Year--'
     ],
 
     'characteristic' => [
@@ -32,8 +35,8 @@ return [
 
     'variance' => 'Variance',
 
-    'report-title' => 'Report on CFS Monitoring',
+    'report-title' => 'Report on CFC Monitoring',
 
-    'report-compare-title' => 'Report on Result of CFS Monitoring'
+    'report-compare-title' => 'Report on Result of CFC Monitoring'
 
 ];

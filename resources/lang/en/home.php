@@ -29,10 +29,10 @@ return [
         'collapse-menu' => 'Collapse Menu',
         'administrator' => 'Administrator'
     ],
-    
+
     'left-menu' => [
         'information-list' => 'Information List',
-        'aggregate-list' => 'School Aggregate List'
+        'aggregate-list' => 'Orphanage Aggregate List'
     ],
 
     'footer' => [

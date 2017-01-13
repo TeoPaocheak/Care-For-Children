@@ -12,6 +12,7 @@ use MONITORING\EntityDefinedFieldSearchValue;
 use MONITORING\EntityDefinedFieldCondition;
 use Auth;
 use DB;
+use MONITORING\OrphanageList;
 
 class InformationController extends Controller {
     private $language_id;
@@ -31,7 +32,6 @@ class InformationController extends Controller {
         if (Auth::check()) {
             $this->user_role_level = Auth::user()->role->level;
         }
-
 //        dd($this->user_role_level);
     }
 
@@ -47,6 +47,7 @@ class InformationController extends Controller {
         $conditions = json_decode($request->input('data'));
         // selections here are checkboxes chosen
         $selections = json_decode($request->input('selections'));
+        // DB here will get result from View 'school_lists'
         $db = DB::table($request->input('table_name'));
         $db->select(DB::raw("EDF_CODE,".implode(",", $selections)));
         // dd($selections);
@@ -70,16 +71,15 @@ class InformationController extends Controller {
             default: break;
         }
 
-//        dd($conditions);
-
         if (count($conditions) > 0) {
             $conditions[0]->conjunction = "AND";
         }
 
-//        $conditions[i]->keyValue = "RESULT_SECTION_CAL_COM1_SHOW_RESULT";
-//        $conditions[i]->condition = ">=";
-//        $conditions[i]->value = "yes" or "2";
-
+        /**
+         * $conditions[i]->keyValue = "RESULT_SECTION_CAL_COM1_SHOW_RESULT";
+         * $conditions[i]->condition = ">=";
+         * $conditions[i]->value = "yes" or "2";
+         */
         for ($i = 0; $i < count($conditions); $i++) {
             // keyValue is from dropdown1
             if (strlen($conditions[$i]->keyValue) !== 0 && strlen($conditions[$i]->condition) !== 0 && strlen($conditions[$i]->value) !== 0) {
@@ -91,8 +91,6 @@ class InformationController extends Controller {
                 }
             }
         }
-
-//        dd($selections);
 
         // Selecting column header according to selections from checkboxes and displaying them in result form
         $col_header = DB::table('entitydefinedfieldwithlistfull')
@@ -106,7 +104,6 @@ class InformationController extends Controller {
         return response()->view('content.monitor.information-result', ['col_headers' => $col_header, 'rows' => $db->get(), 'table' => $table]);
     }
 
-
     // show category
     public function show($tableID) {
         // Load geographical areas
@@ -115,7 +112,6 @@ class InformationController extends Controller {
         $province = trans('information_content.geography.province');
         $district = trans('information_content.geography.district');
         $commune = trans('information_content.geography.commune');
-
 
         switch ($this->user_role_level){
             case 1:
@@ -130,7 +126,7 @@ class InformationController extends Controller {
                 // get province code
                 if ($this->language_id == 1) {
                     $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->get();
-                    $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
+                    $districts = District::select(DB::raw("DCode AS DistrictCode, DName_en AS DistrictName"))->get();
                 } elseif ($this->language_id == 2) {
                     $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->get();
                     $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
@@ -147,7 +143,7 @@ class InformationController extends Controller {
                 if (Auth::check()) {
                     if ($this->language_id == 1) {
                         $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE AS ProvinceName"))->where('PROCODE','=', Auth::user()->province_code)->get();
-                        $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
+                        $districts = District::select(DB::raw("DCode AS DistrictCode, DName_en AS DistrictName"))->get();
                     } elseif ($this->language_id == 2) {
                         $provinces = Province::select(DB::raw("PROCODE AS ProvinceCode, PROVINCE_KH AS ProvinceName"))->where('PROCODE','=', Auth::user()->province_code)->get();
                         $districts = District::select(DB::raw("DCode AS DistrictCode, DName_kh AS DistrictName"))->get();
@@ -180,7 +176,7 @@ class InformationController extends Controller {
         $table = DB::table('table')->where('id', $tableID)->first();
 
         // Selecting data from Database View called EntityDefinedFieldWithListFull
-        // Checkbox
+        // Checkbox - Tree structure
         $categories = DB::table('entitydefinedfieldwithlistfull')
                 ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
                 ->groupBy('EntityDefinedCategoryName')
@@ -198,6 +194,8 @@ class InformationController extends Controller {
                 ->where([['LanguageID', $this->language_id], ['TableID', $tableID]])
                 ->orderBy('EntityDefinedFieldListCode', 'asc')
                 ->get();
+
+        // dd($fields);
 
         return response()->view('content.monitor.information', ['table' => $table->TableName, 'provinces' => $provinces, 'districts' => $districts, 'geographical_areas' => $geographical_areas, 'conditions' => $conditions, 'categories' => $categories, 'fields' => $fields, 'user_role_level' => $this->user_role_level]);
     }
@@ -227,25 +225,18 @@ class InformationController extends Controller {
     // Comparing All fields when clicking on a row in result form
     // It is in result form
     public function compareEDF($tableID, $edfCode) {
-        $colHeaders = DB::table('entitydefinedfieldwithlistfull')
-                ->select('EntityDefinedFieldNameInTable', 'EntityDefinedFieldListName')
-                ->whereIn('DisplayField', [1, 2])
-                ->where('TableID', $tableID)
-                ->where('LanguageID', $this->language_id)
-                ->orderBy('id', 'asc')
-                ->get();
-        $fields =[];
-        foreach($colHeaders as $col){
-            $fields[]=$col->EntityDefinedFieldNameInTable;
-        }
-        $table = DB::table('table')->where('id', $tableID)->first();
-        $rows = DB::table($table->TableName)
-                ->select(DB::raw(implode(",", $fields)))
-                ->where('EDF_CODE', $edfCode)
-                ->orderBy('_URI','desc')
-                ->take(2)->get();
 
-        return response()->view('content.monitor.edf-comparison', ['colHeaders' => $colHeaders,'rows'=>  array_reverse($rows), 'table' => $table]);
+        $table = DB::table('table')->where('id', $tableID)->first();
+        // $colHeaders = DB::table($table->TableName)
+        //         ->where('EDF_CODE', $edfCode)
+        //         ->get();
+        //
+
+        $colHeaders = OrphanageList::where('EDF_CODE', '=', $edfCode)->get()->toArray();
+
+        // dd($colHeaders);
+
+        return response()->view('content.monitor.edf-comparison', ['colHeaders' => $colHeaders, 'table' => $table]);
     }
 
     /**

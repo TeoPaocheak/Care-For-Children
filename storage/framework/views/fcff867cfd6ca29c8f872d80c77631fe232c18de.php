@@ -1,11 +1,11 @@
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid" style="margin-top: 80px;">
     <div class="row">
-        <div class="col-md-5 col-md-offset-1 pull-left">
+        <div class="col-md-6 col-md-offset-1 pull-left">
             <div class="panel panel-default">
                 <div class="panel-heading" style="background-color: #f0efee; height: 55px;">
-                    <h4 class="panel-title pull-left" style="font-size: 20px; padding-top: 5px;">
-                        <strong><?php echo e(trans('auth.form.sign-in-form')); ?></strong>
+                    <h4 class="panel-title pull-left" style="font-size: 18px; padding-top: 10px;">
+                        <strong><?php echo e(trans('auth.form.sign-in-form')); ?> - <?php echo e(trans('auth.cfs')); ?></strong>
                     </h4>
 
                     <li class="dropdown pull-right" style="list-style: none; padding-top: 7px">

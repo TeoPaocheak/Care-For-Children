@@ -9,6 +9,7 @@ return [
         'confirmed-password' => 'ផ្ទៀងផ្ទាត់លេខសម្ងាត់',
         'role' => 'តួនាទី',
         'level' => 'កំរិត',
+
         'province' => 'ខេត្ត',
         'district' => 'ស្រុក',
         'actions' => 'សកម្មភាព'
