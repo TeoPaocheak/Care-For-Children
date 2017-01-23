@@ -175,7 +175,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div id="inspect_graph" style="width: auto; height: 800px;"></div>
+                                                <div id="inspect_graph" style="width: auto; height: 850px;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -286,10 +286,10 @@
                     },
                     dataType: "json",
                     success: function(data){
-                        // alert(data);
+                        // console.log(data);
                         $('#modal-loading').modal('hide');
 
-                        var arr =[['<?php echo trans('inspection.inspection') ?>', '<?php echo trans('inspection.inspect-once') ?>', '<?php echo trans('inspection.inspect-twice') ?>']];
+                        var arr =[['<?php echo trans('inspection.inspection') ?>', '<?php echo trans('inspection.inspect-once') ?>', '<?php echo trans('inspection.inspect-twice') ?>', '<?php echo trans('inspection.baseline') ?>']];
                         var last_total = [];
                         var max_total_centers;
                         $.each(data, function(index, value){
@@ -300,24 +300,19 @@
                                 inner_arr.push(val);
                             });
 
-                            var arr_1 = inner_arr.length-1;
-                            // console.log(inner_arr[1]);
-
                             // Temporary array to keep converted numbers
                             var converted_arr = [];
                             converted_arr.push(inner_arr[0]);
                             converted_arr.push(parseInt(inner_arr[1]));
                             converted_arr.push(parseInt(inner_arr[2]));
+                            converted_arr.push(parseInt(inner_arr[3]));
 
                             // console.log(converted_arr);
 
-                            last_total.push(inner_arr.pop(inner_arr.length-1));
                             arr.push(converted_arr);
                         });
 
-                        // Getting max number of center to minValue of graph
-                        max_total_centers = parseInt(Math.max.apply(Math, last_total));
-                        // console.log(max_total_centers);
+                        // console.log(arr);
 
                         // Google Map
                         google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -327,18 +322,20 @@
                             var data = google.visualization.arrayToDataTable(arr);
 
                             var options = {
-                                title: '<?php echo trans('inspection.inspection-graph') ?>',
-                                chartArea: {width: '50%', height: '75%'},
+                                title : '<?php echo trans('inspection.inspection-graph') ?>',
+                                hAxis: {title: '<?php echo trans('inspection.total-inspection') ?>'},
+                                vAxis: {title: '<?php echo trans('inspection.inspection-location') ?>'},
+                                chartArea: {width: '50%', height: '90%'},
+                                seriesType: 'bars',
                                 isStacked: true,
-                                hAxis: {
-                                  title: '<?php echo trans('inspection.total-inspection') ?>',
-                                  minValue: max_total_centers,
-                                },
-                                vAxis: {
-                                  title: '<?php echo trans('inspection.inspection-location') ?>'
-                                }
+                                orientation: 'vertical',
+                                pointSize: 10,
+                                pointShape: { type: 'triangle', rotation: 180 },
+                                colors: ['blue', 'green', 'red'],
+                                series: {2: {type: 'scatter'}}
                             };
-                            var chart = new google.visualization.BarChart(document.getElementById('inspect_graph'));
+
+                            var chart = new google.visualization.ComboChart(document.getElementById('inspect_graph'));
                             chart.draw(data, options);
                         }
 

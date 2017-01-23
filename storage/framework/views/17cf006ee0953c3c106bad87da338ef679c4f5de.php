@@ -442,7 +442,7 @@
                    },
                    {
                        "sExtends": "pdf",
-                       "sCharSet": "utf16le"
+                       "sCharSet": "utf-8"
                    },
                    {
                        "sExtends": "print",

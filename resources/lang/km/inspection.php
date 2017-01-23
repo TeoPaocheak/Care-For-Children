@@ -9,6 +9,7 @@ return [
     'inspection-location' => 'ទីតាំងចុះអធិការកិច្ច',
     'inspect-once' => 'មួយដង',
     'inspect-twice' => 'ពីរដង',
+    'baseline' => 'ចំនុចដៅ',
     'not-inspect' => 'មិនមាន',
     'inspection-in-year' => 'ចុះអធិការកិច្ចតាមក្នុងឆ្នាំ',
     'select-option' => 'សូមជ្រេីសរេីសជម្រើសមួយ',

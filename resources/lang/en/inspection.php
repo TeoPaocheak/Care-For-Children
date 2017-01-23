@@ -9,6 +9,7 @@ return [
     'inspection-location' => 'Inspection Locations',
     'inspect-once' => 'Inspected once',
     'inspect-twice' => 'Inspected twice',
+    'baseline' => 'Baseline',
     'not-inspect' => 'Not inspected',
     'inspection-in-year' => 'Inspection in Year',
     'select-option' => 'Select an option',
