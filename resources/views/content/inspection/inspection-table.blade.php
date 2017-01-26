@@ -1,3 +1,4 @@
+
 <!-- row -->
 <section ng-app="app" ng-controller="chartController">
     <div class="row">
@@ -188,7 +189,7 @@
                                                             <th>{{ trans('inspection.institution-name') }}</th>
                                                             <th>{{ trans('inspection.inspect-once') }}</th>
                                                             <th>{{ trans('inspection.inspect-twice') }}</th>
-                                                            <th>{{ trans('inspection.total-inspection') }}</th>
+                                                            <th>{{ trans('inspection.baseline') }}</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tBody"></tbody>

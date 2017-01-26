@@ -435,14 +435,14 @@
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
             "oTableTools": {
                 "aButtons": [
-                //    "xls",
                    {
-                       "sExtends": "xls",
-                       "sCharSet": "utf8"
+                       "sExtends": "csv", // "xls",
+                       "sButtonText": "Excel",
+                       "sCharSet": "utf16le"
                    },
                    {
                        "sExtends": "pdf",
-                       "sCharSet": "utf-8"
+                       "sCharSet": "utf16"
                    },
                    {
                        "sExtends": "print",
@@ -468,6 +468,7 @@
 
                                // Insert HTML into printForm
                                var printHTML = $(document).context.documentElement.outerHTML;
+
                                // printHTML += htmlToPrint.outerHTML;
                                printForm.document.body.innerHTML = printHTML;
 

@@ -4,7 +4,7 @@ return [
     'inspect-chart-title' => 'The number of times of Institution Inspection (%) ',
     'inspect-children-title' => 'The number of children of Institution Inspection (%) ',
 
-    'inspection-graph' => 'Inspection Graph',
+    'inspection-graph' => 'Inspection Graphs',
     'total-inspection' => 'Total Institutions',
     'inspection-location' => 'Inspection Locations',
     'inspect-once' => 'Inspected once',
@@ -16,13 +16,16 @@ return [
     'select-year' => 'Select a year',
     'inspection-table' => 'Table of the Institution Inspection',
 
-    'institution-inspection-chart' => 'Institution Inspection Chart',
+    'institution-inspection-chart' => 'Institutions Inspection Chart',
     'children-inspection-chart' => 'Children Inspection Chart',
     'institution-inspection-table' => 'Institution Inspection Table',
 
     'inspection-for-institutions' => 'Inspection for Institutions',
     'inspection-for-children' => 'Inspection for Children',
 
-    'institution-name' => 'Institution Name'
+    'institution-name' => 'Institution Name',
+    'inspection-bar-chart' => 'Bar Chart showing Institution Inspection',
+    'inspection-pie-chart' => 'Pie Chart showing Institution Inspection',
+    'children-pie-chart' => 'Pie Chart showing Children Inspection'
 
 ];

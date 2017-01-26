@@ -214,23 +214,26 @@ EOT;
         SELECT $district_name AS d_name , (CASE WHEN ISNULL(tmp.insp1) THEN 0 ELSE tmp.insp1 END) AS insp1, (CASE WHEN ISNULL(tmp.insp2) THEN 0 ELSE tmp.insp2 END) AS insp2, COUNT(DISTINCT b.id) as total_centers
         FROM district d
         LEFT JOIN baseline b ON b.district_code = d.DCode
-        LEFT JOIN (SELECT o.DISTRICT_CODE , CASE WHEN COUNT(o.EDF_CODE) = 1 THEN 1 ELSE 0 END AS insp1 ,
-        CASE WHEN COUNT(o.EDF_CODE) >= 2 THEN 1 ELSE 0 END AS insp2 FROM orphanage_lists o GROUP BY o.DISTRICT_CODE, o.EDF_CODE) tmp ON tmp.DISTRICT_CODE = d.DCode
+        LEFT JOIN (SELECT o.DISTRICT_CODE, o.Inspected_date, CASE WHEN COUNT(o.EDF_CODE) = 1 THEN 1 ELSE 0 END AS insp1 ,
+        CASE WHEN COUNT(o.EDF_CODE) >= 2 THEN 1 ELSE 0 END AS insp2 FROM orphanage_lists o GROUP BY o.DISTRICT_CODE, o.EDF_CODE ) tmp ON tmp.DISTRICT_CODE = d.DCode AND YEAR(tmp.Inspected_date) = ?
 
         WHERE $param = ? GROUP BY d.DCode
+
 EOT;
 
         $national_sql = <<<EOT
 
         SELECT $p_name AS d_name, IFNULL(tmp.total_insp1,0) AS insp1, IFNULL(tmp.total_insp2,0) AS insp2, COUNT(DISTINCT b.id) as total_centers
+
         FROM province p
         LEFT JOIN baseline b ON b.province_code = p.PROCODE
 
         LEFT JOIN (
-        		SELECT tt.PROVINCE_CODE, SUM(tt.insp1) as total_insp1, SUM(tt.insp2) as total_insp2
+        		SELECT tt.PROVINCE_CODE, SUM(tt.insp1) as total_insp1, SUM(tt.insp2) as total_insp2, tt.Inspected_date as insp_date
         		FROM (
         			SELECT
         			o.PROVINCE_CODE,
+        			o.Inspected_date,
         			(
         				CASE
         				WHEN COUNT(o.EDF_CODE) = 1 THEN
@@ -252,17 +255,18 @@ EOT;
         			GROUP BY
         				o.PROVINCE_CODE, o.EDF_CODE) as tt
         		GROUP BY tt.PROVINCE_CODE
-        	) tmp ON tmp.PROVINCE_CODE = p.PROCODE
+        	) tmp ON tmp.PROVINCE_CODE = p.PROCODE AND YEAR(tmp.insp_date) = ?
+
 
         GROUP BY p.PROCODE
 EOT;
 
         if ($request->input('selected_name') === 'district') {
-            $results = DB::select($sql, array($request->input('district_code')));
+            $results = DB::select($sql, array($request->input('inspected_date'), $request->input('district_code')));
         } elseif ($request->input('selected_name') === 'province') {
-            $results = DB::select($sql, array($request->input('province_code')));
+            $results = DB::select($sql, array($request->input('inspected_date'), $request->input('province_code')));
         } elseif ($request->input('selected_name') === 'national'){
-            $results = DB::select($national_sql);
+            $results = DB::select($national_sql, array($request->input('inspected_date')));
         }
 
         return response($results, 200);

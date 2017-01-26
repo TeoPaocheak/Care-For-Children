@@ -294,6 +294,16 @@ Use search to find needed section.
 
         <ul>
             <!-- Navigation left  -->
+            <li class="">
+                <a href="inspect/inspect-chart" title="inspect-info"><i class="fa fa-lg fa-fw fa-bar-chart"></i><span class="menu-item-parent">{{ trans('inspection.inspection-graph') }}</span></a>
+            </li>
+            {{-- <li class="">
+                <a href="inspect/inspect-table" title="inspect-info"><i class="fa fa-lg fa-fw fa-bar-chart"></i><span class="menu-item-parent">{{ trans('inspection.institution-inspection-table') }}</span></a>
+            </li>
+            <li class="">
+                <a href="inspect/inspect-children" title="inspect-info"><i class="fa fa-lg fa-fw fa-child"></i><span class="menu-item-parent">{{ trans('inspection.children-inspection-chart') }}</span></a>
+            </li> --}}
+
             <!-- Showing all tables -->
             @foreach($tables as $table)
                 @if (session()->has('locale'))
@@ -349,16 +359,6 @@ Use search to find needed section.
                         <a href="system/edf-export" title="sys-entity-defined-field">{{trans('home.system.export')}}</a>
                     </li>
                 </ul>
-            </li>
-
-            <li class="">
-                <a href="inspect/inspect-chart" title="inspect-info"><i class="fa fa-lg fa-fw fa-university"></i><span class="menu-item-parent">{{ trans('inspection.institution-inspection-chart') }}</span></a>
-            </li>
-            <li class="">
-                <a href="inspect/inspect-table" title="inspect-info"><i class="fa fa-lg fa-fw fa-bar-chart"></i><span class="menu-item-parent">{{ trans('inspection.institution-inspection-table') }}</span></a>
-            </li>
-            <li class="">
-                <a href="inspect/inspect-children" title="inspect-info"><i class="fa fa-lg fa-fw fa-child"></i><span class="menu-item-parent">{{ trans('inspection.children-inspection-chart') }}</span></a>
             </li>
         </ul>
     </nav>

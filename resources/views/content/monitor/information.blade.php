@@ -429,14 +429,14 @@
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
             "oTableTools": {
                 "aButtons": [
-                //    "xls",
                    {
-                       "sExtends": "xls",
-                       "sCharSet": "utf8"
+                       "sExtends": "csv", // "xls",
+                       "sButtonText": "Excel",
+                       "sCharSet": "utf16le"
                    },
                    {
                        "sExtends": "pdf",
-                       "sCharSet": "utf8"
+                       "sCharSet": "utf16"
                    },
                    {
                        "sExtends": "print",
@@ -449,9 +449,9 @@
                        "sButtonText": "Print Report",
                        "sMessage": "{{ trans('information_content.report-title') }}",
                        "fnClick": function ( nButton, oConfig, oFlash ) {
-                           $('#ToolTables_datatable_fixed_column_2').click();
+                            $('#ToolTables_datatable_fixed_column_2').click();
 
-                           setTimeout(function () {
+                            setTimeout(function () {
                                var extraCSS = '<style id="printMode" type="text/css"> table th, table td { border:1px solid 000 !important;} table td {padding-left: 10px !important}  </style>';
                                $('head').append(extraCSS);
 
@@ -462,6 +462,7 @@
 
                                // Insert HTML into printForm
                                var printHTML = $(document).context.documentElement.outerHTML;
+
                                // printHTML += htmlToPrint.outerHTML;
                                printForm.document.body.innerHTML = printHTML;
 
@@ -478,7 +479,7 @@
 
                                    $('#printMode').remove();
                                }, 1000);
-                           }, 1000);
+                            }, 1000);
                        }
                    }
                 ],

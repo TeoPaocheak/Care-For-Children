@@ -6,6 +6,7 @@ return [
         'selecting-geographical-area' => 'Selecting Geographical Area',
         'geographical-area' => 'Geographical Area',
         'country' => 'Country',
+        'whole-country' => 'Whole Country',
         'national' => 'Natiional',
         'province' => 'Province',
         'district' => 'District',
