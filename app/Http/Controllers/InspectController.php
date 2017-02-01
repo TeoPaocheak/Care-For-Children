@@ -252,10 +252,12 @@ EOT;
         			) AS insp2
         			FROM
         				orphanage_lists o
+                    WHERE
+                        YEAR(o.Inspected_date) = ?
         			GROUP BY
         				o.PROVINCE_CODE, o.EDF_CODE) as tt
         		GROUP BY tt.PROVINCE_CODE
-        	) tmp ON tmp.PROVINCE_CODE = p.PROCODE AND YEAR(tmp.insp_date) = ?
+        	) tmp ON tmp.PROVINCE_CODE = p.PROCODE
 
 
         GROUP BY p.PROCODE

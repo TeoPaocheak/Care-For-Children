@@ -270,7 +270,7 @@
                             </fieldset>
 
                             <footer>
-                                <button class="btn btn-primary" ng-click="view()"><i class="fa fa-fw fa-search"></i><?php echo e(trans('button.search')); ?></button>
+                                <button class="btn btn-primary btn-search" ng-click="view()"><i class="fa fa-fw fa-search"></i><?php echo e(trans('button.search')); ?></button>
                                 <button class="btn btn-danger" type="button" ng-click="reset()"><i class="fa fa-fw fa-refresh"></i><?php echo e(trans('button.reset')); ?></button>
                             </footer>
                         </div>
@@ -293,6 +293,7 @@
         </div>
     </div>
 </div>
+
 
 <script type="text/javascript">
     pageSetUp();
@@ -342,7 +343,9 @@
                 });
             }
         });
+
     });
+
     loadScript("js/plugin/bootstraptree/bootstrap-tree.min.js", function () {});
 </script>
 
@@ -394,22 +397,6 @@
 
     // Show search bar, copy/pdf/..
     var pagefunction = function () {
-        //console.log("cleared");
-        /* // DOM Position key index //
-
-         l - Length changing (dropdown)
-         f - Filtering input (search)
-         t - The Table! (datatable)
-         i - Information (records)
-         p - Pagination (paging)
-         r - pRocessing
-         < and > - div elements
-         <"#id" and > - div with an id
-         <"class" and > - div with a class
-         <"#id.class" and > - div with an id and class
-
-         Also see: http://legacy.datatables.net/usage/features
-         */
 
         /* BASIC ;*/
         var responsiveHelper_datatable_fixed_column = undefined;
@@ -418,143 +405,27 @@
             tablet: 1024,
             phone: 480
         };
-
         /* END BASIC */
-
-        /* COLUMN FILTER  */
-        var otable = $('#datatable_fixed_column').DataTable({
-            //"bFilter": false,
-            //"bInfo": false,
-            //"bLengthChange": false
-            //"bAutoWidth": false,
-            //"bPaginate": false,
-            //"bStateSave": true // saves sort state using localStorage
-
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-4 hidden-xs'f><'col-sm-4 col-xs-6 hidden-xs'T><'col-sm-4 col-xs-6 hidden-xs'C>r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-            "oTableTools": {
-                "aButtons": [
-                   {
-                       "sExtends": "csv", // "xls",
-                       "sButtonText": "Excel",
-                       "sCharSet": "utf16le"
-                   },
-                   {
-                       "sExtends": "pdf",
-                       "sCharSet": "utf16"
-                   },
-                   {
-                       "sExtends": "print",
-                       "sButtonText": "Print Preview report",
-                       "sCharSet": "utf8",
-                       "sMessage": "<?php echo e(trans('information_content.report-title')); ?>"
-                   },
-                   {
-                       "sExtends": "print",
-                       "sButtonText": "Print Report",
-                       "sMessage": "<?php echo e(trans('information_content.report-title')); ?>",
-                       "fnClick": function ( nButton, oConfig, oFlash ) {
-                           $('#ToolTables_datatable_fixed_column_2').click();
-
-                           setTimeout(function () {
-                               var extraCSS = '<style id="printMode" type="text/css"> table th, table td { border:1px solid 000 !important;} table td {padding-left: 10px !important}  </style>';
-                               $('head').append(extraCSS);
-
-                               $('.DTTT_PrintMessage').css({"text-align":"center", "font-size":"25px", "padding-bottom":"25px", "font-weight":"bold"});
-
-                               // Creating New Window
-                               var printForm = window.open('', 'Print Report');
-
-                               // Insert HTML into printForm
-                               var printHTML = $(document).context.documentElement.outerHTML;
-
-                               // printHTML += htmlToPrint.outerHTML;
-                               printForm.document.body.innerHTML = printHTML;
-
-                               setTimeout(function () {
-                                   // Automatic Open Print Diaglog
-                                   printForm.print();
-
-                                   // Close Windows after print completed
-                                   printForm.close();
-
-                                   // Trigger Key Escape
-                                //    var esc = $.Event("keydown", { keyCode: 27 });
-                                //    $('#ToolTables_datatable_fixed_column_2').trigger(esc);
-
-                                   $('#printMode').remove();
-                               }, 1000);
-                           }, 1000);
-                       }
-                   }
-                ],
-                "sSwfPath": "<?php echo e(asset('js/plugin/datatables/swf/copy_csv_xls_pdf.swf')); ?>",
-            },
-            "iDisplayLength": 20,
-            "autoWidth": true,
-            "preDrawCallback": function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper_datatable_fixed_column) {
-                    responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
-                }
-            },
-            "rowCallback": function (nRow) {
-                responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
-            },
-            "drawCallback": function (oSettings) {
-                responsiveHelper_datatable_fixed_column.respond();
-            }
-        });
-        // custom toolbar
-
-        // Apply the filter
-        $("#datatable_fixed_column thead th input[type=text],#datatable_fixed_column thead th select").on('keyup change', function () {
-            otable
-                    .column($(this).parent().index() + ':visible')
-                    .search(this.value)
-                    .draw();
-        });
-        $("#datatable_fixed_column thead th select").bind("DOMSubtreeModified", function () {
-            otable
-                    .column($(this).parent().index() + ':visible')
-                    .search(this.value)
-                    .draw();
-        });
-        /* END COLUMN FILTER */
-
-        /* COLUMN SHOW - HIDE */
-        $('#datatable_col_reorder').dataTable({
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-            "autoWidth": true,
-            "preDrawCallback": function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper_datatable_col_reorder) {
-                    responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
-                }
-            },
-            "rowCallback": function (nRow) {
-                responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
-            },
-            "drawCallback": function (oSettings) {
-                responsiveHelper_datatable_col_reorder.respond();
-            }
-        });
-        /* END COLUMN SHOW - HIDE */
-
     };
 
     var reloadScript = function () {
-        loadScript("<?php echo e(asset('js/plugin/datatables/jquery.dataTables.min.js')); ?>", function () {
-            loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.colVis.min.js')); ?>", function () {
-                loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.tableTools.min.js')); ?>", function () {
-                    loadScript("<?php echo e(asset('js/plugin/datatables/dataTables.bootstrap.min.js')); ?>", function () {
-                        loadScript("<?php echo e(asset('js/plugin/datatable-responsive/datatables.responsive.min.js')); ?>", pagefunction);
-                    });
-                });
-            });
+        $('#datatable_fixed_column').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'excelHtml5',
+                // {
+                //     extend: 'pdf',
+                //     orientation: 'landscape'
+                // },
+                {
+                    extend: "print",
+                    text: 'Preview',
+                    autoPrint: false
+                },
+                {
+                    extend: "print",
+                }
+            ]
         });
     }
 

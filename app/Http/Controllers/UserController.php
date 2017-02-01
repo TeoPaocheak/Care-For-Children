@@ -57,8 +57,7 @@ class UserController extends Controller {
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|min:3|confirmed',
                     'password_confirmation' => 'required|min:3',
-                    'role_id' => 'required',
-                    'level_id' => 'required'
+                    'role_id' => 'required'
                 ];
             }
             case 'PUT':
@@ -67,8 +66,7 @@ class UserController extends Controller {
                 return [
                     'name' => 'required',
                     'email' => 'required|email|max:255|unique:users,email,'.$id,
-                    'role_id' => 'required',
-                    'level_id' => 'required'
+                    'role_id' => 'required'
                 ];
             }
             default:break;
@@ -118,10 +116,10 @@ class UserController extends Controller {
                 default: break;
             }
             $provinces = Province::select(DB::raw("PROCODE AS province_id, PROVINCE_KH AS province_name"))->get();
-            $levels = Level::select(DB::raw("id AS level_id, display_name_kh AS level_name"))->get();
+            // $levels = Level::select(DB::raw("id AS level_id, display_name_kh AS level_name"))->get();
         }
 
-        return View::make('users.create', compact('roles', 'levels', 'provinces'));
+        return View::make('users.create', compact('roles', 'provinces'));
     }
 
     public function store(Request $request) {
@@ -193,13 +191,13 @@ class UserController extends Controller {
                 default: break;
             }
             $provinces = Province::select(DB::raw("PROCODE AS province_id, PROVINCE_KH AS province_name"))->get();
-            $levels = Level::select(DB::raw("id AS level_id, display_name_kh AS level_name"))->get();
+            // $levels = Level::select(DB::raw("id AS level_id, display_name_kh AS level_name"))->get();
             if ($user->role->level == 4) {
                 $districts = District::select(DB::raw("DCODE AS district_id, DName_kh AS district_name"))->where('PCode', '=', $user->province_code);
             }
         }
 
-        return View::make('users.edit', compact('user', 'roles', 'levels', 'provinces', 'districts'));
+        return View::make('users.edit', compact('user', 'roles', 'provinces', 'districts'));
     }
 
     public function update($id, Request $request) {

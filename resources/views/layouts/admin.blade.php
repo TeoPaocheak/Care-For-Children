@@ -14,11 +14,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/font-awesome.min.css')}}">
 
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
 
     <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-production-plugins.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-production.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartadmin-skins.min.css')}}">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+
 
     <!-- DEV links : turn this on when you like to develop directly -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="../Source_UNMINIFIED_CSS/smartadmin-production.css">-->
@@ -117,7 +120,7 @@ Use search to find needed section.
 <header id="header">
     <div id="logo-group" style="width: 80px;">
         <!-- PLACE YOUR LOGO HERE -->
-        <span id="logo"><a href="http://www.moeys.gov.kh" target="blank"><img src="img/ministry_logo.png" alt="Ministry of Education" style="position: absolute; top: -2px; width: 40px; height: 55px;"></a></span>
+        <span id="logo"><a href="http://www.mosvy.gov.kh" target="blank"><img src="img/ministry_logo.png" alt="Ministry of Education" style="position: absolute; top: 5px; width: 40px; height: 40px;"></a></span>
         <!-- END LOGO PLACEHOLDER -->
     </div>
     <div id="logo-group" style="width: 360px;">
@@ -179,9 +182,9 @@ Use search to find needed section.
         <!-- end logout button -->
 
         <!-- collapse menu button -->
-        <div id="hide-menu" class="btn-header pull-right">
+        {{-- <div id="hide-menu" class="btn-header pull-right">
             <span><a href="javascript:void(0);" data-action="toggleMenu" title="{{ trans('home.top-menu.collapse-menu') }}"><i class="fa fa-reorder"></i></a> </span>
-        </div>
+        </div> --}}
         <!-- end collapse menu -->
 
         <!-- search mobile button (this is hidden till mobile view port) -->
@@ -190,17 +193,17 @@ Use search to find needed section.
         </div>
         <!-- end search mobile button -->
 
-        <div class="btn-header transparent pull-right">
+        {{-- <div class="btn-header transparent pull-right">
             <span><a href="/" title="{{ trans('auth.dashboard') }}"><i class="fa fa-lg fa-fw fa-tachometer"></i></a></span>
-        </div>
+        </div> --}}
 
         @if(Auth::check())
             @if(Auth::user()->role->level != 4)
                 <div class="btn-header transparent pull-right">
                     <span><a href="/users" title="{{ trans('user_content.user-management') }}"><i class="fa fa-lg fa-fw fa-users"></i></a></span>
                 </div>
+            @endif
         @endif
-    @endif
 
     <!-- #SEARCH -->
         <!-- input: search field -->
@@ -268,12 +271,23 @@ Use search to find needed section.
         <span> <!-- User image size is adjusted inside CSS, it should stay as is -->
             <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
                 {{--<img src="{{asset('img/avatars/male.png')}}" alt="me" class="offline" />--}}
-                <span>
-                    @if (Auth::check())
-                        {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
-                    @endif
-                </span>
-                <i class="fa fa-angle-down"></i>
+
+                <li class="dropdown" style="list-style: none">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span>
+                            @if(Auth::check())
+                                {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}
+                            @endif
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/logout">{{ trans('home.top-menu.sign-out') }}</a>
+                        </li>
+                    </ul>
+                </li>
+
             </a>
         </span>
     </div>
@@ -360,6 +374,15 @@ Use search to find needed section.
                     </li>
                 </ul>
             </li>
+
+            {{-- <li class="">
+                <a href="users" title="inspect-info"><i class="fa fa-lg fa-fw fa-users"></i><span class="menu-item-parent">{{ trans('user_content.user-management') }}</span></a>
+            </li>
+
+            <li class="">
+                <a href="/logout" data-action="userLogout" data-logout-msg="{{ trans('home.logout-msg') }}"><i class="fa fa-lg fa-fw fa-sign-out"></i><span class="menu-item-parent">{{ trans('home.top-menu.sign-out') }}</span></a>
+            </li> --}}
+
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
@@ -528,6 +551,16 @@ Use search to find needed section.
 <!-- SmartChat UI : plugin -->
 <script src="{{asset('js/smart-chat-ui/smart.chat.ui.min.js')}}"></script>
 <script src="{{asset('js/smart-chat-ui/smart.chat.manager.min.js')}}"></script>
+
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" charset="utf-8"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js" charset="utf-8"></script>
+<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js" charset="utf-8"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js" charset="utf-8"></script>
+<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js" charset="utf-8"></script>
+<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js" charset="utf-8"></script>
+<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js" charset="utf-8"></script>
+<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js" charset="utf-8"></script>
+
 
 <!-- Your GOOGLE ANALYTICS CODE Below -->
 <script type="text/javascript">

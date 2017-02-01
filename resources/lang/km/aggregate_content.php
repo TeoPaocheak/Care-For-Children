@@ -1,6 +1,6 @@
-<?php 
+<?php
 return [
-  
+
     'form-aggregate-list' => 'ទម្រង់​បញ្ជី​បូក​សរុប​ទិន្នន័យ​',
 
     'geography' => [
@@ -21,7 +21,7 @@ return [
     'aggregate' => 'បូកសរុបទិន្នន័យតាមតំបន់ភូមិសាស្ត្រ',
 
     'characteristic' => [
-        'selecting-characteristic' => 'ជ្រេីសរេីសលក្ខណៈសម្បត្តិដែល​​ត្រូវការ​កំណត់​លក្ខខ័ណ្ឌ',
+        'selecting-characteristic' => 'ជ្រេីសរេីសលក្ខណសម្បត្តិដែល​​ត្រូវការ​កំណត់​លក្ខខ័ណ្ឌ',
         'select' => '--ជ្រេីសរេីស--',
         'and' => 'នឹង',
         'or' => 'ឬ'

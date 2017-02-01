@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id', 'level_id', 'province_code', 'district_code', 'user_id'
+        'name', 'email', 'password', 'role_id', 'province_code', 'district_code', 'user_id'
     ];
 
     /**
@@ -29,9 +29,9 @@ class User extends Authenticatable
         return $this->belongsTo('MONITORING\Role');
     }
 
-    public function level() {
-        return $this->belongsTo('MONITORING\Level');
-    }
+    // public function level() {
+    //     return $this->belongsTo('MONITORING\Level');
+    // }
 
     public function setPasswordAttribute($password)
     {

@@ -38,7 +38,7 @@
                                                 <li>
                                                     <div class="col-md-12">
                                                         <div class="col-md-4">
-                                                            <input type="radio" ng-checked="" value="national" id="rd_national" name="options" ng-model="national_option" checked="checked">&nbsp;{{ trans('information_content.geography.national') }}
+                                                            <input type="radio" value="national" id="rd_national" name="options" checked="checked">&nbsp;{{ trans('information_content.geography.national') }}
                                                         </div>
                                                         <div class="col-md-8"></div>
                                                     </div>
@@ -46,12 +46,12 @@
                                                 <li>
                                                     <div class="col-md-12">
                                                         <div class="col-md-4">
-                                                            <input type="radio" id="rd_province" value="province" name="options" ng-model="checked">&nbsp;{{ trans('information_content.geography.province') }}
+                                                            <input type="radio" id="rd_province" value="province" name="options">&nbsp;{{ trans('information_content.geography.province') }}
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <div id="province-select" style="display:inline" ng-show="checked">
+                                                            <div id="province-select" style="display:inline">
                                                                 <label class="select">
-                                                                    <select ng-model="province" class="form-control" onchange="loadNew(this, 'district')" id="province-option">
+                                                                    <select class="form-control" onchange="loadNew(this, 'district')" id="province-option">
                                                                         <option value="">{{ trans('information_content.geography.province_label') }}</option>
                                                                         @foreach($provinces as $province)
                                                                             <option value="{{$province->ProvinceCode}}">{{$province->ProvinceName}}</option>
@@ -66,7 +66,7 @@
                                                 <li>
                                                     <div class="col-md-12">
                                                         <div class="col-md-4">
-                                                            <input type="radio" value="district" id="rd_district" name="options" ng-model="district_option">&nbsp;{{ trans('information_content.geography.district') }}
+                                                            <input type="radio" value="district" id="rd_district" name="options">&nbsp;{{ trans('information_content.geography.district') }}
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div id="district-select" style="display:inline">
@@ -86,11 +86,11 @@
                                                 <li>
                                                     <div class="col-md-12">
                                                         <div class="col-md-4">
-                                                            <input type="radio" id="rd_province" value="province" name="options" ng-model="checked" checked="checked">&nbsp;{{ trans('information_content.geography.province') }}
+                                                            <input type="radio" id="rd_province" value="province" name="options" checked="checked">&nbsp;{{ trans('information_content.geography.province') }}
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="col-md-8">
-                                                                <div style="display:inline" ng-show="checked">
+                                                                <div style="display:inline">
                                                                     <input id="province-option" type="hidden" value="{{ $provinces->first()->ProvinceCode }}"/>
                                                                     <input id="province-name" type="hidden" value="{{ $provinces->first()->ProvinceName }}"/>
                                                                     <h5 style="display:inline">{{ $provinces->first()->ProvinceName }}</h5>
@@ -102,12 +102,12 @@
                                                 <li>
                                                     <div class="col-md-12">
                                                         <div class="col-md-4">
-                                                            <input type="radio" value="district" id="rd_district" name="options" ng-model="district_option">&nbsp;{{ trans('information_content.geography.district') }}
+                                                            <input type="radio" value="district" id="rd_district" name="options">&nbsp;{{ trans('information_content.geography.district') }}
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div id="district-select" style="display:inline">
                                                                 <label class="select">
-                                                                    <select ng-model="district" id="district-filter" class="form-control">
+                                                                    <select id="district-filter" class="form-control">
                                                                         <option value="">{{ trans('information_content.geography.district_label') }}</option>
                                                                         @foreach($districts as $district)
                                                                             <option value="{{$district->DistrictCode}}">{{$district->DistrictName}}</option>
@@ -167,7 +167,9 @@
                                                 <div class="col-md-7">
                                                     <div​ style="display:inline">
                                                         <label class="select">
-                                                            <select ng-model="year" id="year-filter" class="form-control">
+                                                            <select id="year-filter" class="form-control">
+                                                                <option value="2016">2016</option>
+                                                                <option value="2017">2017</option>
                                                             </select>
                                                         </label>
                                                     </div>
@@ -219,7 +221,7 @@
                                 <div class="col-md-8">
                                     <div class="panel panel-primary" style="border-color: #5cb85c">
                                         <div class="panel-heading" style="background-color: #5cb85c;">
-                                            {{ trans('inspection.inspection-bar-chart') }}
+                                            {{ trans('inspection.inspection-pie-chart') }}
                                             <div class="clearfix"></div>
                                         </div>
                                         <div class="panel-body">
@@ -239,10 +241,10 @@
                                         </div>
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" style="padding: 0 3px">
                                                     <table class="dataTable display table table-bordered" cellspacing="0" width="100%" >
                                                         <thead>
-                                                            <tr>
+                                                            <tr style="font-size: 11px">
                                                                 <th>{{ trans('inspection.institution-name') }}</th>
                                                                 <th>{{ trans('inspection.inspect-once') }}</th>
                                                                 <th>{{ trans('inspection.inspect-twice') }}</th>
@@ -283,7 +285,7 @@
 
 <script>
     $(document).ready(function () {
-        // $('#chart-result').hide();
+
         $('#province-select').hide();
         $('#district-select').hide();
         $('#chart-result').hide();
@@ -305,16 +307,19 @@
 
         callAllAjax();
 
+        // console.log($('#year-filter').val());
+
         $('#search-button').click(function() {
-            // alert({{ Auth::user()->role->level }});
             callAllAjax();
         })
     });
 
+
+
     function callAllAjax() {
-        if (!$("#rd_province").is(":checked") && !$("#rd_district").is(":checked") && !$("#rd_national").is(":checked")) {
-            alert("Please choose an option");
-        } else {
+        // if (!$("#rd_province").is(":checked") && !$("#rd_district").is(":checked") && !$("#rd_national").is(":checked")) {
+        //     alert("Please choose an option");
+        // } else {
             var rd_name;
             var province_code;
             var district_code;
@@ -323,27 +328,29 @@
 
             // alert(inspected_date);
 
+            // alert(inspected_date);
+
             if ({{ Auth::user()->role->level }} == 1 || {{ Auth::user()->role->level }} == 2) {
                 if($("#rd_province").is(":checked")) {
-                    selected_label = '<?php echo trans('information_content.geography.province') ?> ' + $('#province-option option:selected').text();
+                    selected_label = '<?php echo trans('inspection.inspection-chart') ?> - <?php echo trans('inspection.districts') ?>';
                 }
-                else if($("#rd_district").is(":checked") || {{ Auth::user()->role->level }} == 4) {
-                    selected_label = '<?php echo trans('information_content.geography.district') ?> ' + $('#district-filter option:selected').text();
+                else if($("#rd_district").is(":checked")) {
+                    selected_label = '<?php echo trans('inspection.inspection-chart-district') ?> - <?php echo trans('information_content.geography.district') ?> - ' + $("#district-filter option:selected").text();
                 }
                 else {
-                    selected_label = '<?php echo trans('information_content.geography.whole-country') ?> ' + $('input[name=options]:checked').text();
+                    selected_label = '<?php echo trans('inspection.inspection-chart') ?> - <?php echo trans('inspection.provinces') ?>';
                 }
             }
             else if ({{ Auth::user()->role->level }} == 3) {
-                if($("#rd_district").is(":checked") || {{ Auth::user()->role->level }} == 4) {
-                    selected_label = '<?php echo trans('information_content.geography.district') ?> ' + $('#district-filter option:selected').text();
+                if($("#rd_district").is(":checked")) {
+                    selected_label = '<?php echo trans('inspection.inspection-chart-district') ?> - <?php echo trans('information_content.geography.district') ?> - ' + $("#district-filter option:selected").text();
                 }
                 else if($("#rd_province").is(":checked")) {
-                    selected_label = '<?php echo trans('information_content.geography.province') ?> ' + $('#province-name').val();
+                    selected_label = '<?php echo trans('inspection.inspection-chart') ?> - <?php echo trans('inspection.districts') ?>';
                 }
             }
             else if ({{ Auth::user()->role->level }} == 4) {
-                selected_label = '<?php echo trans('information_content.geography.district') ?> ' + $('#district-name').val();
+                selected_label = '<?php echo trans('inspection.inspection-chart-district') ?> - <?php echo trans('information_content.geography.district') ?> - ' + $("#district-name").val();
             }
 
             if($("#rd_province").is(":checked")) {
@@ -393,7 +400,7 @@
                             ]);
 
                             var options = {
-                                title: '<?php echo trans('inspection.inspect-chart-title') ?> - ' + selected_label + ' - ' + $('#year-filter').val(),
+                                title: '<?php echo trans('inspection.inspect-chart-title') ?> - ' + $('#year-filter').val(),
                                 legend: 'labeled',
                                 pieSliceText: 'none',
                                 is3D: true,
@@ -453,7 +460,7 @@
                             ]);
 
                             var options = {
-                                title: '<?php echo trans('inspection.inspect-children-title') ?> - ' + selected_label + ' - ' + $('#year-filter').val(),
+                                title: '<?php echo trans('inspection.inspect-children-title') ?> - ' + $('#year-filter').val(),
                                 legend: 'labeled',
                                 pieSliceText: 'none',
                                 is3D: true,
@@ -531,9 +538,9 @@
                         var chartHeight = chartAreaHeight + 250;
 
                         var options = {
-                            title : '<?php echo trans('inspection.inspection-bar-chart') ?> - ' + selected_label + ' - ' + $('#year-filter').val(),
+                            title : selected_label,
                             hAxis: {title: '<?php echo trans('inspection.total-inspection') ?>'},
-                            vAxis: {title: '<?php echo trans('inspection.inspection-location') ?>'},
+                            // vAxis: {title: '<?php echo trans('inspection.inspection-location') ?>'},
                             // chartArea: {width: '50%', height: '90%'},
                             seriesType: 'bars',
                             isStacked: true,
@@ -543,12 +550,13 @@
                             width: '100%',
                             height: chartHeight,
                             chartArea: {
-                                left: "15%",
+                                left: "20%",
                                 top: "7%",
                                 bottom: "12%",
-                                width: "65%",
+                                width: "60%",
                                 height: chartHeight
                             },
+                            fontSize: 12,
                             colors: ['blue', 'green', '#d52434'],
                             series: {2: {type: 'scatter'}}
                         };
@@ -570,7 +578,7 @@
                             trHTML += '<tr class="hidden"></tr>'
                         } else {
                             trHTML +=
-                                '<tr><td>'
+                                '<tr style="font-size: 11px"><td>'
                                 + data[i].d_name
                                 + '</td><td>'
                                 + inspected_once
@@ -590,7 +598,7 @@
                     console.log(error);
                 }
             });
-        }
+        // }
     }
 </script>
 
@@ -630,16 +638,16 @@
     };
 
     // Generating years
-    var min = new Date().getFullYear() - 1,
-    max = min + 10,
-    select = document.getElementById('year-filter');
-
-    for (var i = min; i<=max; i++){
-        var opt = document.createElement('option');
-        opt.value = i;
-        opt.innerHTML = i;
-        select.appendChild(opt);
-    }
+    // var min = new Date().getFullYear() - 1,
+    // max = min + 10,
+    // select = document.getElementById('year-filter');
+    //
+    // for (var i = min; i<=max; i++){
+    //     var opt = document.createElement('option');
+    //     opt.value = i;
+    //     opt.innerHTML = i;
+    //     select.appendChild(opt);
+    // }
 
 
 </script>

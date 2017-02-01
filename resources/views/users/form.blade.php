@@ -59,7 +59,7 @@
     @endif
 </div>
 
-<div class="form-group">
+{{-- <div class="form-group">
     <h4>{{ trans('user_content.field.level')}}</h4>
     {!! Form::select('level_id', $levels->lists('level_name', 'level_id')->toArray(), null, ['class'=>"form-control $errors->has('level_id') ? ' has-error' : ''", 'placeholder' => trans('user_content.select-level')]) !!}
     @if ($errors->has('level_id')) 
@@ -69,7 +69,7 @@
             </span>
         </div>
     @endif
-</div>
+</div> --}}
 
 <div class="form-group" id="province-block">
     <h4>{{ trans('user_content.field.province')}}</h4>

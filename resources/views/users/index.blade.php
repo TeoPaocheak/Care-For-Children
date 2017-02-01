@@ -21,7 +21,6 @@
                                 <th>{{ trans('user_content.field.name')}}</th>
                                 <th>{{ trans('user_content.field.email')}}</th>
                                 <th>{{ trans('user_content.field.role')}}</th>
-                                <th>{{ trans('user_content.field.level')}}</th>
                                 <th>{{ trans('user_content.field.actions')}}</th>
                             </tr>
                             </thead>
@@ -34,14 +33,11 @@
                                         @if (session()->get('locale'))
                                             @if (session()->get('locale') == 'en')
                                                 <td>{{ $user->role->display_name }}</td>
-                                                <td>{{ $user->level->display_name }}</td>
                                             @elseif (session()->get('locale') == 'km')
                                                 <td>{{ $user->role->display_name_kh }}</td>
-                                                <td>{{ $user->level->display_name_kh }}</td>
                                             @endif
                                         @else
                                             <td>{{ $user->role->display_name_kh }}</td>
-                                            <td>{{ $user->level->display_name_kh }}</td>
                                         @endif
                                         <td>
                                             <a href="users/{{ $user->id }}/edit" class="btn btn-xs btn-warning">{{ trans('button.edit')}}</a>
@@ -62,11 +58,11 @@
 
         <div class="row">
             <div class="col-md-12" style="padding: 0 35px">
-                <div class="panel-footer" style="background-color: #fcfdf8; min-height: 60px; border: none;">
+                {{-- <div class="panel-footer" style="background-color: #fcfdf8; min-height: 60px; border: none;">
                     <h5 class="pull-right">
                         <a href="/" title="{{ trans('auth.dashboard') }}"><i class="fa fa-lg fa-fw fa-arrow-left"></i> <span class="menu-item-parent">{{ trans('auth.dashboard') }}</span></a>
                     </h5>
-                </div>
+                </div> --}}
             </div>
         </div>
 

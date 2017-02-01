@@ -1,8 +1,8 @@
 <?php
 return [
     'no-data' => 'No Data',
-    'inspect-chart-title' => 'The number of times of Institution Inspection (%) ',
-    'inspect-children-title' => 'The number of children of Institution Inspection (%) ',
+    'inspect-chart-title' => 'Percentage of Institutions Inspected ',
+    'inspect-children-title' => 'Percentage of children Inspected ',
 
     'inspection-graph' => 'Inspection Graphs',
     'total-inspection' => 'Total Institutions',
@@ -24,8 +24,12 @@ return [
     'inspection-for-children' => 'Inspection for Children',
 
     'institution-name' => 'Institution Name',
-    'inspection-bar-chart' => 'Bar Chart showing Institution Inspection',
-    'inspection-pie-chart' => 'Pie Chart showing Institution Inspection',
-    'children-pie-chart' => 'Pie Chart showing Children Inspection'
+    'inspection-chart' => 'Institutions Inspected by ',
+    'inspection-chart-district' => 'Institutions Inspected in',
+    'inspection-pie-chart' => 'Chart showing Institutions Inspection',
+    'children-pie-chart' => 'Chart showing Children Inspection',
+
+    'provinces' => 'Provinces',
+    'districts' => 'Districts'
 
 ];

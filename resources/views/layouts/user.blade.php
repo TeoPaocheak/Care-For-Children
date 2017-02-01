@@ -91,12 +91,12 @@
             <div class="collapse navbar-collapse nav-block" id="app-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right nav-with-color">
                     @if(!\Request::segment(1) == '')
-                        <li>
+                        {{-- <li>
                             <a href="/"><i class="fa fa-dashboard"></i> {{ trans('auth.dashboards') }}</a>
-                        </li>
+                        </li> --}}
 
                         <li>
-                            <a href="/home"><i class="fa fa-list-alt"></i> {{ trans('auth.report') }}</a>
+                            <a href="/"><i class="fa fa-list-alt"></i> {{ trans('auth.report') }}</a>
                         </li>
                     @endif
                     <li class="dropdown pull-right" style="list-style: none">

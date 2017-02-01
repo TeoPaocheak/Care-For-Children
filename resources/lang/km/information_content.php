@@ -1,13 +1,12 @@
 <?php
 return [
 
-    'form-information-list' => 'ទម្រង់​បញ្ជីនៃព័ត៌មាន',
+    'form-information-list' => 'ទម្រង់​បញ្ជៃព័ត៌មាន',
 
     'geography' => [
         'selecting-geographical-area' => 'ជ្រេីសរេីសតំបន់ភូមិសាស្ត្រ',
         'geographical-area' => 'តំបន់ភូមិសាស្ត្រ',
         'country' => 'ប្រទេស',
-        'whole-country' => 'ទូទាំងប្រទេស',
         'national' => 'ប្រទេស',
         'province' => 'ខេត្ត',
         'district' => 'ក្រុង/ស្រុក/ខ័ណ្ឌ',

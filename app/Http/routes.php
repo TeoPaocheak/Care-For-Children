@@ -16,7 +16,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@showLoginForm']);
     Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@loginWithCondition']);
-    Route::get('logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
+    // Route::get('/#/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
+    Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
 
     Route::get('/lang/{locale}', ['as' => 'language', function ($locale) {
         Session::set('locale', $locale);
@@ -24,12 +25,12 @@ Route::group(['middleware' => ['web']], function () {
     }]);
 
     Route::group(['middleware' => ['auth']], function() {
-        Route::get('/home', 'HomeController@index');
+        Route::get('/', 'HomeController@index');
         Route::resource('users', 'UserController');
 
-        Route::get('/', ['as' => 'dashboard', function () {
-            return view('content.dashboard');
-        }]);
+        // Route::get('/', ['as' => 'dashboard', function () {
+        //     return view('content.dashboard');
+        // }]);
     });
 
     Route::resource('system/table', 'TableController');

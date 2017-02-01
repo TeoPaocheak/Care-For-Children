@@ -64,7 +64,7 @@
     <?php endif; ?>
 </div>
 
-<div class="form-group">
+<?php /* <div class="form-group">
     <h4><?php echo e(trans('user_content.field.level')); ?></h4>
     <?php echo Form::select('level_id', $levels->lists('level_name', 'level_id')->toArray(), null, ['class'=>"form-control $errors->has('level_id') ? ' has-error' : ''", 'placeholder' => trans('user_content.select-level')]); ?>
 
@@ -75,7 +75,7 @@
             </span>
         </div>
     <?php endif; ?>
-</div>
+</div> */ ?>
 
 <div class="form-group" id="province-block">
     <h4><?php echo e(trans('user_content.field.province')); ?></h4>

@@ -37,7 +37,7 @@
                 <!-- widget content -->
                 <div class="widget-body no-padding">
 
-                    <table id="datatable_fixed_column" class="table table-striped table-bordered printBorder" width="100%">
+                    <table id="datatable_fixed_column" class="table table-striped table-bordered printBorder display" width="100%">
                         <thead>
                             <tr class="danger txt-color-darken">
                                 <?php foreach($col_headers as $header): ?>

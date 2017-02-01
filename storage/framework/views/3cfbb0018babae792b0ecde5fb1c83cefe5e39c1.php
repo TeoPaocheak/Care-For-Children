@@ -92,12 +92,12 @@
             <div class="collapse navbar-collapse nav-block" id="app-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right nav-with-color">
                     <?php if(!\Request::segment(1) == ''): ?>
-                        <li>
+                        <?php /* <li>
                             <a href="/"><i class="fa fa-dashboard"></i> <?php echo e(trans('auth.dashboards')); ?></a>
-                        </li>
+                        </li> */ ?>
 
                         <li>
-                            <a href="/home"><i class="fa fa-list-alt"></i> <?php echo e(trans('auth.report')); ?></a>
+                            <a href="/"><i class="fa fa-list-alt"></i> <?php echo e(trans('auth.report')); ?></a>
                         </li>
                     <?php endif; ?>
                     <li class="dropdown pull-right" style="list-style: none">
