@@ -20,7 +20,6 @@ bootstrap/cache/
 .env.*.php
 .env.php
 .env
-.env.example
 .idea
 *.swp
 
@@ -33,7 +32,6 @@ logs
 *.log
 npm-debug.log*
 .idea
-.env.example
 
 # Runtime data
 pids
