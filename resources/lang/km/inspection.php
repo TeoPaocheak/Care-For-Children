@@ -24,11 +24,13 @@ return [
     'inspection-for-children' => 'ការចុះអធិការកិច្ចសម្រាប់កុមារ',
 
     'institution-name' => 'ឈ្មោះមណ្ឌល',
-    'inspection-chart' => 'ការចុះអធិការកិច្ចតាមបណ្តាល',
+    'institution-province' => 'ឈ្មោះខេត្ត',
+    'institution-district' => 'ឈ្មោះស្រុក',
+    'inspection-chart' => 'ការចុះអធិការកិច្ចតាម',
     'inspection-chart-district' => 'ការចុះអធិការកិច្ចក្នុង',
     'inspection-pie-chart' => 'ក្រាហ្វ​​បង្ហាញពីការចុះអធិការកិច្ចតាមមណ្ឌល',
     'children-pie-chart' => 'ក្រាហ្វ​​​បង្ហាញពីការចុះអធិការកិច្ច​កុមារតាមមណ្ឌល',
 
     'provinces' => 'ខេត្ត',
-    'districts' => 'ក្រុង/ស្រុក/ខ័ណ្ឌ'
+    'districts' => 'ក្រុង/ស្រុក/ខណ្ឌ'
 ];
