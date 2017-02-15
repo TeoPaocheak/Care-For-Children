@@ -10,6 +10,7 @@ use User;
 use MONITORING\Province;
 use MONITORING\District;
 use DB;
+use Log;
 
 class InspectController extends Controller
 {
@@ -288,6 +289,17 @@ EOT;
         } elseif ($request->input('selected_name') === 'national'){
             $results = DB::select($national_sql, array($request->input('inspected_date')));
         }
+
+        return response($results, 200);
+    }
+
+    public function getDistrictLevelResult(Request $request) {
+        $sql = <<<EOT
+        SELECT b.ngo_name, 0 as insp1, 0 as insp2 FROM baseline b
+            LEFT JOIN orphanage_lists o ON o.DISTRICT_CODE=b.district_code AND b.id_form = o.EDF_CODE
+            WHERE b.district_code = ?
+EOT;
+        $results = DB::select($sql, array($request->input('district_code')));
 
         return response($results, 200);
     }

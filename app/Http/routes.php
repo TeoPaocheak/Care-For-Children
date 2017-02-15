@@ -71,6 +71,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('inspect/inspect-table', 'InspectController@inspectTable');
     Route::get('inspect/get-table-result', 'InspectController@getTableResult');
+    Route::get('inspect/get-district-result', 'InspectController@getDistrictLevelResult');
 
     Route::get('inspect/inspect-children', 'InspectController@inspectChildren');
     Route::get('inspect/get-children-result', 'InspectController@getChildrenResult');
