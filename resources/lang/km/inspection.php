@@ -25,7 +25,7 @@ return [
 
     'institution-name' => 'ឈ្មោះមណ្ឌល',
     'institution-province' => 'ឈ្មោះខេត្ត',
-    'institution-district' => 'ឈ្មោះស្រុក',
+    'institution-district' => 'ឈ្មោះស្រុក/ខណ្ឌ',
     'inspection-chart' => 'ការចុះអធិការកិច្ចតាម',
     'inspection-chart-district' => 'ការចុះអធិការកិច្ចក្នុង',
     'inspection-pie-chart' => 'ក្រាហ្វ​​បង្ហាញពីការចុះអធិការកិច្ចតាមមណ្ឌល',

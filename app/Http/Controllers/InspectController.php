@@ -474,8 +474,8 @@ EOT;
           return response(trans('inspection.institution-province'),200);
         elseif ($val==="province")
           return response(trans('inspection.institution-district'),200);
-
-        return response(trans('inspection.institution-province'),200);
+        else
+          return response(trans('inspection.institution-name'),200);
     }
 
 }
