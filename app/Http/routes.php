@@ -11,6 +11,8 @@
   |
  */
 
+use Illuminate\Http\Request;
+
 Route::group(['middleware' => ['web']], function () {
 //    Route::auth();
 
@@ -72,6 +74,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('inspect/inspect-children', 'InspectController@inspectChildren');
     Route::get('inspect/get-children-result', 'InspectController@getChildrenResult');
+
+    Route::get('inspect/get-inspection-name','InspectController@changeInspectionName');
 
     // Route::get('/graph', function () {
     //     return view('content.inspection.inspection-charts');

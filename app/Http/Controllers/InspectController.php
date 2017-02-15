@@ -466,4 +466,16 @@ EOT;
         return response($results, 200);
     }
 
+    public function changeInspectionName(Request $request){
+
+        $val = $request->input("val");
+
+        if($val==="national")
+          return response(trans('inspection.institution-province'),200);
+        elseif ($val==="province")
+          return response(trans('inspection.institution-district'),200);
+
+        return response(trans('inspection.institution-province'),200);
+    }
+
 }

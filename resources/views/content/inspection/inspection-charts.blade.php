@@ -245,7 +245,7 @@
                                                     <table class="dataTable display table table-bordered" cellspacing="0" width="100%" >
                                                         <thead>
                                                             <tr style="font-size: 11px">
-                                                                <th>{{ trans('inspection.institution-name') }}</th>
+                                                                <th id="inspection_name">{{ trans('inspection.institution-province') }}</th>
                                                                 <th>{{ trans('inspection.inspect-once') }}</th>
                                                                 <th>{{ trans('inspection.inspect-twice') }}</th>
                                                                 <th>{{ trans('inspection.baseline') }}</th>
@@ -313,8 +313,6 @@
             callAllAjax();
         })
     });
-
-
 
     function callAllAjax() {
         // if (!$("#rd_province").is(":checked") && !$("#rd_district").is(":checked") && !$("#rd_national").is(":checked")) {
@@ -485,6 +483,18 @@
                 error: function(error) {
                     console.log(error);
                 }
+            });
+
+            //Ajax for Change Inspection Name
+            jQuery.ajax({
+              url: "inspect/get-inspection-name",
+              type: "GET",
+              data:{
+                "val" : $("input:radio[name=options]:checked").val()
+              },
+              success:function (data) {
+                $('#inspection_name').html(data);
+              }
             });
 
             // Ajax for Table chart

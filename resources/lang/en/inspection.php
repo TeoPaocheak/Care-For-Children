@@ -24,6 +24,8 @@ return [
     'inspection-for-children' => 'Inspected for Children',
 
     'institution-name' => 'Institution Name',
+    'institution-province' => 'Province Name',
+    'institution-district' => 'District Name',
     'inspection-chart' => 'Institutions Inspected by ',
     'inspection-chart-district' => 'Institutions Inspected in',
     'inspection-pie-chart' => 'Chart showing Institutions Inspected',
