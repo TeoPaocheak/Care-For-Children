@@ -81,5 +81,11 @@ Route::group(['middleware' => ['web']], function () {
     // Route::get('/graph', function () {
     //     return view('content.inspection.inspection-charts');
     // });
+});
 
+Route::group(['prefix' => 'api', 'middleware' => 'auth.basic'], function () {
+    /**
+     * Use for API Access Only
+     */
+    require (__DIR__ . '/api.php');
 });
