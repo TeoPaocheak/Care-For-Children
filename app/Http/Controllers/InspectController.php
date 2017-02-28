@@ -10,6 +10,7 @@ use User;
 use MONITORING\Province;
 use MONITORING\District;
 use DB;
+use Log;
 
 class InspectController extends Controller
 {
@@ -209,17 +210,35 @@ EOT;
             $param = 'national';
         }
 
+//         $sql = <<<EOT
+
+//         SELECT $district_name AS d_name , (CASE WHEN ISNULL(tmp.insp1) THEN 0 ELSE tmp.insp1 END) AS insp1, (CASE WHEN ISNULL(tmp.insp2) THEN 0 ELSE tmp.insp2 END) AS insp2, COUNT(DISTINCT b.id) as total_centers
+//         FROM district d
+//         LEFT JOIN baseline b ON b.district_code = d.DCode
+//         LEFT JOIN (SELECT o.DISTRICT_CODE, o.Inspected_date, CASE WHEN COUNT(o.EDF_CODE) = 1 THEN 1 ELSE 0 END AS insp1 ,
+//         CASE WHEN COUNT(o.EDF_CODE) >= 2 THEN 1 ELSE 0 END AS insp2 FROM orphanage_lists o GROUP BY o.DISTRICT_CODE, o.EDF_CODE ) tmp ON tmp.DISTRICT_CODE = d.DCode AND YEAR(tmp.Inspected_date) = ?
+
+//         WHERE $param = ? GROUP BY d.DCode
+
+// EOT;
+
         $sql = <<<EOT
 
-        SELECT $district_name AS d_name , (CASE WHEN ISNULL(tmp.insp1) THEN 0 ELSE tmp.insp1 END) AS insp1, (CASE WHEN ISNULL(tmp.insp2) THEN 0 ELSE tmp.insp2 END) AS insp2, COUNT(DISTINCT b.id) as total_centers
+                SELECT $district_name AS d_name , 
+					(CASE WHEN ISNULL(dd.insp1) THEN 0 ELSE dd.insp1 END) AS insp1, 
+					(CASE WHEN ISNULL(dd.insp2) THEN 0 ELSE dd.insp2 END) AS insp2, 
+					COUNT(DISTINCT b.id) as total_centers
         FROM district d
         LEFT JOIN baseline b ON b.district_code = d.DCode
-        LEFT JOIN (SELECT o.DISTRICT_CODE, o.Inspected_date, CASE WHEN COUNT(o.EDF_CODE) = 1 THEN 1 ELSE 0 END AS insp1 ,
-        CASE WHEN COUNT(o.EDF_CODE) >= 2 THEN 1 ELSE 0 END AS insp2 FROM orphanage_lists o GROUP BY o.DISTRICT_CODE, o.EDF_CODE ) tmp ON tmp.DISTRICT_CODE = d.DCode AND YEAR(tmp.Inspected_date) = ?
-
-        WHERE $param = ? GROUP BY d.DCode
+        LEFT JOIN (SELECT tmp.DISTRICT_CODE, SUM(tmp.insp1) as insp1, SUM(tmp.insp2) as insp2 FROM  (SELECT o.DISTRICT_CODE, o.Inspected_date, CASE WHEN COUNT(o.EDF_CODE) = 1 THEN 1 ELSE 0 END AS insp1 ,
+        CASE WHEN COUNT(o.EDF_CODE) >= 2 THEN 1 ELSE 0 END AS insp2 FROM orphanage_lists o WHERE YEAR(o.Inspected_date) = ?
+								GROUP BY o.DISTRICT_CODE, o.EDF_CODE  ) tmp
+				GROUP BY tmp.DISTRICT_CODE) dd ON dd.DISTRICT_CODE = d.DCode
+        WHERE $param = ?
+        GROUP BY d.DCode;
 
 EOT;
+
 
         $national_sql = <<<EOT
 
@@ -270,6 +289,17 @@ EOT;
         } elseif ($request->input('selected_name') === 'national'){
             $results = DB::select($national_sql, array($request->input('inspected_date')));
         }
+
+        return response($results, 200);
+    }
+
+    public function getDistrictLevelResult(Request $request) {
+        $sql = <<<EOT
+        SELECT b.ngo_name, 0 as insp1, 0 as insp2 FROM baseline b
+            LEFT JOIN orphanage_lists o ON o.DISTRICT_CODE=b.district_code AND b.id_form = o.EDF_CODE
+            WHERE b.district_code = ?
+EOT;
+        $results = DB::select($sql, array($request->input('district_code')));
 
         return response($results, 200);
     }
@@ -464,6 +494,18 @@ EOT;
         }
 
         return response($results, 200);
+    }
+
+    public function changeInspectionName(Request $request){
+
+        $val = $request->input("val");
+
+        if($val==="national")
+          return response(trans('inspection.institution-province'),200);
+        elseif ($val==="province")
+          return response(trans('inspection.institution-district'),200);
+        else
+          return response(trans('inspection.institution-name'),200);
     }
 
 }

@@ -11,6 +11,8 @@
   |
  */
 
+use Illuminate\Http\Request;
+
 Route::group(['middleware' => ['web']], function () {
 //    Route::auth();
 
@@ -69,12 +71,21 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('inspect/inspect-table', 'InspectController@inspectTable');
     Route::get('inspect/get-table-result', 'InspectController@getTableResult');
+    Route::get('inspect/get-district-result', 'InspectController@getDistrictLevelResult');
 
     Route::get('inspect/inspect-children', 'InspectController@inspectChildren');
     Route::get('inspect/get-children-result', 'InspectController@getChildrenResult');
 
+    Route::get('inspect/get-inspection-name','InspectController@changeInspectionName');
+
     // Route::get('/graph', function () {
     //     return view('content.inspection.inspection-charts');
     // });
+});
 
+Route::group(['prefix' => 'api', 'middleware' => 'auth.basic'], function () {
+    /**
+     * Use for API Access Only
+     */
+    require (__DIR__ . '/api.php');
 });

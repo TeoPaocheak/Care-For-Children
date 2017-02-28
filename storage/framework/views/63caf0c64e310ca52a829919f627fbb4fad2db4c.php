@@ -21,7 +21,7 @@
             -->
             <header>
                 <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                <h2>{{ trans('information_content.result.information-result') }}</h2>
+                <h2><?php echo e(trans('information_content.result.information-result')); ?></h2>
             </header>
 
             <!-- widget div-->
@@ -40,27 +40,27 @@
                     <table id="datatable_fixed_column" class="table table-striped table-bordered printBorder display" width="100%">
                         <thead>
                             <tr class="danger txt-color-darken">
-                                @foreach($col_headers as $header)
-                                    @foreach($header as $col)
-                                        <th>{{$col}}</th>
-                                    @endforeach
-                                @endforeach
+                                <?php foreach($col_headers as $header): ?>
+                                    <?php foreach($header as $col): ?>
+                                        <th><?php echo e($col); ?></th>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($rows as $row)
-                                <tr onclick="compareObject(this)" data-href="#monitor/entity/{{$table->id}}/{{$row->EDF_CODE}}" target="_blank">
+                            <?php foreach($rows as $row): ?>
+                                <tr onclick="compareObject(this)" data-href="#monitor/entity/<?php echo e($table->id); ?>/<?php echo e($row->EDF_CODE); ?>" target="_blank">
                                     <?php $i = 0; ?>
-                                    @foreach($row as $data)
-                                        @if($i===0)
-                                        @endif
-                                        @if($i>0)
-                                            <td>{{$data}}</td>
-                                        @endif
+                                    <?php foreach($row as $data): ?>
+                                        <?php if($i===0): ?>
+                                        <?php endif; ?>
+                                        <?php if($i>0): ?>
+                                            <td><?php echo e($data); ?></td>
+                                        <?php endif; ?>
                                         <?php $i++; ?>
-                                    @endforeach
+                                    <?php endforeach; ?>
                                 </tr>
-                            @endforeach
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -85,7 +85,7 @@
         color: #0066cc;
     }
 
-    @media print {
+    @media  print {
         table,table th, table tr, table td {
             border-top: #000 solid 1px;
             border-bottom: #000 solid 1px;

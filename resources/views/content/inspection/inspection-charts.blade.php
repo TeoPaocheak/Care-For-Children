@@ -245,10 +245,10 @@
                                                     <table class="dataTable display table table-bordered" cellspacing="0" width="100%" >
                                                         <thead>
                                                             <tr style="font-size: 11px">
-                                                                <th>{{ trans('inspection.institution-name') }}</th>
+                                                                <th id="inspection_name">{{ trans('inspection.institution-province') }}</th>
                                                                 <th>{{ trans('inspection.inspect-once') }}</th>
                                                                 <th>{{ trans('inspection.inspect-twice') }}</th>
-                                                                <th>{{ trans('inspection.baseline') }}</th>
+                                                                <th id="inspection_baseline">{{ trans('inspection.baseline') }}</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="tBody"></tbody>
@@ -313,8 +313,6 @@
             callAllAjax();
         })
     });
-
-
 
     function callAllAjax() {
         // if (!$("#rd_province").is(":checked") && !$("#rd_district").is(":checked") && !$("#rd_national").is(":checked")) {
@@ -487,6 +485,18 @@
                 }
             });
 
+            //Ajax for Change Inspection Name
+            jQuery.ajax({
+              url: "inspect/get-inspection-name",
+              type: "GET",
+              data:{
+                "val" : $("input:radio[name=options]:checked").val()
+              },
+              success:function (data) {
+                $('#inspection_name').html(data);
+              }
+            });
+
             // Ajax for Table chart
             jQuery.ajax({
                 url: "inspect/get-table-result",
@@ -568,7 +578,43 @@
                     // Table
                     $("#tBody").empty();
                     var trHTML = '';
-                    for (i = 0; i < data.length; i++) {
+                    if (rd_name=='district'){
+                        $('#inspection_baseline').hide();
+                        jQuery.ajax({
+                        url: "inspect/get-district-result",
+                        type: "GET",
+                        data: {
+                            "selected_name" : rd_name,
+                            "district_code" : district_code,
+                            "inspected_date" : inspected_date,
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            console.log(data);
+                            for (i = 0; i < data.length; i++) {
+                                var col_name = data[i].ngo_name;
+                                var inspected_once = data[i].insp1;
+                                var inspected_twice = data[i].insp2;
+                                 trHTML +=
+                                        '<tr style="font-size: 11px"><td>'
+                                        + col_name
+                                        + '</td><td>'
+                                        + inspected_once
+                                        + '</td><td>'
+                                        + inspected_twice
+                                        + '</td></tr>';
+                            }
+                            $('#tBody').append(trHTML);
+                            $('#chart-result').show();
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                        });
+                    } else{
+                        $('#inspection_baseline').show();
+                        for (i = 0; i < data.length; i++) {
                         var col_name = data[i].d_name;
                         var inspected_once = data[i].insp1;
                         var inspected_twice = data[i].insp2;
@@ -593,6 +639,7 @@
 
                     $('#chart-result').show();
                     // alert(data);
+                    }
                 },
                 error: function(error) {
                     console.log(error);
