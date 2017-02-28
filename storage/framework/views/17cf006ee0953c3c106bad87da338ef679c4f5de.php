@@ -351,6 +351,7 @@
 
 <script>
     var conditions = <?php echo $conditions; ?>;
+    // console.log(conditions);
     var loadNew = function (obj, type) {
         var code;
         code = $(obj).val();
@@ -415,7 +416,8 @@
                 'excelHtml5',
                 // {
                 //     extend: 'pdf',
-                //     orientation: 'landscape'
+                //     orientation: 'landscape',
+                //     // charSet: "utf16le"
                 // },
                 {
                     extend: "print",

@@ -1,4 +1,4 @@
-var entity = angular.module("app", []);
+var entity = angular.module("entity", []);
 
 entity.controller("entityInfoController", function ($scope, $http) {
     // $scope.user.level.type = {Auth::user()->role->level};

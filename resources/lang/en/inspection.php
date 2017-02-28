@@ -14,11 +14,11 @@ return [
     'inspection-in-year' => 'Inspection in Year',
     'select-option' => 'Select an option',
     'select-year' => 'Select a year',
-    'inspection-table' => 'Table of the Institution Inspection',
+    'inspection-table' => 'Table of the Institution Inspected',
 
     'institution-inspection-chart' => 'Institutions Inspection Chart',
     'children-inspection-chart' => 'Children Inspection Chart',
-    'institution-inspection-table' => 'Institution Inspection Table',
+    'institution-inspection-table' => 'Institutions Inspection Table',
 
     'inspection-for-institutions' => 'Inspection for Institutions',
     'inspection-for-children' => 'Inspection for Children',
@@ -26,8 +26,8 @@ return [
     'institution-name' => 'Institution Name',
     'inspection-chart' => 'Institutions Inspected by ',
     'inspection-chart-district' => 'Institutions Inspected in',
-    'inspection-pie-chart' => 'Chart showing Institutions Inspection',
-    'children-pie-chart' => 'Chart showing Children Inspection',
+    'inspection-pie-chart' => 'Chart showing Institutions Inspected',
+    'children-pie-chart' => 'Chart showing Children Inspected',
 
     'provinces' => 'Provinces',
     'districts' => 'Districts'

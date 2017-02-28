@@ -178,7 +178,7 @@
                                                     <div​ style="display:inline">
                                                         <label class="select">
                                                             <select id="year-filter" class="form-control">
-                                                                
+                                                                <option value="2016">2016</option>
                                                                 <option value="2017">2017</option>
                                                             </select>
                                                         </label>
